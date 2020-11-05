@@ -20,6 +20,10 @@ public class DoShowSuppliers extends Command<StoreManager> {
 
   @Override
   public void execute() throws DialogException {
-    //FIXME implement command
+    Collection<Supplier> suppliers = _receiver.getSuppliers();
+    for(Supplier sp : suppliers)
+      _display.addLine(sp.toString());
+
+    _display.display();
   }
-}
+  }
