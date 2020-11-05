@@ -11,16 +11,23 @@ import woo.core.StoreManager;
  */
 public class DoShowClient extends Command<StoreManager> {
 
-  //FIXME add input fields
+  private Input<String> _clientKey;
 
   public DoShowClient(StoreManager storefront) {
     super(Label.SHOW_CLIENT, storefront);
-    //FIXME init input fields
+    _clientKey = _form.addStringInput(Message.requestClientKey());
   }
 
   @Override
   public void execute() throws DialogException {
-    //FIXME implement command
+    _form.parse();
+
+    try {
+      Client cl = _receiver.getClient(_clientKey.value());
+      _display.popup(cl.toString());
+    } catch(        )
+        new UnknownClientKeyException(_clientKey.value());
+    }
   }
 
 }

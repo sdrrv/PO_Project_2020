@@ -12,10 +12,15 @@ import woo.core.StoreManager;
 public class DoRegisterClient extends Command<StoreManager> {
 
   //FIXME add input fields
+  private Input<String> _clientKey;
+  private Input<String> _nome;
+  private Input<String> _endereco;
 
   public DoRegisterClient(StoreManager storefront) {
     super(Label.REGISTER_CLIENT, storefront);
-    //FIXME init input fields
+    _clientKey = _form.addStringInput(Message.requestClientKey());
+    _nome = _form.addStringInput(Message.requestClientName());
+    _endereco = _form.addStringInput(Message.requestClientAddress());
   }
 
   @Override

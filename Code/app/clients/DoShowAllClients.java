@@ -1,9 +1,9 @@
 package woo.app.clients;
 
 import pt.tecnico.po.ui.Command;
-import pt.tecnico.po.ui.DialogException; 
-import pt.tecnico.po.ui.Input; 
-import woo.core.StoreManager;  
+import pt.tecnico.po.ui.DialogException;
+import pt.tecnico.po.ui.Input;
+import woo.core.StoreManager;
 //FIXME import other classes
 
 /**
@@ -20,6 +20,11 @@ public class DoShowAllClients extends Command<StoreManager> {
 
   @Override
   public void execute() throws DialogException {
-    //FIXME implement command
+    Collection<Client> clients = _receiver.getClients();
+
+    for(Client cl : clients)
+      _display.addLine(cl.toString());
+
+    _display.display();
   }
 }
