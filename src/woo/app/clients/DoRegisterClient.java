@@ -13,21 +13,22 @@ public class DoRegisterClient extends Command<StoreManager> {
 
   //FIXME add input fields
   private Input<String> _clientKey;
-  private Input<String> _nome;
-  private Input<String> _endereco;
+  private Input<String> _name;
+  private Input<String> _address;
 
   public DoRegisterClient(StoreManager storefront) {
     super(Label.REGISTER_CLIENT, storefront);
     _clientKey = _form.addStringInput(Message.requestClientKey());
-    _nome = _form.addStringInput(Message.requestClientName());
-    _endereco = _form.addStringInput(Message.requestClientAddress());
+    _name = _form.addStringInput(Message.requestClientName());
+    _address = _form.addStringInput(Message.requestClientAddress());
   }
 
   @Override
   public void execute() throws DialogException { //
     try{
-      DoRegisterClient(storefront);
+      Client cl = _receiver.registerClient(_clientKey.value(), _name.value(), _address.value());
+    }catch(DuplicateClientKeyException e){
+      new DuplicateClientKeyException(_clientKey.value());
     }
   }
-
 }
