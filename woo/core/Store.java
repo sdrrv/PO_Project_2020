@@ -11,6 +11,8 @@ import core.users.*;
 import java.util.Map;
 import java.util.HashMap;
 
+import java.util.List;
+import java.util.LinkedList;
 /**
  * Class Store implements a store.
  */
@@ -27,7 +29,22 @@ public class Store implements Serializable {
     _clients = new HashMap<String, Client>();
   }
 
-  // FIXME define methods
+  public int getDate(){
+    return _date;
+  }
+  public void increaseDate(int amount){
+    _date += amount;
+  }
+
+  public Client getClient(String id){
+    return _clients.get(id);
+  }
+
+  public LinkedList<Client> getAllClients(){
+    List<Client> result = new LinkedList<Client>();
+    result = (LinkedList<Client>) _clients.values();
+    return result;
+  }
 
 
   /**
