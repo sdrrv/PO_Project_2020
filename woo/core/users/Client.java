@@ -1,11 +1,6 @@
-package app.clients;
+package core.users;
 
-import java.util.List;
-
-import app.clients.ClientStatus;
-
-import java.util.LinkedList;
-
+import woo.core.users.ClientStatus;
 
 public class Client extends User{
     private ClientStatus _status;

@@ -24,8 +24,10 @@ public class DoRegisterClient extends Command<StoreManager> {
   }
 
   @Override
-  public void execute() throws DialogException {
-    //FIXME implement command
+  public void execute() throws DialogException { //
+    try{
+      DoRegisterClient(storefront);
+    }
   }
 
 }

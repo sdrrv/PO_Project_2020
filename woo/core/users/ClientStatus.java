@@ -1,4 +1,4 @@
-package app.clients;
+package core.users;
 
 public enum ClientStatus {
     NORMAL,
