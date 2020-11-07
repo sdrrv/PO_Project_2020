@@ -1,3 +1,5 @@
+package woo.core.products;
+
 public class Caixa extends Produto {
 
     enum TipoServico{

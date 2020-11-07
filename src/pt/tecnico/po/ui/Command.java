@@ -44,7 +44,8 @@ public abstract class Command<Receiver>
     public Command(final String s, final Receiver receiver, final ValidityPredicate<Receiver> validityPredicate) {
         this(false, s, receiver, (ValidityPredicate<Object>)validityPredicate);
     }
-    
+
+
     public final String title() {
         return this._title;
     }

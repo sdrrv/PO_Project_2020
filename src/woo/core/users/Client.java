@@ -1,4 +1,4 @@
-package core.users;
+package woo.core.users;
 
 import woo.core.users.ClientStatus;
 

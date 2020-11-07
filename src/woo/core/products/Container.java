@@ -1,3 +1,5 @@
+package woo.core.products;
+
 public class Contentor extends Produto{
     enum TipoServico{
         C4,

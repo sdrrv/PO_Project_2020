@@ -1,3 +1,5 @@
+package woo.core.products;
+
 public class Livro extends Produto {
     private String _titulo;
     private String _autor;

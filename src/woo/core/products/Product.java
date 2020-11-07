@@ -1,3 +1,4 @@
+package woo.core.products;
 
 public abstract class Produto{
     private int _preco;

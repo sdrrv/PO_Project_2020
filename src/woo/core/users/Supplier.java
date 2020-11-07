@@ -1,4 +1,4 @@
-package core.users;
+package woo.core.users;
 
 public class Supplier extends User{
     private boolean _isActive;

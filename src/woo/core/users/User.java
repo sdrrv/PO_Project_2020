@@ -1,4 +1,4 @@
-package core.users;
+package woo.core.users;
 
 public abstract class User {
     private String _name;

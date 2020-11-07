@@ -36,6 +36,9 @@ public class Store implements Serializable {
     _date += amount;
   }
 
+  public void registClient(Client){
+
+  }
   public Client getClient(String id){
     return _clients.get(id);
   }
