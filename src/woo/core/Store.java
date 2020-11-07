@@ -6,13 +6,11 @@ import java.io.Serializable;
 import java.io.IOException;
 
 import woo.core.exception.BadEntryException;
-import core.users.*;
 
-import java.util.Map;
-import java.util.HashMap;
+import woo.core.users.Client;
 
-import java.util.List;
-import java.util.LinkedList;
+import java.util.*;
+
 /**
  * Class Store implements a store.
  */
@@ -36,19 +34,20 @@ public class Store implements Serializable {
     _date += amount;
   }
 
-  public void registClient(Client){
-
+  //-----------------------------------------------------------------------------------
+  public boolean isClient(String id){
+    return _clients.containsKey(id);
+  }
+  public void registerClient(Client client){
+    _clients.put(client.getid(),client);
   }
   public Client getClient(String id){
     return _clients.get(id);
   }
-
-  public LinkedList<Client> getAllClients(){
-    List<Client> result = new LinkedList<Client>();
-    result = (LinkedList<Client>) _clients.values();
-    return result;
+  public Collection<Client> getAllClients(){
+    return _clients.values();
   }
-
+  //-----------------------------------------------------------------------------------
   /**
    * @param txtfile filename to be loaded.
    * @throws IOException
