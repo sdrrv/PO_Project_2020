@@ -20,7 +20,7 @@ public class DoShowAllClients extends Command<StoreManager> {
 
   @Override
   public void execute() throws DialogException {
-    Collection<Client> clients = _receiver.getClients();
+    Collection<Client> clients = _receiver.getAllClients();
 
     for(Client cl : clients)
       _display.addLine(cl.toString());

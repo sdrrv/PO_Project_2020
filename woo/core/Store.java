@@ -21,6 +21,7 @@ public class Store implements Serializable {
   /** Serial number for serialization. */
   private static final long serialVersionUID = 202009192006L;
 
+<<<<<<< HEAD
   private Map<String,Client> _clients;
   private int _date;
 
@@ -46,6 +47,12 @@ public class Store implements Serializable {
     return result;
   }
 
+=======
+  private Map<Client>
+
+  // FIXME define contructor(s)
+  // FIXME define methods
+>>>>>>> 548a09e401074d34597530ebc1965db737c003ac
 
   /**
    * @param txtfile filename to be loaded.
@@ -55,5 +62,4 @@ public class Store implements Serializable {
   void importFile(String txtfile) throws IOException, BadEntryException /* FIXME maybe other exceptions */ {
     //FIXME implement method
   }
-
 }
