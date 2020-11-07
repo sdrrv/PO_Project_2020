@@ -24,7 +24,7 @@ public class Store implements Serializable {
 
   public Store(){
     _date=0;
-    _clients = new HashMap<String, Client>();
+    _clients = new HashMap<String,Client>();
   }
 
   public int getDate(){
@@ -37,6 +37,9 @@ public class Store implements Serializable {
   //-----------------------------------------------------------------------------------
   public boolean isClient(String id){
     return _clients.containsKey(id);
+  }
+  public Client createClient(String name, String address, String id){
+    return new Client(name,address,id);
   }
   public void registerClient(Client client){
     _clients.put(client.getid(),client);
