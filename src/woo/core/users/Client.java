@@ -2,7 +2,9 @@ package woo.core.users;
 
 import woo.core.users.ClientStatus;
 
-public class Client extends User{
+import java.io.Serializable;
+
+public class Client extends User implements Serializable {
     private ClientStatus _status;
 
     public Client(String name, String address, String id){

@@ -1,6 +1,8 @@
 package woo.core.users;
 
-public class Supplier extends User{
+import java.io.Serializable;
+
+public class Supplier extends User implements Serializable {
     private boolean _isActive;
 
     public Supplier(String name, String address, String id){

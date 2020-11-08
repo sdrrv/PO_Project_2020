@@ -1,6 +1,8 @@
 package woo.core.users;
 
-public enum ClientStatus {
+import java.io.Serializable;
+
+public enum ClientStatus implements Serializable {
     NORMAL,
     SELECTION,
     ELITE

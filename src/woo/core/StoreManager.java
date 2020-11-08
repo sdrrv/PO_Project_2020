@@ -2,6 +2,7 @@ package woo.core;
 
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.util.Collection;
 
 import woo.core.exception.*;
 
@@ -25,6 +26,10 @@ public class StoreManager {
       throw new UnknownClientIdException(id);
     }
     return _store.getClient(id).toString();
+  }
+
+  public Collection<String> getAllClients(){
+    
   }
 
   public int showDate(){

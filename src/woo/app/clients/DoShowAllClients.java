@@ -15,15 +15,14 @@ public class DoShowAllClients extends Command<StoreManager> {
 
   public DoShowAllClients(StoreManager storefront) {
     super(Label.SHOW_ALL_CLIENTS, storefront);
-                //FIXME init input fields
   }
 
   @Override
   public void execute() throws DialogException {
-    Collection<Client> clients = _receiver.getAllClients();
+    Collection<String> clients = _receiver.getAllClients();
 
-    for(Client cl : clients)
-      _display.addLine(cl.toString());
+    for(String cl : clients)
+      _display.addLine(cl);
 
     _display.display();
   }

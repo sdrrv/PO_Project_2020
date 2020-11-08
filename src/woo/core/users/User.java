@@ -1,6 +1,8 @@
 package woo.core.users;
 
-public abstract class User {
+import java.io.Serializable;
+
+public abstract class User implements Serializable {
     private String _name;
     private String _address;
     private String _id;
@@ -20,8 +22,5 @@ public abstract class User {
     public String getid(){
         return _id;
     }
-
-    @Override
-    public String toString(){}//
 }
 
