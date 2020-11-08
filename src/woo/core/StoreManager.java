@@ -2,10 +2,17 @@ package woo.core;
 
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
 import java.util.Collection;
 
 import woo.core.exception.*;
+import woo.core.users.Client;
 
+import java.util.Set;
+import java.util.SortedSet;
+
+import java.util.List;
+import java.util.ArrayList;
 /**
  * StoreManager: façade for the core classes.
  */
@@ -20,7 +27,6 @@ public class StoreManager {
   public void registerClient(String name, String address, String id) throws DuplicateClientIdException {
     if(_store.hasClient(id)){ throw new DuplicateClientIdException(id); }
     _store.registerClient(_store.createClient(name, address, id));
-    System.out.println("HELLO");
     //.
   }
   public String getClient(String id) throws UnknownClientIdException {
@@ -47,15 +53,20 @@ public String getSupplier(String id) throws UnknownSupplierIdException{
 
 //---------------------------------------------------------------------------------------------------------------------
 
-  public Collection<String> getAllClients(){
+  public List<String> getAllClients(){
+    SortedSet<Client> temp = _store.getAllClients();
+    List<String> result = new ArrayList<String>();
+    for(Client client: temp){
+      result.add(client.toString());
+    }
+    return result;
+  }
+
+  public List<String> getAllProducts(){
     return null;
   }
 
-  public Collection<String> getAllProducts(){
-    return null;
-  }
-
-  public Collection<String> getAllSuppliers(){
+  public List<String> getAllSuppliers(){
     return null;
   }
 

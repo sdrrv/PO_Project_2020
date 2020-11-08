@@ -3,7 +3,7 @@ package woo.app.clients;
 import pt.tecnico.po.ui.Command;
 import pt.tecnico.po.ui.DialogException;
 import woo.core.StoreManager;
-import java.util.Collection;
+import java.util.List;
 //FIXME import other classes
 
 /**
@@ -17,7 +17,7 @@ public class DoShowAllClients extends Command<StoreManager> {
 
   @Override
   public void execute() throws DialogException {
-    Collection<String> clients = _receiver.getAllClients();
+    List<String> clients = _receiver.getAllClients();
     for(String cl : clients) {_display.addLine(cl);}
 
     _display.display();
