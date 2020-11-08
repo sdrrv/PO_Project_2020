@@ -29,6 +29,13 @@ public class StoreManager {
     }
     _store.registerClient(_store.createClient(name, address, id));
   }
+  public int showDate(){
+    return _store.getDate();
+  }
+  public void increaseDate(){
+    _store.increaseDate(1);
+  }
+  
   /**
    * @throws IOException
    * @throws FileNotFoundException
