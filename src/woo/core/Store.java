@@ -35,7 +35,7 @@ public class Store implements Serializable {
   }
 
   //-----------------------------------------------------------------------------------
-  public boolean isClient(String id){
+  public boolean hasClient(String id){
     return _clients.containsKey(id);
   }
   public Client createClient(String name, String address, String id){

@@ -3,6 +3,7 @@ package woo.core;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
+import woo.app.exception.DuplicateClientKeyException;
 import woo.core.exception.UnavailableFileException;
 import woo.core.exception.MissingFileAssociationException;
 import woo.core.exception.ImportFileException;
@@ -17,12 +18,17 @@ public class StoreManager {
   private String _filename = "";
 
   /** The actual store. */
-  private Store _store = new Store();
+  private final Store _store = new Store();
 
   //FIXME define other attributes
   //FIXME define constructor(s)
   //FIXME define other methods
-
+  public void registerClient(String name, String address, String id) throws DuplicateClientKeyException {
+    if(_store.hasClient(id)){
+      throw new DuplicateClientKeyException(id);
+    }
+    _store.registerClient(_store.createClient(name, address, id));
+  }
   /**
    * @throws IOException
    * @throws FileNotFoundException
