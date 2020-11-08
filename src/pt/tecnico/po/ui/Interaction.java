@@ -1,18 +1,46 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
+/* $Id: Interaction.java,v 1.3 2017/09/05 16:28:29 david Exp $ */
 package pt.tecnico.po.ui;
 
-public interface Interaction
-{
-    void menu(final Menu p0);
-    
-    void form(final Form p0);
-    
-    void message(final Display p0);
-    
-    void setTitle(final String p0);
-    
-    void close();
+/**
+ * Generic interaction (interface).
+ */
+public interface Interaction {
+
+  /**
+   * Display a Menu.
+   * 
+   * @param menu
+   *          menu to be displayed
+   */
+  public void menu(Menu menu);
+
+  /**
+   * Fill a Form.
+   * 
+   * @param form
+   *          form to be filled
+   */
+  public void form(Form form);
+
+  /**
+   * Display a Message.
+   * 
+   * @param display
+   *          what to display
+   */
+  public void message(Display display);
+
+  /**
+   * Set the Interaction title.
+   * 
+   * @param title
+   *          the interaction's title
+   */
+  public void setTitle(String title);
+
+  /**
+   * Close all I/O channels.
+   */
+  public void close();
+  
 }

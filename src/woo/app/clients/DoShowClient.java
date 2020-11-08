@@ -4,8 +4,7 @@ import pt.tecnico.po.ui.Command;
 import pt.tecnico.po.ui.DialogException;
 import pt.tecnico.po.ui.Input;
 import woo.core.StoreManager;
-//FIXME import other classes
-
+import woo.app.exception.UnknownClientKeyException;
 /**
  * Show client.
  */
@@ -23,10 +22,10 @@ public class DoShowClient extends Command<StoreManager> {
     _form.parse();
 
     try {
-      Client cl = _receiver.getClient(_clientKey.value());
+      String cl = _receiver.getClient(_clientKey.value());
       _display.popup(cl.toString());
     } catch(UnknownClientKeyException e){
-        new UnknownClientKeyException(_clientKey.value());
+        throw new UnknownClientKeyException(_clientKey.value());
     }
   }
 

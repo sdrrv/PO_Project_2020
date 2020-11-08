@@ -1,23 +1,28 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
+/* $Id: InputFloat.java,v 1.3 2017/09/05 16:28:29 david Exp $ */
 package pt.tecnico.po.ui;
 
-class InputFloat extends Input<Float>
-{
-    public InputFloat(final String s) {
-        super(s, "[0-9]+\\.[0-9]+[eE][+-][0-9]+");
+/** Request a float within a Form */
+class InputFloat extends Input<Float> {
+
+  /**
+   * Build an InputFloat
+   * 
+   * @param prompt
+   *          the description used in the request
+   */
+  public InputFloat(String prompt) {
+    super(prompt, Constants.REGEX_NUMBER_REAL);
+  }
+
+  /** @see pt.tecnico.po.ui.Input#parse(java.lang.String) */
+  @Override
+  public boolean parse(String in) {
+    try {
+      set(Float.parseFloat(in));
+      return true;
+    } catch (NumberFormatException e) {
+      return false;
     }
-    
-    @Override
-    public boolean parse(final String s) {
-        try {
-            this.set(Float.parseFloat(s));
-            return true;
-        }
-        catch (NumberFormatException ex) {
-            return false;
-        }
-    }
+  }
+
 }

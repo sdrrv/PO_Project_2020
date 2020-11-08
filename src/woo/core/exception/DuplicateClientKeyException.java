@@ -3,7 +3,7 @@ package woo.core.exception;
 import woo.app.exception.Message;
 
 /** Exception thrown when a client key is duplicated. */
-public class DuplicateClientKeyException {
+public class DuplicateClientKeyException extends Exception{
   /** Client key. */
   private String _key;
 

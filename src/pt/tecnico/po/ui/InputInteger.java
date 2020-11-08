@@ -1,23 +1,29 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
+/* $Id: InputInteger.java,v 1.3 2017/09/05 16:28:29 david Exp $ */
 package pt.tecnico.po.ui;
 
-class InputInteger extends Input<Integer>
-{
-    public InputInteger(final String s) {
-        super(s, "[0-9]+");
+/** Request an integer within a Form */
+class InputInteger extends Input<Integer> {
+
+  /**
+   * Build an InputInteger
+   * 
+   * @param prompt
+   *          the description used in the request
+   */
+  public InputInteger(String prompt) {
+    super(prompt, Constants.REGEX_NUMBER_INTEGER);
+  }
+
+  /** @see pt.tecnico.po.ui.Input#parse(java.lang.String) */
+  @Override
+  public boolean parse(String in) {
+    try {
+      set(Integer.parseInt(in));
+    } catch (NumberFormatException e) {
+      // println(Messages.invalidNumber(e));
+      return false;
     }
-    
-    @Override
-    public boolean parse(final String s) {
-        try {
-            this.set(Integer.parseInt(s));
-        }
-        catch (NumberFormatException ex) {
-            return false;
-        }
-        return true;
-    }
+    return true;
+  }
+
 }

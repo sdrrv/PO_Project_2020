@@ -1,227 +1,214 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
+/* $Id: CompositePrintStream.java,v 1.2 2017/09/05 16:28:29 david Exp $ */
 package pt.tecnico.po.io;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.ArrayList;
-import java.io.OutputStream;
-import java.util.Collection;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Collection;
 
-public class CompositePrintStream extends PrintStream
-{
-    private Collection<PrintStream> _streams;
-    private boolean _error;
-    
-    public CompositePrintStream() {
-        super(System.out);
-        this._error = false;
-        this._streams = new ArrayList<PrintStream>();
-    }
-    
-    public final void add(final PrintStream printStream) {
-        this._streams.add(printStream);
-    }
-    
-    @Override
-    public boolean checkError() {
-        boolean error = this._error;
-        for (final PrintStream printStream : this._streams) {
-            error = (error || printStream.checkError());
-        }
-        return error;
-    }
-    
-    @Override
-    public void close() {
-        for (final PrintStream printStream : this._streams) {
-            if (printStream != System.out) {
-                printStream.close();
-            }
-        }
-    }
-    
-    @Override
-    public void flush() {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().flush();
-        }
-    }
-    
-    @Override
-    public void print(final boolean b) {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().print(b);
-        }
-    }
-    
-    @Override
-    public void print(final char c) {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().print(c);
-        }
-    }
-    
-    @Override
-    public void print(final char[] s) {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().print(s);
-        }
-    }
-    
-    @Override
-    public void print(final double d) {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().print(d);
-        }
-    }
-    
-    @Override
-    public void print(final float f) {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().print(f);
-        }
-    }
-    
-    @Override
-    public void print(final int i) {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().print(i);
-        }
-    }
-    
-    @Override
-    public void print(final long l) {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().print(l);
-        }
-    }
-    
-    @Override
-    public void print(final Object obj) {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().print(obj);
-        }
-    }
-    
-    @Override
-    public void print(final String s) {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().print(s);
-        }
-    }
-    
-    @Override
-    public void println(final boolean x) {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().println(x);
-        }
-    }
-    
-    @Override
-    public void println(final char x) {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().println(x);
-        }
-    }
-    
-    @Override
-    public void println(final char[] x) {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().println(x);
-        }
-    }
-    
-    @Override
-    public void println(final double x) {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().println(x);
-        }
-    }
-    
-    @Override
-    public void println(final float x) {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().println(x);
-        }
-    }
-    
-    @Override
-    public void println(final int x) {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().println(x);
-        }
-    }
-    
-    @Override
-    public void println(final long x) {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().println(x);
-        }
-    }
-    
-    @Override
-    public void println(final Object x) {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().println(x);
-        }
-    }
-    
-    @Override
-    public void println(final String x) {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().println(x);
-        }
-    }
-    
-    @Override
-    protected void setError() {
-        this._error = true;
-    }
-    
-    @Override
-    public void write(final byte[] buf, final int off, final int len) {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().write(buf, off, len);
-        }
-    }
-    
-    @Override
-    public void write(final int b) {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().write(b);
-        }
-    }
-    
-    @Override
-    public void write(final byte[] b) throws IOException {
-        final Iterator<PrintStream> iterator = this._streams.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().write(b);
-        }
-    }
+/**
+ * Class CompositePrintStream represents a multiple print stream. It is a print
+ * stream that encloses more than one print stream. Each message sent to this
+ * print stream is also sent to its nested print streams.
+ */
+public class CompositePrintStream extends PrintStream {
+
+  /** A stream collection. */
+  private Collection<PrintStream> _streams;
+
+  /** PrintStreams convert exceptions into error status. */
+  private boolean _error = false;
+
+  /** Creates a new composite print stream. */
+  public CompositePrintStream() {
+    super(System.out); // this should not be necessary
+    _streams = new ArrayList<PrintStream>();
+  }
+
+  /**
+   * Add a print stream object to this composite print stream.
+   * 
+   * @param st
+   *          the new print stream to add.
+   */
+  public final void add(PrintStream st) {
+    _streams.add(st);
+  }
+
+  /** @see java.io.PrintStream#checkError() */
+  @Override
+  public boolean checkError() {
+    boolean res = _error;
+    for (PrintStream st : _streams)
+      res = res || st.checkError();
+    return res;
+  }
+
+  /** @see java.io.PrintStream#close() */
+  @Override
+  public void close() {
+    for (PrintStream st : _streams)
+      if (st != System.out)
+        st.close();
+  }
+
+  /** @see java.io.PrintStream#flush() */
+  @Override
+  public void flush() {
+    for (PrintStream st : _streams)
+      st.flush();
+  }
+
+  /** @see java.io.PrintStream#print(boolean) */
+  @Override
+  public void print(boolean b) {
+    for (PrintStream st : _streams)
+      st.print(b);
+  }
+
+  /** @see java.io.PrintStream#print(char) */
+  @Override
+  public void print(char c) {
+    for (PrintStream st : _streams)
+      st.print(c);
+  }
+
+  /** @see java.io.PrintStream#print(char[]) */
+  @Override
+  public void print(char[] c) {
+    for (PrintStream st : _streams)
+      st.print(c);
+  }
+
+  /** @see java.io.PrintStream#print(double d) */
+  @Override
+  public void print(double d) {
+    for (PrintStream st : _streams)
+      st.print(d);
+  }
+
+  /** @see java.io.PrintStream#print(float) */
+  @Override
+  public void print(float f) {
+    for (PrintStream st : _streams)
+      st.print(f);
+  }
+
+  /** @see java.io.PrintStream#print(int) */
+  @Override
+  public void print(int i) {
+    for (PrintStream st : _streams)
+      st.print(i);
+  }
+
+  /** @see java.io.PrintStream#print(long) */
+  @Override
+  public void print(long l) {
+    for (PrintStream st : _streams)
+      st.print(l);
+  }
+
+  /** @see java.io.PrintStream#print(Object) */
+  @Override
+  public void print(Object obj) {
+    for (PrintStream st : _streams)
+      st.print(obj);
+  }
+
+  /** @see java.io.PrintStream#print(String) */
+  @Override
+  public void print(String s) {
+    for (PrintStream st : _streams)
+      st.print(s);
+  }
+
+  /** @see java.io.PrintStream#println(boolean) */
+  @Override
+  public void println(boolean b) {
+    for (PrintStream st : _streams)
+      st.println(b);
+  }
+
+  /** @see java.io.PrintStream#println(char) */
+  @Override
+  public void println(char c) {
+    for (PrintStream st : _streams)
+      st.println(c);
+  }
+
+  /** @see java.io.PrintStream#println(char[]) */
+  @Override
+  public void println(char[] c) {
+    for (PrintStream st : _streams)
+      st.println(c);
+  }
+
+  /** @see java.io.PrintStream#println(double d) */
+  @Override
+  public void println(double d) {
+    for (PrintStream st : _streams)
+      st.println(d);
+  }
+
+  /** @see java.io.PrintStream#println(float) */
+  @Override
+  public void println(float f) {
+    for (PrintStream st : _streams)
+      st.println(f);
+  }
+
+  /** @see java.io.PrintStream#println(int) */
+  @Override
+  public void println(int i) {
+    for (PrintStream st : _streams)
+      st.println(i);
+  }
+
+  /** @see java.io.PrintStream#println(long) */
+  @Override
+  public void println(long l) {
+    for (PrintStream st : _streams)
+      st.println(l);
+  }
+
+  /** @see java.io.PrintStream#println(Object) */
+  @Override
+  public void println(Object obj) {
+    for (PrintStream st : _streams)
+      st.println(obj);
+  }
+
+  /** @see java.io.PrintStream#println(String) */
+  @Override
+  public void println(String s) {
+    for (PrintStream st : _streams)
+      st.println(s);
+  }
+
+  /** @see java.io.PrintStream#setError() */
+  @Override
+  protected void setError() {
+    _error = true;
+  }
+
+  /** @see java.io.PrintStream#write(byte[], int, int) */
+  @Override
+  public void write(byte[] buf, int off, int len) {
+    for (PrintStream st : _streams)
+      st.write(buf, off, len);
+  }
+
+  /** @see java.io.PrintStream#write(int) */
+  @Override
+  public void write(int b) {
+    for (PrintStream st : _streams)
+      st.write(b);
+  }
+
+  /** @see java.io.FilterOutputStream#write(byte[]) */
+  @Override
+  public void write(byte[] b) throws IOException {
+    for (PrintStream st : _streams)
+      st.write(b);
+  }
 }

@@ -1,216 +1,256 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
+/* $Id: InteractionUsingText.java,v 1.3 2017/09/05 16:28:29 david Exp $ */
 package pt.tecnico.po.ui;
 
-import java.util.Iterator;
-import pt.tecnico.po.io.RuntimeEOFException;
+import java.io.BufferedReader;
 import java.io.EOFException;
-import java.io.IOException;
-import pt.tecnico.po.io.CompositePrintStream;
-import java.io.OutputStream;
-import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.Reader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.io.BufferedReader;
 
-public class InteractionUsingText implements Interaction
-{
-    private BufferedReader _in;
-    private PrintStream _out;
-    private PrintStream _log;
-    private boolean _writeInput;
-    
-    public InteractionUsingText() {
-        this._in = new BufferedReader(new InputStreamReader(System.in));
-        this._out = System.out;
-        this._log = null;
-        final String property = System.getProperty("in");
-        if (property != null) {
-            try {
-                this._in = new BufferedReader(new FileReader(property));
-            }
-            catch (FileNotFoundException ex) {
-                this.println(ErrorMessages.inputError(ex));
-            }
-        }
-        final String property2 = System.getProperty("out");
-        if (property2 != null) {
-            try {
-                final PrintStream out = new PrintStream(new FileOutputStream(property2));
-                if (Boolean.getBoolean("both")) {
-                    final CompositePrintStream out2 = new CompositePrintStream();
-                    out2.add(out);
-                    out2.add(System.out);
-                    this._out = out2;
-                }
-                else {
-                    this._out = out;
-                }
-            }
-            catch (FileNotFoundException ex2) {
-                this.println(ErrorMessages.outputError(ex2));
-            }
-        }
-        final String property3 = System.getProperty("log");
-        if (property3 != null) {
-            try {
-                this._log = new PrintStream(new FileOutputStream(property3));
-            }
-            catch (FileNotFoundException ex3) {
-                this.println(ErrorMessages.logError(ex3));
-            }
-        }
-        this._writeInput = Boolean.getBoolean("writeInput");
+import pt.tecnico.po.io.CompositePrintStream;
+import pt.tecnico.po.io.RuntimeEOFException;
+
+/**
+ * Text interaction (either through the keyboard or files).
+ */
+public class InteractionUsingText implements Interaction {
+
+  /** Input channel. */
+  private BufferedReader _in = new BufferedReader(new InputStreamReader(System.in));;
+
+  /** Output channel. */
+  private PrintStream _out = System.out;
+
+  /** Log channel. */
+  private PrintStream _log = null;
+
+  /** Copy input to output? */
+  private boolean _writeInput;
+
+  /**
+   * Constructor (package).
+   */
+  public InteractionUsingText() {
+    String fileName = System.getProperty(PropertyNames.INPUT_CHANNEL);
+    if (fileName != null) {
+      try {
+        _in = new BufferedReader(new FileReader(fileName));
+      } catch (FileNotFoundException fn) {
+        println(ErrorMessages.inputError(fn));
+        fileName = null; // uses the default value
+      }
     }
-    
-    public void closeDown() {
-        if (System.out != this._out) {
-            this._out.close();
-        }
-        try {
-            if (System.getProperty("in") != null) {
-                this._in.close();
-            }
-        }
-        catch (IOException ex) {
-            this.println(ErrorMessages.errorClosingInput(ex));
-        }
-        if (this._log != null) {
-            this._log.close();
-        }
+
+    fileName = System.getProperty(PropertyNames.OUTPUT_CHANNEL);
+    if (fileName != null) {
+      try {
+        PrintStream pr = new PrintStream(new FileOutputStream(fileName));
+        if (Boolean.getBoolean(PropertyNames.BOTH_CHANNELS)) {
+          CompositePrintStream out = new CompositePrintStream();
+          out.add(pr);
+          out.add(System.out);
+          _out = out;
+        } else
+          _out = pr;
+      } catch (FileNotFoundException fn) {
+        println(ErrorMessages.outputError(fn));
+        fileName = null; // uses the default value
+      }
     }
-    
-    @Override
-    public void menu(final Menu menu) {
-        int integer = 0;
-        while (true) {
-            this.println(menu.title());
-            int i;
-            for (i = 0; i < menu.size(); ++i) {
-                if (menu.entry(i).isValid()) {
-                    this.println(i + 1 + " - " + menu.entry(i).title());
-                }
-            }
-            this.println(Messages.exit());
-            try {
-                integer = this.readInteger(Messages.selectAnOption());
-                if (integer == 0) {
-                    return;
-                }
-                if (integer < 0 || integer > i || !menu.entry(integer - 1).isValid()) {
-                    this.println(Messages.invalidOption());
-                }
-                else {
-                    menu.entry(integer - 1).performCommand();
-                    if (menu.entry(integer - 1).isLast()) {
-                        return;
-                    }
-                    continue;
-                }
-            }
-            catch (DialogException obj) {
-                this.println(menu.entry(integer - 1).title() + ": " + obj);
-            }
-            catch (EOFException ex) {
-                this.println(ErrorMessages.errorEOF(ex));
-            }
-            catch (IOException ex2) {
-                this.println(ErrorMessages.errorIO(ex2));
-            }
-            catch (NumberFormatException ex3) {
-                this.println(ErrorMessages.errorInvalidNumber(ex3));
-            }
-            catch (RuntimeEOFException ex4) {
-                this.println(ErrorMessages.errorREOF(ex4));
-            }
-        }
+
+    fileName = System.getProperty(PropertyNames.LOG_CHANNEL);
+    if (fileName != null) {
+      try {
+        _log = new PrintStream(new FileOutputStream(fileName));
+      } catch (FileNotFoundException fn) {
+        println(ErrorMessages.logError(fn));
+        fileName = null; // uses the default value
+      }
     }
-    
-    @Override
-    public void form(final Form form) {
-        try {
-            for (final Input<?> input : form.entries()) {
-                if (input.regex() != null) {
-                    while (!input.parse(this.readString(input.prompt()))) {}
-                }
-                else {
-                    this.println(input.prompt());
-                }
-            }
-        }
-        catch (EOFException ex) {
-            this.println(ErrorMessages.errorEOF(ex));
-        }
-        catch (IOException ex2) {
-            this.println(ErrorMessages.errorIO(ex2));
-        }
-        catch (NumberFormatException ex3) {
-            this.println(ErrorMessages.errorInvalidNumber(ex3));
-        }
-        catch (RuntimeEOFException ex4) {
-            this.println(ErrorMessages.errorREOF(ex4));
-        }
+
+    _writeInput = Boolean.getBoolean(PropertyNames.WRITE_INPUT);
+  }
+
+  /**
+   * Close all I/O channels.
+   */
+  public void closeDown() {
+    if (System.out != _out)
+      _out.close();
+    try {
+      String nome = System.getProperty(PropertyNames.INPUT_CHANNEL);
+      if (nome != null)
+        _in.close();
+    } catch (IOException ioe) {
+      println(ErrorMessages.errorClosingInput(ioe));
     }
-    
-    @Override
-    public void message(final Display display) {
-        if (display.getText().length() == 0) {
+
+    if (_log != null)
+      _log.close();
+  }
+
+  /** @see pt.tecnico.po.ui.Interaction#menu(pt.tecnico.po.ui.Menu) */
+  @Override
+  public void menu(Menu m) {
+    int option = 0, i;
+
+    while (true) {
+      println(m.title());
+      for (i = 0; i < m.size(); i++)
+        if (m.entry(i).isValid())
+          println((i + 1) + " - " + m.entry(i).title()); //$NON-NLS-1$
+      println(Messages.exit());
+
+      try {
+        option = readInteger(Messages.selectAnOption());
+        if (option == 0)
+          return;
+
+        if (option < 0 || option > i || !m.entry(option - 1).isValid()) {
+          println(Messages.invalidOption());
+        } else {
+          m.entry(option - 1).performCommand();
+          if (m.entry(option - 1).isLast())
             return;
         }
-        if (display.getText().charAt(display.getText().length() - 1) == '\n') {
-            this.print(display.getText());
-        }
-        else {
-            this.println(display.getText());
-        }
+      } catch (DialogException oi) {
+        println(m.entry(option - 1).title() + ": " + oi); //$NON-NLS-1$
+      } catch (EOFException eof) {
+        println(ErrorMessages.errorEOF(eof));
+        return;
+      } catch (IOException ioe) {
+        println(ErrorMessages.errorIO(ioe));
+      } catch (NumberFormatException nbf) {
+        println(ErrorMessages.errorInvalidNumber(nbf));
+      } catch (RuntimeEOFException e) {
+        // Não devia ser preciso mas há alunos que apanham
+        // IOException e não fazem nada.
+        println(ErrorMessages.errorREOF(e));
+        return;
+      }
     }
-    
-    @Override
-    public void setTitle(final String s) {
+  }
+
+  /** @see pt.tecnico.po.ui.Interaction#form(pt.tecnico.po.ui.Form) */
+  @Override
+  public void form(Form form) {
+    // if (f.title() != null) println(f.title()); // No title in text mode
+    try {
+      for (Input<?> in : form.entries()) {
+        if (in.regex() != null) {
+          while (!in.parse(readString(in.prompt())))
+            ;
+        } else
+          println(in.prompt());
+      }
+    } catch (EOFException eof) {
+      println(ErrorMessages.errorEOF(eof));
+      return;
+    } catch (IOException ioe) {
+      println(ErrorMessages.errorIO(ioe));
+    } catch (NumberFormatException nbf) {
+      println(ErrorMessages.errorInvalidNumber(nbf));
+    } catch (RuntimeEOFException e) {
+      // Não devia ser preciso mas há alunos que apanham
+      // IOException e não fazem nada.
+      println(ErrorMessages.errorREOF(e));
+      return;
     }
-    
-    @Override
-    public void close() {
-        this.closeDown();
+  }
+
+  /** @see pt.tecnico.po.ui.Interaction#message(pt.tecnico.po.ui.Display) */
+  @Override
+  public void message(Display display) {
+    if (display.getText().length() == 0)
+      return;
+    if (display.getText().charAt(display.getText().length() - 1) == '\n')
+      print(display.getText());
+    else
+      println(display.getText());
+  }
+
+  /** @see pt.tecnico.po.ui.Interaction#setTitle(java.lang.String) */
+  @Override
+  public void setTitle(String title) {
+    // DO NOTHING
+  }
+
+  /** @see pt.tecnico.po.ui.Interaction#close() */
+  @Override
+  public void close() {
+    closeDown();
+  }
+
+  /**
+   * Read an integer number from the input.
+   * 
+   * @param prompt
+   *          a prompt (may be null)
+   * @return the number read from the input.
+   * @throws IOException
+   *           in case of read errors
+   */
+  private final int readInteger(String prompt) throws IOException {
+    while (true) {
+      try {
+        return Integer.parseInt(readString(prompt));
+      } catch (NumberFormatException e) {
+        println(ErrorMessages.invalidNumber(e));
+      }
     }
-    
-    private final int readInteger(final String s) throws IOException {
-        try {
-            return Integer.parseInt(this.readString(s));
-        }
-        catch (NumberFormatException ex) {
-            this.println(ErrorMessages.invalidNumber(ex));
-            return Integer.parseInt(this.readString(s));
-        }
+  }
+
+  /**
+   * Read a string.
+   * 
+   * @param prompt
+   *          a prompt (may be null)
+   * @return the string read from the input.
+   * @throws IOException
+   *           in case of read errors
+   * @throws EOFException
+   *           in case of end of file errors
+   */
+  private final String readString(String prompt) throws IOException {
+    if (prompt != null)
+      _out.print(prompt);
+    String str = _in.readLine();
+    if (str == null) {
+      // infelizmente tem que ser esta excepcao pq ha
+      // alunos que a apanham e nao fazem nada
+      throw new RuntimeEOFException(ErrorMessages.endOfInput());
     }
-    
-    private final String readString(final String s) throws IOException {
-        if (s != null) {
-            this._out.print(s);
-        }
-        final String line = this._in.readLine();
-        if (line == null) {
-            throw new RuntimeEOFException(ErrorMessages.endOfInput());
-        }
-        if (this._log != null) {
-            this._log.println(line);
-        }
-        if (this._writeInput) {
-            this._out.println(line);
-        }
-        return line;
-    }
-    
-    private final void println(final String x) {
-        this._out.println(x);
-    }
-    
-    private final void print(final String s) {
-        this._out.print(s);
-    }
+
+    if (_log != null)
+      _log.println(str);
+
+    if (_writeInput)
+      _out.println(str);
+
+    return str;
+  }
+
+  /**
+   * Write a string.
+   * 
+   * @param text
+   *          string to write.
+   */
+  private final void println(String text) {
+    _out.println(text);
+  }
+
+  /**
+   * Write a string.
+   *
+   * @param text
+   *          string to write.
+   */
+  private final void print(String text) {
+    _out.print(text);
+  }
+
 }

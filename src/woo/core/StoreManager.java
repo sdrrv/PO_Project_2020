@@ -3,11 +3,7 @@ package woo.core;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
-import woo.app.exception.DuplicateClientKeyException;
-import woo.core.exception.UnavailableFileException;
-import woo.core.exception.MissingFileAssociationException;
-import woo.core.exception.ImportFileException;
-import woo.core.exception.BadEntryException;
+import woo.core.exception.*;
 
 /**
  * StoreManager: façade for the core classes.
@@ -20,18 +16,21 @@ public class StoreManager {
   /** The actual store. */
   private final Store _store = new Store();
 
-  //FIXME define other attributes
-  //FIXME define constructor(s)
-  //FIXME define other methods
   public void registerClient(String name, String address, String id) throws DuplicateClientKeyException {
-    if(_store.hasClient(id)){
-      throw new DuplicateClientKeyException(id);
-    }
+    if(_store.hasClient(id)){ throw new DuplicateClientKeyException(id); }
     _store.registerClient(_store.createClient(name, address, id));
   }
+  public String getClient(String id) throws UnknownClientKeyException{
+    if(!_store.hasClient(id)){
+      throw new UnknownClientKeyException(id);
+    }
+    return _store.getClient(id).toString();
+  }
+
   public int showDate(){
     return _store.getDate();
   }
+
   public void increaseDate(){
     _store.increaseDate(1);
   }

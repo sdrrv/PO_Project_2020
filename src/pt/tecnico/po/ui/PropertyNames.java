@@ -1,18 +1,30 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
+/* $Id: PropertyNames.java,v 1.3 2017/09/05 16:28:29 david Exp $ */
 package pt.tecnico.po.ui;
 
-public final class PropertyNames
-{
-    public static final String WRITE_INPUT = "writeInput";
-    public static final String BOTH_CHANNELS = "both";
-    public static final String INPUT_CHANNEL = "in";
-    public static final String OUTPUT_CHANNEL = "out";
-    public static final String LOG_CHANNEL = "log";
-    public static final String ACTION_CHANNEL = "ui";
-    
-    private PropertyNames() {
-    }
+/** Property names. */
+@SuppressWarnings("nls")
+public final class PropertyNames {
+
+  /** Property name: Should input be copied to the output? */
+  public final static String WRITE_INPUT = "writeInput";
+
+  /** Property name: Use multiple channels? */
+  public final static String BOTH_CHANNELS = "both";
+
+  /** Property name: input property name. */
+  public final static String INPUT_CHANNEL = "in";
+
+  /** Property name: output property name. */
+  public final static String OUTPUT_CHANNEL = "out";
+
+  /** Property name: log channel property name. */
+  public final static String LOG_CHANNEL = "log";
+  
+  /** Property name: user interface property name. */
+  public final static String ACTION_CHANNEL = "ui";
+
+  /** Prevent instantiantion. */
+  private PropertyNames() {
+  }
+
 }

@@ -1,18 +1,33 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
+/* $Id: DialogException.java,v 1.2 2017/09/05 16:28:29 david Exp $ */
 package pt.tecnico.po.ui;
 
-public abstract class DialogException extends Exception
-{
-    static final long serialVersionUID = 200610291601L;
-    
-    @Override
-    public abstract String getMessage();
-    
-    @Override
-    public final String toString() {
-        return ErrorMessages.invalidOperation(this.getMessage());
-    }
+/**
+ * This class represents events in unsuccessful operations.
+ */
+public abstract class DialogException extends Exception {
+
+  /**
+   * Serial number for serialization.
+   */
+  static final long serialVersionUID = 200610291601L;
+
+  /**
+   * This method is made abstract so that meaningful descriptive messages are
+   * provided by each subclass, instead of using the general implementation.
+   * 
+   * @see java.lang.Throwable#getMessage()
+   */
+  @Override
+  public abstract String getMessage();
+
+  /**
+   * Subclasses are not allowed to redefine this method.
+   * 
+   * @see java.lang.Throwable#toString()
+   */
+  @Override
+  public final String toString() {
+    return ErrorMessages.invalidOperation(getMessage());
+  }
+
 }

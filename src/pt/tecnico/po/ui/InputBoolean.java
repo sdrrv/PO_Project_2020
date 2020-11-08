@@ -1,27 +1,35 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
+/* $Id: InputBoolean.java,v 1.3 2017/09/05 16:28:29 david Exp $ */
 package pt.tecnico.po.ui;
 
-class InputBoolean extends Input<Boolean>
-{
-    public InputBoolean(final String s) {
-        super(s, "[ns]");
+/** Request a boolean within a Form */
+class InputBoolean extends Input<Boolean> {
+
+  /**
+   * Build an InputBoolean
+   * 
+   * @param prompt
+   *          the description used in the request
+   */
+  public InputBoolean(String prompt) {
+    super(prompt, Constants.REGEX_BOOLEAN);
+  }
+
+  /** @see pt.tecnico.po.ui.Input#parse(java.lang.String) */
+  @Override
+  public boolean parse(String in) {
+    if (in.length() == 1 && (in.charAt(0) == Constants.BOOLEAN_CHAR_YES
+        || in.charAt(0) == Constants.BOOLEAN_CHAR_NO)) {
+      _value = in.charAt(0) == Constants.BOOLEAN_CHAR_YES;
+      dirty();
+      return true;
     }
-    
-    @Override
-    public boolean parse(final String s) {
-        if (s.length() == 1 && (s.charAt(0) == 's' || s.charAt(0) == 'n')) {
-            this._value = (Type)Boolean.valueOf(s.charAt(0) == 's');
-            this.dirty();
-            return true;
-        }
-        return false;
-    }
-    
-    @Override
-    public String toString() {
-        return this.value() ? "sim" : "nao";
-    }
+    return false;
+  }
+
+  /** @see pt.tecnico.po.ui.Input#toString() */
+  @Override
+  public String toString() {
+    return value() ? Constants.BOOLEAN_WORD_YES : Constants.BOOLEAN_WORD_NO;
+  }
+
 }

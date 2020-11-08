@@ -1,21 +1,39 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
+/* $Id: Constants.java,v 1.3 2017/09/05 16:28:29 david Exp $ */
 package pt.tecnico.po.ui;
 
-final class Constants
-{
-    public static final String MAIN_TITLE = "Programa\u00e7\u00e3o com Objectos";
-    public static final String BOOLEAN_WORD_YES = "sim";
-    public static final String BOOLEAN_WORD_NO = "nao";
-    public static final char BOOLEAN_CHAR_YES = 's';
-    public static final char BOOLEAN_CHAR_NO = 'n';
-    public static final String REGEX_BOOLEAN = "[ns]";
-    public static final String REGEX_NUMBER_INTEGER = "[0-9]+";
-    public static final String REGEX_NUMBER_REAL = "[0-9]+\\.[0-9]+[eE][+-][0-9]+";
-    public static final String REGEX_STRING = ".*";
-    
-    private Constants() {
-    }
+/** Property names. */
+@SuppressWarnings("nls")
+final class Constants {
+
+  /** Application title (e.g., for window titles) */
+  public final static String MAIN_TITLE = "Programação com Objectos";
+
+  /** How do you say "yes"? */
+  public final static String BOOLEAN_WORD_YES = "sim";
+
+  /** How do you say "yes"? */
+  public final static String BOOLEAN_WORD_NO = "nao";
+
+  /** How do you say "yes"? */
+  public final static char BOOLEAN_CHAR_YES = 's';
+
+  /** How do you say "yes"? */
+  public final static char BOOLEAN_CHAR_NO = 'n';
+
+  /** Property name: input property name. */
+  public final static String REGEX_BOOLEAN = "[ns]";
+
+  /** Property name: input property name. */
+  public final static String REGEX_NUMBER_INTEGER = "[0-9]+";
+
+  /** Property name: input property name. */
+  public final static String REGEX_NUMBER_REAL = "[0-9]+\\.[0-9]+[eE][+-][0-9]+";
+
+  /** Property name: input property name. */
+  public final static String REGEX_STRING = ".*";
+
+  /** Prevent instantiantion. */
+  private Constants() {
+  }
+
 }

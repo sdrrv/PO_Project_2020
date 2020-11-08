@@ -1,70 +1,104 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
+/* $Id: Dialog.java,v 1.4 2017/09/05 16:28:29 david Exp $ */
 package pt.tecnico.po.ui;
 
 import java.io.IOException;
 
-public class Dialog
-{
-    private static final String ACTION_SWING = "swing";
-    private static final String ACTION_TEXT = "text";
-    public static final Dialog IO;
-    private Interaction _subsystem;
-    
-    private Dialog() {
+/**
+ * User interaction (either through the keyboard or files).
+ */
+public class Dialog {
+
+  private final static String ACTION_SWING = "swing";
+  private final static String ACTION_TEXT = "text";
+
+  /** Single instance of this class. */
+  public final static Dialog IO = new Dialog();
+
+  /** Interaction with subsystem (text, swing, ...). */
+  private Interaction _subsystem;
+
+  /**
+   * Singleton constructor (private).
+   */
+  private Dialog() {
+    try {
+      String name = System.getProperty(PropertyNames.ACTION_CHANNEL);
+      if (name == null) {
+        // applets cannot do System.getProperty()
         try {
-            final String property = System.getProperty("ui");
-            if (property == null) {
-                try {
-                    System.in.available();
-                    this._subsystem = new InteractionUsingText();
-                }
-                catch (IOException ex) {
-                    this._subsystem = new InteractionUsingSwing();
-                }
-            }
-            else if (property.equalsIgnoreCase("swing")) {
-                this._subsystem = new InteractionUsingSwing();
-            }
-            else if (property.equalsIgnoreCase("text")) {
-                this._subsystem = new InteractionUsingText();
-            }
-            else {
-                this._subsystem = new InteractionUsingText();
-            }
+          System.in.available();
+          _subsystem = new InteractionUsingText();
+        } catch (IOException e) {
+          _subsystem = new InteractionUsingSwing();
         }
-        catch (SecurityException ex2) {
-            this._subsystem = InteractionUsingApplet.getAppletInstance();
-        }
+      }
+      else {
+        if (name.equalsIgnoreCase(ACTION_SWING))
+          _subsystem = new InteractionUsingSwing();
+        else if (name.equalsIgnoreCase(ACTION_TEXT))
+          _subsystem = new InteractionUsingText();
+        else
+          _subsystem = new InteractionUsingText();
+      }
+    } catch (SecurityException e) {
+      // this happens in the applet case, so we can ignore the possible value of the property in this case
+       _subsystem = InteractionUsingApplet.getAppletInstance();
     }
-    
-    public Dialog(final Interaction subsystem) {
-        this._subsystem = subsystem;
-    }
-    
-    public void setTitle(final String title) {
-        this._subsystem.setTitle(title);
-    }
-    
-    public void menu(final Menu menu) {
-        this._subsystem.menu(menu);
-    }
-    
-    public void form(final Form form) {
-        this._subsystem.form(form);
-    }
-    
-    public void message(final Display display) {
-        this._subsystem.message(display);
-    }
-    
-    public void close() {
-        this._subsystem.close();
-    }
-    
-    static {
-        IO = new Dialog();
-    }
+  }
+
+  /**
+   * supply the action interface (package).
+   * 
+   * @param action
+   *          interaction type
+   */
+  public Dialog(Interaction action) {
+    _subsystem = action;
+  }
+
+  /**
+   * Set the title for the main window
+   * 
+   * @param title
+   *          the String to define as the title
+   */
+  public void setTitle(String title) {
+    _subsystem.setTitle(title);
+  }
+
+  /**
+   * Display a Menu.
+   * 
+   * @param menu
+   *          menu to be displayed
+   */
+  public void menu(Menu menu) {
+    _subsystem.menu(menu);
+  }
+
+  /**
+   * Fill a Form.
+   * 
+   * @param form
+   *          form to be filled
+   */
+  public void form(Form form) {
+    _subsystem.form(form);
+  }
+
+  /**
+   * Display a text message
+   * 
+   * @param d
+   *          the String to display
+   */
+  public void message(Display d) {
+    _subsystem.message(d);
+  }
+
+  /** Close the interaction */
+  public void close() {
+    _subsystem.close();
+  }
+
 }

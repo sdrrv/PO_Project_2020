@@ -1,256 +1,353 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
+/* $Id: InteractionUsingApplet.java,v 1.3 2017/09/05 16:28:29 david Exp $ */
 package pt.tecnico.po.ui;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.swing.JApplet;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import java.awt.BorderLayout;
-import java.util.HashMap;
-import javax.swing.JButton;
-import java.awt.LayoutManager;
-import java.awt.GridLayout;
-import java.util.Iterator;
-import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
-import java.util.Map;
-import java.awt.event.ActionListener;
-import javax.swing.JPanel;
-import java.awt.Component;
-import javax.swing.JLabel;
-import javax.swing.JApplet;
+import javax.swing.SwingConstants;
 
-public class InteractionUsingApplet extends JApplet implements Interaction
-{
-    private static final long serialVersionUID = 201609171556L;
-    private static InteractionUsingApplet _appletInstance;
-    
-    public static InteractionUsingApplet getAppletInstance() {
-        return InteractionUsingApplet._appletInstance;
+/**
+ * Applet interaction. This implementation that there is a single JApplet instance, which is the instance
+ * automatically created when the applet is loaded.
+ */
+@SuppressWarnings("nls")
+public class InteractionUsingApplet extends JApplet implements Interaction {
+
+  /** Serial number for serialization. */
+  private static final long serialVersionUID = 201609171556L;
+
+  /** The holds the instance created and initialized by the applet engine **/
+  private static InteractionUsingApplet _appletInstance;
+
+  /**
+   * retunrs the applet instance created by the applet engine.
+   **/
+   public static InteractionUsingApplet getAppletInstance() {
+      return _appletInstance;
     }
-    
-    public InteractionUsingApplet() {
-        if (InteractionUsingApplet._appletInstance == null) {
-            InteractionUsingApplet._appletInstance = this;
-        }
+
+  // ctor
+  public InteractionUsingApplet() {
+    if (_appletInstance == null)
+      _appletInstance = this;
+  }
+
+  /**
+   * Start rotine called by the internet browser. This rotines fetches the
+   * <b>mainClass</B> parameter, builds the <code>main()</code> arguments from
+   * the <b>mainArgs</b> parameter and calls the application's main rotine:
+   * <b>mainClass.main(mainArgs)</b>. The <b>AppletInteraction</b> is then
+   * called back by the <b>UserInteraction</b>.
+   */
+  private void main() {
+    String mainClass = getParameter("mainClass");
+    if (mainClass == null) {
+      add(new JLabel("no 'mainClass' <param> for this Applet"));
+      return;
     }
-    
-    private void main() {
-        final String parameter = this.getParameter("mainClass");
-        if (parameter == null) {
-            this.add(new JLabel("no 'mainClass' <param> for this Applet"));
-            return;
-        }
-        String[] split = new String[0];
-        final String parameter2 = this.getParameter("mainArgs");
-        if (parameter2 != null) {
-            split = parameter2.split(";");
-        }
-        try {
-            Class.forName(parameter).getMethod("main", String[].class).invoke(null, split);
-        }
-        catch (Exception obj) {
-            this.add(new JLabel("ERROR: " + obj));
-        }
+    String[] args = new String[] {};
+    String mainArgs = getParameter("mainArgs");
+    if (mainArgs != null)
+      args = mainArgs.split(";");
+    try {
+      Class<?> c = Class.forName(mainClass);
+      Class<?>[] cArray = new Class<?>[] { String[].class };
+      Object[] oArray = new Object[] { args };
+      c.getMethod("main", cArray).invoke(null, oArray);
+    } catch (Exception e) {
+      add(new JLabel("ERROR: " + e));
     }
-    
-    @Override
-    public void init() {
-        try {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    InteractionUsingApplet.this.main();
-                }
-            }, "bank.app.App").start();
-        }
-        catch (Exception obj) {
-            System.err.println("main() error: " + obj);
-        }
-        try {
-            Thread.sleep(100L);
-        }
-        catch (Exception ex) {}
-    }
-    
-    @Override
-    public void close() {
-        super.destroy();
-    }
-    
-    @Override
-    public void setTitle(final String name) {
-        this.setName(name);
-    }
-    
-    @Override
-    public void menu(final Menu menu) {
-        int access$200;
-        do {
-            final AppletPanel appletPanel = new AppletPanel(menu);
-            this.add(appletPanel);
-            appletPanel.await();
-            access$200 = appletPanel.option();
-            this.remove(appletPanel);
-            if (access$200 == 0) {
-                break;
-            }
-            try {
-                menu.entry(access$200 - 1).performCommand();
-            }
-            catch (DialogException obj) {
-                this.message(menu.entry(access$200 - 1).title() + ": " + obj, menu.title());
-            }
-        } while (!menu.entry(access$200 - 1).isLast());
-    }
-    
-    @Override
-    public void form(final Form form) {
-        final AppletPanel appletPanel = new AppletPanel(form);
-        this.add(appletPanel);
-        do {
-            appletPanel.await();
-        } while (!appletPanel.parse());
-        this.remove(appletPanel);
-    }
-    
-    @Override
-    public void message(final Display display) {
-        this.message(display.getText(), display.getTitle());
-    }
-    
-    private void message(final String s, final String s2) {
-        final AppletPanel appletPanel = new AppletPanel(s, s2);
-        this.add(appletPanel);
-        appletPanel.await();
-        this.remove(appletPanel);
-    }
-    
-    public class AppletPanel extends JPanel implements ActionListener
-    {
-        private static final long serialVersionUID = 201608221459L;
-        private int _opt;
-        private boolean _end;
-        private Map<Input<?>, JTextField> _inputs;
-        
+  }
+
+  /** @see java.applet.Applet#init() */
+  @Override
+  public void init() {
+    try {
+      Runnable r = new Runnable() {
         @Override
-        public void actionPerformed(final ActionEvent actionEvent) {
-            this._opt = Integer.parseInt(actionEvent.getActionCommand());
-            this._end = true;
-            try {
-                Thread.sleep(100L);
-            }
-            catch (Exception ex) {}
-        }
-        
-        private synchronized void sleep(final int n) {
-            try {
-                Thread.sleep(n);
-            }
-            catch (InterruptedException x) {
-                System.out.println(x);
-            }
-        }
-        
-        private synchronized void await() {
-            this._end = false;
-            while (!this._end) {
-                this.sleep(1);
-            }
-        }
-        
-        private int option() {
-            return this._opt;
-        }
-        
-        private boolean parse() {
-            boolean b = true;
-            for (final Input<?> input : this._inputs.keySet()) {
-                if (input.regex() != null && !input.parse(this._inputs.get(input).getText())) {
-                    this._inputs.get(input).setText("");
-                    b = false;
-                }
-            }
-            return b;
-        }
-        
-        AppletPanel(final Menu menu) {
-            super(new GridLayout(menu.size() + 3, 1));
-            final JLabel comp = new JLabel("");
-            final int[] array = { 49, 50, 51, 52, 53, 54, 55, 56, 57 };
-            this.add(new JLabel(menu.title(), 0));
-            this.add(comp);
-            for (int i = 0; i < menu.size(); ++i) {
-                if (menu.entry(i).isValid()) {
-                    final JButton button;
-                    this.add(button = new JButton(i + 1 + " - " + menu.entry(i).title()));
-                    button.addActionListener(this);
-                    button.setActionCommand("" + (i + 1));
-                    if (i < 9) {
-                        button.setMnemonic(array[i]);
-                    }
-                }
-                else {
-                    this.add(new JLabel(i + 1 + " - " + menu.entry(i).title(), 0));
-                }
-            }
-            final JButton button2;
-            this.add(button2 = new JButton(Messages.exit()));
-            button2.addActionListener(this);
-            button2.setActionCommand("0");
-            button2.setMnemonic(48);
-        }
-        
-        AppletPanel(final Form form) {
-            super(new GridLayout(form.entries().size() + 2, 2));
-            this._inputs = new HashMap<Input<?>, JTextField>();
-            final JLabel comp = new JLabel("");
-            if (form.title() != null) {
-                this.add(comp);
-                this.add(new JLabel(form.title()));
-            }
-            int n = 1;
-            for (final Input<?> input : form.entries()) {
-                final JLabel comp2 = new JLabel(input.prompt(), 11);
-                this.add(comp2);
-                if (input.regex() != null) {
-                    final JTextField textField = input.cleared() ? new JTextField(10) : new JTextField(input.toString(), 10);
-                    this.add(textField);
-                    comp2.setLabelFor(textField);
-                    this._inputs.put(input, textField);
-                    if (n == 0) {
-                        continue;
-                    }
-                    n = 0;
-                    textField.setFocusAccelerator('1');
-                }
-                else {
-                    this.add(comp);
-                }
-            }
-            this.add(comp);
-            final JButton comp3 = new JButton("OK");
-            this.add(comp3);
-            comp3.addActionListener(this);
-            comp3.setActionCommand("0");
-            comp3.setMnemonic(10);
-        }
-        
-        AppletPanel(final String str, final String text) {
-            this.setLayout(new BorderLayout());
-            if (text != null) {
-                this.add(new JLabel(text, 0));
-            }
-            final JTextArea view = new JTextArea(5, 20);
-            view.setEditable(false);
-            view.append(str);
-            this.add(new JScrollPane(view), "Center");
-            final JButton comp = new JButton("OK");
-            this.add(comp, "South");
-            comp.addActionListener(this);
-            comp.setActionCommand("0");
-            comp.setMnemonic(10);
-        }
+        public void run() {
+          main();
+        };
+      };
+      Thread t = new Thread(r, "bank.app.App");
+      t.start();
+    } catch (Exception e) {
+      System.err.println("main() error: " + e);
     }
+    try {
+      Thread.sleep(100);
+    } catch (Exception e) {
+      // DO NOTHING
+    }
+  }
+  // public void start() { System.out.println("start"); } // debug
+  // public void stop() { System.out.println("stop"); } // debug
+  // public void destroy() { System.out.println("destroy"); } // debug
+
+  /** @see pt.tecnico.po.ui.Interaction#close() */
+  @Override
+  public void close() {
+    super.destroy();
+  }
+
+  /** @see pt.tecnico.po.ui.Interaction#setTitle(java.lang.String) */
+  @Override
+  public void setTitle(String title) {
+    setName(title);
+  }
+
+  /** @see pt.tecnico.po.ui.Interaction#menu(pt.tecnico.po.ui.Menu) */
+  @Override
+  public void menu(Menu m) {
+    int option;
+    do {
+      AppletPanel menu = new AppletPanel(m);
+      add(menu);
+      menu.await();
+      option = menu.option();
+      remove(menu);
+      if (option == 0)
+        break;
+      try {
+        m.entry(option - 1).performCommand();
+      } catch (DialogException oi) {
+        message(m.entry(option - 1).title() + ": " + oi, m.title()); //$NON-NLS-1$
+      }
+    } while (!m.entry(option - 1).isLast());
+  }
+
+  /** @see pt.tecnico.po.ui.Interaction#form(pt.tecnico.po.ui.Form) */
+  @Override
+  public void form(Form f) {
+    AppletPanel form = new AppletPanel(f);
+    add(form);
+    do {
+      form.await();
+    } while (!form.parse());
+    remove(form);
+  }
+
+  /** @see pt.tecnico.po.ui.Interaction#message(pt.tecnico.po.ui.Display) */
+  @Override
+  public void message(Display d) {
+    message(d.getText(), d.getTitle());
+  }
+
+  /**
+   * Display a Message.
+   * 
+   * @param s
+   * @param title
+   */
+  private void message(String s, String title) {
+    AppletPanel mesg = new AppletPanel(s, title);
+    add(mesg);
+    mesg.await();
+    remove(mesg);
+  }
+
+  /**
+   * The class manages the body of the window, that can be used to select an
+   * option (Command) from a Menu, fill the Input values of a Form, or output a
+   * text message
+   */
+  public class AppletPanel extends JPanel implements ActionListener {
+
+    /** Serial number for serialization. */
+    private static final long serialVersionUID = 201608221459L;
+
+    /** The menu option selected */
+    private int _opt;
+
+    /** The OK button was pressed or a menu option selected */
+    private boolean _end;
+
+    /**
+     * Association between user Input instances and Applet's JTextField values
+     */
+    private Map<Input<?>, JTextField> _inputs;
+
+    /**
+     * implements ActionListener is called when a menu option is selected or
+     * when th OK button is pressed is Forms or messages.
+     * 
+     * @param evt
+     *          the ActionEvent to be processed
+     */
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+      _opt = Integer.parseInt(evt.getActionCommand());
+      _end = true;
+      try {
+        Thread.sleep(100);
+      } catch (Exception e) {
+        // IGNORE: DO NOTHING
+      }
+    }
+
+    /**
+     * Sleep the current thread so that other actions can be performed
+     * 
+     * @param n
+     *          time to wait
+     */
+    private synchronized void sleep(int n) {
+      try {
+        Thread.sleep(n);
+      } catch (InterruptedException ie) {
+        System.out.println(ie);
+      }
+    }
+
+    /**
+     * Wait until the OK button is pressed and the <b>_end</b> becomes
+     * <b>true</b>
+     */
+    private synchronized void await() {
+      _end = false;
+      while (!_end) {
+        sleep(1);
+      }
+      // should Thread.currentThread().wait(); for notifyAll
+    }
+
+    /** @return the select option from a menu */
+    private int option() {
+      return _opt;
+    }
+
+    /**
+     * Copy the user inputed values to the respective Input class values
+     * 
+     * @return parsing success
+     */
+    private boolean parse() {
+      boolean ret = true;
+      for (Input<?> in : _inputs.keySet()) {
+        if (in.regex() != null)
+          if (!in.parse(_inputs.get(in).getText())) {
+            _inputs.get(in).setText("");
+            ret = false;
+          }
+      }
+      return ret;
+    }
+
+    /**
+     * Build an AppletPanel to display a Menu
+     * 
+     * @param m
+     *          the Menu to display
+     */
+    AppletPanel(Menu m) {
+      super(new GridLayout(m.size() + 3, 1));
+      JLabel separator = new JLabel(""); // não gosto do JSeparator
+
+      int[] key = { KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5,
+          KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9 };
+
+      add(new JLabel(m.title(), SwingConstants.CENTER));
+      add(separator);
+
+      JButton jb;
+      for (int i = 0; i < m.size(); i++)
+        if (m.entry(i).isValid()) {
+          add(jb = new JButton((i + 1) + " - " + m.entry(i).title()));
+          jb.addActionListener(this);
+          jb.setActionCommand("" + (i + 1));
+          if (i < 9)
+            jb.setMnemonic(key[i]);
+        } else
+          add(new JLabel((i + 1) + " - " + m.entry(i).title(), SwingConstants.CENTER));
+      add(jb = new JButton(Messages.exit()));
+      jb.addActionListener(this);
+      jb.setActionCommand("0");
+      jb.setMnemonic(KeyEvent.VK_0);
+    }
+
+    /**
+     * Build an AppletPanel to display a Form
+     * 
+     * @param form
+     *          the Form to display
+     */
+    AppletPanel(Form form) {
+      super(new GridLayout(form.entries().size() + 2, 2));
+      _inputs = new HashMap<Input<?>, JTextField>();
+      JLabel separator = new JLabel("");
+
+      if (form.title() != null) {
+        add(separator);
+        add(new JLabel(form.title()));
+      }
+
+      boolean first = true;
+      for (Input<?> in : form.entries()) {
+        JLabel label = new JLabel(in.prompt(), SwingConstants.TRAILING);
+        add(label);
+        if (in.regex() != null) {
+          JTextField textField = in.cleared() ? new JTextField(10)
+              : new JTextField(in.toString(), 10);
+          add(textField);
+          label.setLabelFor(textField);
+          _inputs.put(in, textField);
+          if (first) {
+            first = false;
+            textField.setFocusAccelerator('1');
+          }
+        } else {
+          add(separator);
+        }
+      }
+      add(separator);
+
+      JButton jb = new JButton("OK");
+      add(jb);
+      jb.addActionListener(this);
+      jb.setActionCommand("0");
+      jb.setMnemonic(KeyEvent.VK_ENTER);
+    }
+
+    /**
+     * Build an AppletPanel to display a Message
+     * 
+     * @param s
+     *          the Message to display
+     * @param title
+     */
+    AppletPanel(String s, String title) {
+      // setLayout(new GridLayout(2,1));
+      setLayout(new BorderLayout());
+
+      if (title != null)
+        add(new JLabel(title, SwingConstants.CENTER));
+
+      JTextArea textArea = new JTextArea(5, 20);
+      textArea.setEditable(false);
+      textArea.append(s);
+      // textArea.setFocusAccelerator('1'); // nao editavel => no focus
+
+      JScrollPane scrollPane = new JScrollPane(textArea);
+      add(scrollPane, BorderLayout.CENTER);
+
+      JButton jb = new JButton("OK");
+      add(jb, BorderLayout.SOUTH);
+      jb.addActionListener(this);
+      jb.setActionCommand("0");
+      jb.setMnemonic(KeyEvent.VK_ENTER);
+    }
+  }
+
 }
