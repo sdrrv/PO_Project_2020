@@ -64,6 +64,7 @@ public String getSupplier(String id) throws UnknownSupplierIdException{
 
   public List<String> getAllProducts(){
     return null;
+
   }
 
   public List<String> getAllSuppliers(){
