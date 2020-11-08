@@ -52,6 +52,10 @@ public String getSupplier(String id) throws UnknownSupplierIdException{
     return null;
   }
 
+  public Collection<String> getAllSuppliers(){
+    return null;
+  }
+
   public int showDate(){
     return _store.getDate();
   }

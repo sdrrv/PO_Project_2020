@@ -4,7 +4,7 @@ import pt.tecnico.po.ui.Command;
 import pt.tecnico.po.ui.DialogException;
 import pt.tecnico.po.ui.Input;
 import woo.core.StoreManager;
-//FIXME import other classes
+import java.util.Collection;
 
 /**
  * Show all suppliers.
@@ -20,9 +20,9 @@ public class DoShowSuppliers extends Command<StoreManager> {
 
   @Override
   public void execute() throws DialogException {
-    Collection<Supplier> suppliers = _receiver.getSuppliers();
-    for(Supplier sp : suppliers)
-      _display.addLine(sp.toString());
+    Collection<String> suppliers = _receiver.getAllSuppliers();
+    for(String sp : suppliers)
+      _display.addLine(sp);
 
     _display.display();
   }
