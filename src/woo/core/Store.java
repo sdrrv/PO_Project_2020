@@ -58,10 +58,10 @@ public class Store implements Serializable {
   }
 
   public TreeSet<Client> getAllClients(){
-    return null;
+    return new TreeSet<Client>(_clients.values());
   }
   public TreeSet<Product>getAllProducts(){
-    return null;
+    return new TreeSet<Product>(_products.values());
   }
 
   //-----------------------------------------------------------------------------------

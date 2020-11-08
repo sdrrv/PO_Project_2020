@@ -12,7 +12,6 @@ import woo.core.exception.DuplicateClientIdException;
  */
 public class DoRegisterClient extends Command<StoreManager> {
 
-  //FIXME add input fields
   private Input<String> _clientKey;
   private Input<String> _name;
   private Input<String> _address;
@@ -26,8 +25,9 @@ public class DoRegisterClient extends Command<StoreManager> {
 
   @Override
   public void execute() throws DialogException { //
+    _form.parse();
     try{
-      _receiver.registerClient(_clientKey.value(), _name.value(), _address.value());
+      _receiver.registerClient(_name.value(),_address.value(),_clientKey.value());
     }catch(DuplicateClientIdException e){
       throw new DuplicateClientKeyException(_clientKey.value());
     }

@@ -20,6 +20,8 @@ public class StoreManager {
   public void registerClient(String name, String address, String id) throws DuplicateClientIdException {
     if(_store.hasClient(id)){ throw new DuplicateClientIdException(id); }
     _store.registerClient(_store.createClient(name, address, id));
+    System.out.println("HELLO");
+    //.
   }
   public String getClient(String id) throws UnknownClientIdException {
     if(!_store.hasClient(id)){
@@ -33,6 +35,7 @@ public void registerSupplier(String name, String address, String id) throws Dupl
       throw new DuplicateSupplierIdException(id);
     }
     _store.registerSupplier(_store.createSupplier(name, address, id));
+    //.
 }
 
 public String getSupplier(String id) throws UnknownSupplierIdException{
