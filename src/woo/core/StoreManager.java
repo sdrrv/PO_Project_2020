@@ -16,13 +16,13 @@ public class StoreManager {
   /** The actual store. */
   private final Store _store = new Store();
 
-  public void registerClient(String name, String address, String id) throws DuplicateClientKeyException {
-    if(_store.hasClient(id)){ throw new DuplicateClientKeyException(id); }
+  public void registerClient(String name, String address, String id) throws DuplicateClientIdException {
+    if(_store.hasClient(id)){ throw new DuplicateClientIdException(id); }
     _store.registerClient(_store.createClient(name, address, id));
   }
-  public String getClient(String id) throws UnknownClientKeyException{
+  public String getClient(String id) throws UnknownClientIdException {
     if(!_store.hasClient(id)){
-      throw new UnknownClientKeyException(id);
+      throw new UnknownClientIdException(id);
     }
     return _store.getClient(id).toString();
   }

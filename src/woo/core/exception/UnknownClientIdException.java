@@ -2,13 +2,13 @@ package woo.core.exception;
 
 
 
-public class UnknownClientKeyException extends Exception{
+public class UnknownClientIdException extends Exception{
 
 
   /** Unknown key. */
   private String _id;
 
-  public UnknownClientKeyException(String id) {
+  public UnknownClientIdException(String id) {
     _id = id;
   }
 

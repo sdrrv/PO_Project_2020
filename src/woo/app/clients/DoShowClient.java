@@ -1,5 +1,6 @@
 package woo.app.clients;
 
+import woo.core.exception.UnknownClientIdException;
 import pt.tecnico.po.ui.Command;
 import pt.tecnico.po.ui.DialogException;
 import pt.tecnico.po.ui.Input;
@@ -23,8 +24,8 @@ public class DoShowClient extends Command<StoreManager> {
 
     try {
       String cl = _receiver.getClient(_clientKey.value());
-      _display.popup(cl.toString());
-    } catch(UnknownClientKeyException e){
+      _display.popup(cl);
+    } catch(UnknownClientIdException e){
         throw new UnknownClientKeyException(_clientKey.value());
     }
   }
