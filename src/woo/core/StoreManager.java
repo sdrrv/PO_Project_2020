@@ -35,7 +35,7 @@ public class StoreManager {
   public void increaseDate(){
     _store.increaseDate(1);
   }
-  
+
   /**
    * @throws IOException
    * @throws FileNotFoundException

@@ -14,6 +14,10 @@ public class Client extends User{
         return _status;
     }
 
+    public String toString(){
+        return (super.getid()+"|"+super.getname()+"|");
+    }
+
     
 
 }

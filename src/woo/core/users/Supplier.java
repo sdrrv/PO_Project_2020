@@ -16,4 +16,8 @@ public class Supplier extends User{
         _isActive = !_isActive;
         return _isActive;
     }
+
+    public String toString(){
+        return (super.getid()+"|"+super.getname()+"|"+super.getaddress()+"|"+String.valueOf(isActive()));
+    }
 }
