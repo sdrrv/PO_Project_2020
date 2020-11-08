@@ -17,7 +17,7 @@ public class Client extends User implements Serializable {
     }
 
     public String toString(){
-        return (super.getid()+"|"+super.getname()+"|");
+        return (super.getId()+"|"+super.getName()+"|"+"0"+"|"+"0");
     }
 
     

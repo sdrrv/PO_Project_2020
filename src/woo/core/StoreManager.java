@@ -29,7 +29,7 @@ public class StoreManager {
   }
 
   public Collection<String> getAllClients(){
-    
+    return null;
   }
 
   public int showDate(){

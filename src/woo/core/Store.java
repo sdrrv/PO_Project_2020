@@ -8,6 +8,11 @@ import java.io.IOException;
 import woo.core.exception.BadEntryException;
 
 import woo.core.users.Client;
+import java.util.Map;
+
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 
 import java.util.*;
 
@@ -42,14 +47,17 @@ public class Store implements Serializable {
     return new Client(name,address,id);
   }
   public void registerClient(Client client){
-    _clients.put(client.getid(),client);
+    _clients.put(client.getId(),client);
   }
   public Client getClient(String id){
     return _clients.get(id);
   }
-  public Collection<Client> getAllClients(){
-    return _clients.values();
-  }
+
+  /*public TreeSet<Client> getAllClients(){
+    SortedSet<Client> result
+    return
+  }*/
+
   //-----------------------------------------------------------------------------------
   //-----------------------------------------------------------------------------------
   /**

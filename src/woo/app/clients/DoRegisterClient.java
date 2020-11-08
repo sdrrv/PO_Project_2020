@@ -5,6 +5,7 @@ import pt.tecnico.po.ui.DialogException;
 import pt.tecnico.po.ui.Input;
 import woo.core.StoreManager;
 import woo.app.exception.DuplicateClientKeyException;
+import woo.core.exception.DuplicateClientIdException;
 
 /**
  * Register new client.
@@ -27,7 +28,7 @@ public class DoRegisterClient extends Command<StoreManager> {
   public void execute() throws DialogException { //
     try{
       _receiver.registerClient(_clientKey.value(), _name.value(), _address.value());
-    }catch(DuplicateClientKeyException e){
+    }catch(DuplicateClientIdException e){
       throw new DuplicateClientKeyException(_clientKey.value());
     }
   }
