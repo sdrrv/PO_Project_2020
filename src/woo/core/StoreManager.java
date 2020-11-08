@@ -16,7 +16,7 @@ public class StoreManager {
 
   /** The actual store. */
   private final Store _store = new Store();
-
+//---------------------------------------------------------------------------------------------------------------------
   public void registerClient(String name, String address, String id) throws DuplicateClientIdException {
     if(_store.hasClient(id)){ throw new DuplicateClientIdException(id); }
     _store.registerClient(_store.createClient(name, address, id));
@@ -27,6 +27,22 @@ public class StoreManager {
     }
     return _store.getClient(id).toString();
   }
+//---------------------------------------------------------------------------------------------------------------------
+public void registerSupplier(String name, String address, String id) throws DuplicateSupplierIdException{
+    if(_store.hasSupplier(id)){
+      throw new DuplicateSupplierIdException(id);
+    }
+    _store.registerSupplier(_store.createSupplier(name, address, id));
+}
+
+public String getSupplier(String id) throws UnknownSupplierIdException{
+    if(!_store.hasSupplier(id)){
+      throw new UnknownSupplierIdException(id);
+    }
+    return _store.getSupplier(id).toString();
+}
+
+//---------------------------------------------------------------------------------------------------------------------
 
   public Collection<String> getAllClients(){
     return null;

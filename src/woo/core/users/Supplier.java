@@ -20,6 +20,6 @@ public class Supplier extends User implements Serializable {
     }
 
     public String toString(){
-        return (super.getid()+"|"+super.getname()+"|"+super.getaddress()+"|"+String.valueOf(isActive()));
+        return (super.getId()+"|"+super.getName()+"|"+super.getAddress()+"|"+String.valueOf(isActive()));
     }
 }

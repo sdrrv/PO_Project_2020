@@ -29,6 +29,7 @@ public class Store implements Serializable {
   private Map<String,Client> _clients;
   private int _date;
   private Map<String,Product> _products;
+  private Map<String,Supplier> _suppliers;
 
   public Store(){
     _date=0;
@@ -64,6 +65,18 @@ public class Store implements Serializable {
   }
 
   //-----------------------------------------------------------------------------------
+  public boolean hasSupplier(String id){
+    return _suppliers.containsKey(id);
+  }
+  public Supplier createSupplier(String name, String address, String id){
+    return new Supplier(name,address,id);
+  }
+  public void registerSupplier(Supplier supplier){
+    _suppliers.put(supplier.getId(),supplier);
+  }
+  public Supplier getSupplier(String id){
+    return _suppliers.get(id);
+  }
   //-----------------------------------------------------------------------------------
   /**
    * @param txtfile filename to be loaded.
