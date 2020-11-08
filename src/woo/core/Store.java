@@ -7,7 +7,9 @@ import java.io.IOException;
 
 import woo.core.exception.BadEntryException;
 
-import woo.core.users.Client;
+import woo.core.users.*;
+import woo.core.products.*;
+
 import java.util.Map;
 
 import java.util.SortedSet;
@@ -26,6 +28,7 @@ public class Store implements Serializable {
 
   private Map<String,Client> _clients;
   private int _date;
+  private Map<String,Product> _products;
 
   public Store(){
     _date=0;
@@ -53,10 +56,12 @@ public class Store implements Serializable {
     return _clients.get(id);
   }
 
-  /*public TreeSet<Client> getAllClients(){
-    SortedSet<Client> result
-    return
-  }*/
+  public TreeSet<Client> getAllClients(){
+    return null;
+  }
+  public TreeSet<Product>getAllProducts(){
+    return null;
+  }
 
   //-----------------------------------------------------------------------------------
   //-----------------------------------------------------------------------------------

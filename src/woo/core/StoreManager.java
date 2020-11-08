@@ -32,6 +32,10 @@ public class StoreManager {
     return null;
   }
 
+  public Collection<String> getAllProducts(){
+    return null;
+  }
+
   public int showDate(){
     return _store.getDate();
   }

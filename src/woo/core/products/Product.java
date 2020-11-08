@@ -36,4 +36,7 @@ public abstract class Product implements Serializable {
         _valExist += value;
     }
 
+    public String toString(){
+        return  null;
+    }
 }
