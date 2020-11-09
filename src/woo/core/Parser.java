@@ -4,17 +4,16 @@ import java.io.IOException;
 import java.io.FileReader;
 import java.io.BufferedReader;
 
-import woo.core.exception.BadEntryException;
-// add here more imports if needed
+import woo.core.*;
 
 public class Parser {
-    private Store _store;
+    private StoreManager _store;
 
-    public Parser(Store s) {
+    public Parser(StoreManager s) {
         _store = s;
     }
 
-    void parseFile(String fileName) throws IOException, BadEntryException /* may have other exceptions */ {
+    void parseFile(String fileName) throws IOException, BadEntryException, ImportFileException {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
@@ -62,26 +61,37 @@ public class Parser {
         String name = components[2];
         String address = components[3];
 
-        // create/register supplier?
-        // for example, _store.registerSupplier(id, name, address);
-        // or use _store.registerSupplier(components[1];, components[2], components[3]);;
+        _store.registerSupplier(components[1], components[2], components[3])
+
     }
 
     // Format: CLIENT|id|nome|endereço
     private void parseClient(String line, String[] components) throws BadEntryException {
         if (components.length != 4)
             throw new BadEntryException("Invalid number of fields (4) in client description: " + line);
-        // add code here
+
+          String id = components[1];
+          String name = components[2];
+          String address = components[3];
+
+          _store.registerClient(components[1], components[2], components[3]);
     }
 
     // Format: BOX|id|tipo-de-serviço|id-fornecedor|preço|valor-crítico|exemplares
     private void parseBox(String line, String[] components) throws BadEntryException {
         if (components.length != 7)
-            throw new BadEntryException("wrongr number of fields in box description  (7) " + line);
+            throw new BadEntryException("wrong number of fields in box description  (7) " + line);
 
         // ...
+        String id = components[1];
+        String serviceType = components[2];
+        String supplierId = components[3];
         int price = Integer.parseInt(components[4]);
-        // add code here
+        String critVal = components[5];
+        String valExist= components[6];
+
+        _store.registerBox(components[1], components[2], components[3], components[4], components[5], components[6])
+
     }
 
     // Format: BOOK|id|título|autor|isbn|id-fornecedor|preço|valor-crítico|exemplares
@@ -89,7 +99,16 @@ public class Parser {
         if (components.length != 9)
             throw new BadEntryException("Invalid number of fields (9) in box description: " + line);
 
-        // add code here
+        String id = components[1];
+        String title = components[2];
+        String author = components[3];
+        String isbn = components[4];
+        String supplierId = components[5];
+        int price = Integer.parseInt(components[6]);
+        String critVal = components[7];
+        String valExist= components[8];
+
+        _store.registerBook(components[1], components[2], components[3], components[4], components[5], components[6], components[7], components[8]);
     }
 
     // Format: CONTAINER|id|tipo-de-serviço|nível-de-serviço|id-fornecedor|preço|valor-crítico|exemplares
@@ -97,6 +116,14 @@ public class Parser {
         if (components.length != 8)
             throw new BadEntryException("Invalid number of fields (8) in container description: " + line);
 
-        // add code here
+        String id = components[1];
+        String serviceType = components[2];
+        String serviceLevel = components[3];
+        String supplierId = components[4];
+        int price = Integer.parseInt(components[5]);
+        String critVal = components[6];
+        String valExist= components[7];
+
+        _store.registerContainer(components[1], components[2], components[3], components[4], components[5], components[6], components[7]);
     }
 }
