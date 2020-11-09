@@ -8,10 +8,10 @@ public abstract class Product implements Serializable {
     private int _valExist;
     private String _key;
 
-    protected Product(int price,int valCrit, int valExist, String key){
+    protected Product(int price,int valCrit, String key){
         _price = price;
         _valCrit = valCrit;
-        _valExist = valExist;
+        _valExist = 0;
         _key = key;
     }
 

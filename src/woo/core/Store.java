@@ -35,14 +35,13 @@ public class Store implements Serializable {
     _suppliers = new HashMap<String,Supplier>();
     _products = new HashMap<String,Product>();
   }
-
+  //-----------------------------------------------------------------------------------
   public int getDate(){
     return _date;
   }
   public void increaseDate(int amount){
     _date += amount;
   }
-
   //-----------------------------------------------------------------------------------
   public boolean hasClient(String id){
     return _clients.containsKey(id);
@@ -81,6 +80,27 @@ public class Store implements Serializable {
   }
   public boolean toggleSupplierActivation(String id){
     return getSupplier(id).toogleActivation();
+  }
+  //-----------------------------------------------------------------------------------
+  public Box createBox(int price,int valorCrit,String key,ServiceType serviceType){
+    return new Box(price, valorCrit, key, serviceType);
+  }
+  public void registerBox(Box box){
+    _products.put(box.getKey(),box);
+  }
+
+  public Container createContainer(int price,int valorCrit,String key, ServiceType serviceType,ServiceLevel serviceLevel){
+    return new Container(price, valorCrit, key, serviceType, serviceLevel);
+  }
+  public void registerContainer(Container container){
+    _products.put(container.getKey(),container);
+  }
+
+  public Book createBook(int price,int valorCrit, String key, String title, String author, String isbn){
+    return new Book(price, valorCrit, key, title, author, isbn);
+  }
+  public void registerBook(Book book){
+    _products.put(book.getKey(),book);
   }
   //-----------------------------------------------------------------------------------
   /**

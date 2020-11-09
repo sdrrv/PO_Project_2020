@@ -7,8 +7,8 @@ public class Book extends Product implements Serializable {
     private String _author;
     private String _isbn;
 
-    public Book(int price,int valorCrit, int valorExist, String key, String title, String author, String isbn){
-        super(price,valorCrit,valorExist,key);
+    public Book(int price,int valorCrit, String key, String title, String author, String isbn){
+        super(price,valorCrit,key);
         _title= title;
         _author = author;
         _isbn = isbn;
