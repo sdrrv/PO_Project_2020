@@ -111,7 +111,7 @@ public Box registerBox(int price, int valorCrit, String key, String serviceType,
     }
     try{
       ServiceType serv = ServiceType.valueOf(serviceType);
-      box =_store.createBox(price,valorCrit,key,serv,sup)
+      box =_store.createBox(price,valorCrit,key,serv,sup);
       _store.registerBox(box);
     }
     catch (IllegalArgumentException e){

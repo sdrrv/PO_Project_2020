@@ -52,7 +52,7 @@ public abstract class Product implements Serializable,Comparable {
         _valExist += value;
     }
 
-    public void setValue(int value){_valExist = value}
+    public void setValue(int value){_valExist = value;}
 
     public abstract String toString();
 
