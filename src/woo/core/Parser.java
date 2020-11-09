@@ -14,7 +14,7 @@ public class Parser {
         _store = s;
     }
 
-    void parseFile(String fileName) throws IOException, BadEntryException, ImportFileException {
+    void parseFile(String fileName) throws IOException, BadEntryException {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;

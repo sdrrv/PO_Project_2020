@@ -196,7 +196,7 @@ public void registerBook(int price,int valorCrit, String key, String title, Stri
   public void importFile(String textFile) throws ImportFileException {
     try {
       _store.importFile(textFile);
-    } catch (IOException | BadEntryException /* FIXME maybe other exceptions */ e) {
+    } catch (IOException | BadEntryException e) {
       throw new ImportFileException(textFile);
     }
   }

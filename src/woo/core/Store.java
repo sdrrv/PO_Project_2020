@@ -117,7 +117,7 @@ public class Store implements Serializable {
    * @throws IOException
    * @throws BadEntryException
    */
-  void importFile(String txtfile) throws IOException, BadEntryException, ImportFileException {
+  void importFile(String txtfile) throws IOException, BadEntryException {
     Parser parser = new Parser(_storeManager);
     parser.parseFile(txtfile);
   }
