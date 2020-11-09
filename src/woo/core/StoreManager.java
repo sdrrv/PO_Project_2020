@@ -140,8 +140,8 @@ public void resgisterBook(int price,int valorCrit, String key, String title, Str
    * @throws IOException
    * @throws FileNotFoundException
    */
-  public void saveAs(String filename) throws MissingFileAssociationException, FileNotFoundException, IOException {
-    _filename = filename;
+  public void saveAs(String fileName) throws MissingFileAssociationException, FileNotFoundException, IOException {
+    _filename = fileName;
     save();
   }
 
@@ -149,14 +149,14 @@ public void resgisterBook(int price,int valorCrit, String key, String title, Str
    * @param filename
    * @throws UnavailableFileException
    */
-  public void load(String filename) throws UnavailableFileException,IOException,ClassNotFoundException {
+  public void load(String fileName) throws UnavailableFileException,IOException,ClassNotFoundException {
       ObjectInputStream objIn= null;
       try {
-        objIn= new ObjectInputStream(new FileInputStream(filename));
+        objIn= new ObjectInputStream(new FileInputStream(fileName));
         _store= (Store) objIn.readObject();
       }
       catch (IOException|ClassNotFoundException e){
-        throw new UnavailableFileException(filename);
+        throw new UnavailableFileException(fileName);
       }
       finally {
         if (objIn!= null)
@@ -168,11 +168,11 @@ public void resgisterBook(int price,int valorCrit, String key, String title, Str
    * @param textfile
    * @throws ImportFileException
    */
-  public void importFile(String textfile) throws ImportFileException {
+  public void importFile(String textFile) throws ImportFileException {
     try {
-      _store.importFile(textfile);
+      _store.importFile(textFile);
     } catch (IOException | BadEntryException /* FIXME maybe other exceptions */ e) {
-      throw new ImportFileException(textfile);
+      throw new ImportFileException(textFile);
     }
   }
 
