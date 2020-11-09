@@ -63,7 +63,9 @@ public class Store implements Serializable {
   public TreeSet<Product>getAllProducts(){
     return new TreeSet<Product>(_products.values());
   }
-
+  public TreeSet<Supplier> getAllSuppliers(){
+    return new TreeSet<Supplier>(_suppliers.values());
+  }
   //-----------------------------------------------------------------------------------
   public boolean hasSupplier(String id){
     return _suppliers.containsKey(id);

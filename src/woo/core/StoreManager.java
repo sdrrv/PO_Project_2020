@@ -6,7 +6,9 @@ import java.lang.reflect.Array;
 import java.util.Collection;
 
 import woo.core.exception.*;
+import woo.core.products.Product;
 import woo.core.users.Client;
+import woo.core.users.Supplier;
 
 import java.util.Set;
 import java.util.SortedSet;
@@ -63,11 +65,21 @@ public String getSupplier(String id) throws UnknownSupplierIdException{
   }
 
   public List<String> getAllProducts(){
-    return null;
+    SortedSet<Product> temp = _store.getAllProducts();
+    List<String> result = new ArrayList<String>();
+    for(Product product: temp){
+      result.add(product.toString());
+    }
+    return result;
   }
 
   public List<String> getAllSuppliers(){
-    return null;
+    SortedSet<Supplier> temp = _store.getAllSuppliers();
+    List<String> result = new ArrayList<String>();
+    for(Supplier supplier: temp){
+      result.add(supplier.toString());
+    }
+    return result;
   }
 
   public int showDate(){
