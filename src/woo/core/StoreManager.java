@@ -140,6 +140,7 @@ public Container registerContainer(int price, int valorCrit, String key, String 
   catch (IllegalArgumentException i){
     throw new WrongServiceLevelException(serviceLevel);
   }
+  return container;
 }
 
 public Book registerBook(int price,int valorCrit, String key, String title, String author, String isbn, String supplierKey) throws UnknownSupplierIdException,DuplicateProductIdException{
