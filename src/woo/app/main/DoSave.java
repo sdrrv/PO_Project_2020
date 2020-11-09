@@ -10,18 +10,23 @@ import woo.core.StoreManager;
  * Save current state to file under current name (if unnamed, query for name).
  */
 public class DoSave extends Command<StoreManager> {
-
-  //FIXME add input fields
+  private Input<String> _fileName;
 
   /** @param receiver */
   public DoSave(StoreManager receiver) {
     super(Label.SAVE, receiver);
-    //FIXME init input fields
+    _fileName = _form.addStringInput(Message.newSaveAs());
   }
 
   /** @see pt.tecnico.po.ui.Command#execute() */
   @Override
   public final void execute() {
-    //FIXME implement command
+    _form.parse();
+    try{
+      _receiver.saveAs(_fileName.value());
+    }
+    catch (Exception e){
+      System.out.println("Save Error");
+    }
   }
 }
