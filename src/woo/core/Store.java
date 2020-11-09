@@ -34,6 +34,8 @@ public class Store implements Serializable {
   public Store(){
     _date=0;
     _clients = new HashMap<String,Client>();
+    _suppliers = new HashMap<String,Supplier>();
+    _products = new HashMap<String,Product>();
   }
 
   public int getDate(){
