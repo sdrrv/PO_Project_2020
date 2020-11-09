@@ -8,12 +8,14 @@ import java.util.Collection;
 
 import woo.core.exception.*;
 import woo.core.products.Product;
+import woo.core.products.ServiceLevel;
+import woo.core.products.ServiceType;
 import woo.core.users.Client;
 import woo.core.users.Supplier;
 
 import java.util.Set;
 import java.util.SortedSet;
-
+import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
 /**
@@ -25,7 +27,7 @@ public class StoreManager implements Serializable {
   private String _filename = "";
 
   /** The actual store. */
-  private final Store _store = new Store();
+  private Store _store = new Store();
 //---------------------------------------------------------------------------------------------------------------------
   public void registerClient(String name, String address, String id) throws DuplicateClientIdException {
     if(_store.hasClient(id)){ throw new DuplicateClientIdException(id); }
@@ -89,6 +91,35 @@ public List<String> getAllProducts(){
   }
   return result;
 }
+public void registerBox(int price,int valorCrit,String key, String serviceType) throws WrongServiceTypeException{
+    try{
+      ServiceType serv = ServiceType.valueOf(serviceType);
+      _store.registerBox(_store.createBox(price,valorCrit,key,serv));
+    }
+    catch (IllegalArgumentException e){
+      throw new WrongServiceTypeException(serviceType);
+    }
+}
+public void registerContainer(int price, int valorCrit, String key, String serviceType, String serviceLevel)throws WrongServiceTypeException,WrongServiceLevelException{
+  ServiceType serv;
+  try{
+     serv = ServiceType.valueOf(serviceType);
+  }
+  catch (IllegalArgumentException e){
+    throw new WrongServiceTypeException(serviceType);
+  }
+  try{
+    ServiceLevel level = ServiceLevel.valueOf(serviceLevel);
+    _store.registerContainer(_store.createContainer(price,valorCrit,key,serv,level));
+  }
+  catch (IllegalArgumentException i){
+    throw new WrongServiceLevelException(serviceLevel);
+  }
+}
+
+public void resgisterBook(int price,int valorCrit, String key, String title, String author, String isbn){
+
+}
   //---------------------------------------------------------------------------------------------------------------------
   /**
    * @throws IOException
@@ -96,7 +127,11 @@ public List<String> getAllProducts(){
    * @throws MissingFileAssociationException
    */
   public void save() throws IOException, FileNotFoundException, MissingFileAssociationException {
-    //FIXME implement serialization method
+    if (_filename.equals(""))
+      throw new MissingFileAssociationException();
+    try (ObjectOutputStream obOut= new ObjectOutputStream(new FileOutputStream(_filename))){
+      obOut.writeObject(_store);
+    }
   }
 
   /**
@@ -114,9 +149,20 @@ public List<String> getAllProducts(){
    * @param filename
    * @throws UnavailableFileException
    */
-  public void load(String filename) throws UnavailableFileException {
-    //FIXME implement serialization method
-  }
+  public void load(String filename) throws UnavailableFileException,IOException,ClassNotFoundException {
+      ObjectInputStream objIn= null;
+      try {
+        objIn= new ObjectInputStream(new FileInputStream(filename));
+        _store= (Store) objIn.readObject();
+      }
+      catch (IOException|ClassNotFoundException e){
+        throw new UnavailableFileException(filename);
+      }
+      finally {
+        if (objIn!= null)
+          objIn.close();
+      }
+    }
 
   /**
    * @param textfile
