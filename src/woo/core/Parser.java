@@ -63,7 +63,7 @@ public class Parser {
         String name = components[2];
         String address = components[3];
 
-          _store.registerSupplier(components[1], components[2], components[3]);
+        _store.registerSupplier(components[2], components[3], components[1]);
 
 
     }
@@ -77,7 +77,7 @@ public class Parser {
           String name = components[2];
           String address = components[3];
 
-          _store.registerClient(components[1], components[2], components[3]);
+          _store.registerClient(components[2], components[3], components[1]);
     }
 
     // Format: BOX|id|tipo-de-serviço|id-fornecedor|preço|valor-crítico|exemplares
@@ -93,7 +93,7 @@ public class Parser {
         String critVal = components[5];
         String valExist= components[6];
 
-        _store.registerBox(components[1], components[2], components[3], components[4], components[5], components[6]);
+        _store.registerBox(components[4], components[5], components[1], components[2], components[3]);
 
     }
 
@@ -111,7 +111,7 @@ public class Parser {
         String critVal = components[7];
         String valExist= components[8];
 
-        _store.registerBook(components[1], components[2], components[3], components[4], components[5], components[6], components[7], components[8]);
+        _store.registerBook(components[6], components[7], components[1], components[2], components[3], components[4], components[5]);
     }
 
     // Format: CONTAINER|id|tipo-de-serviço|nível-de-serviço|id-fornecedor|preço|valor-crítico|exemplares
@@ -125,8 +125,7 @@ public class Parser {
         String supplierId = components[4];
         int price = Integer.parseInt(components[5]);
         String critVal = components[6];
-        String valExist= components[7];
 
-        _store.registerContainer(components[1], components[2], components[3], components[4], components[5], components[6], components[7]);
+        _store.registerContainer(components[5], components[6], components[1], components[2], components[3], components[4]);
     }
 }
