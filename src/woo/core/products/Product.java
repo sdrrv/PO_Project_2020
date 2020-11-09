@@ -1,5 +1,6 @@
 package woo.core.products;
 
+import woo.core.users.Supplier;
 import woo.core.users.User;
 
 import java.io.Serializable;
@@ -9,12 +10,14 @@ public abstract class Product implements Serializable,Comparable {
     private int _valCrit;
     private int _valExist;
     private String _key;
+    private Supplier _supplier;
 
-    protected Product(int price, int valCrit, String key) {
+    protected Product(int price, int valCrit, String key, Supplier supplier) {
         _price = price;
         _valCrit = valCrit;
         _valExist = 0;
         _key = key;
+        _supplier=supplier;
     }
 
     public int getprice() {
@@ -31,6 +34,10 @@ public abstract class Product implements Serializable,Comparable {
 
     public String getKey() {
         return _key;
+    }
+
+    public Supplier getSupplier(){
+        return _supplier;
     }
 
     public void setprice(int price) {

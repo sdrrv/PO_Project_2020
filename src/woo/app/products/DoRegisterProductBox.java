@@ -10,8 +10,11 @@ import woo.core.StoreManager;
  * Register box.
  */
 public class DoRegisterProductBox extends Command<StoreManager> {
-
-  //FIXME add input fields
+  private Input<String> _key;
+  private Input<Integer> _price;
+  private Input<Integer> _valCrit;
+  private Input<String> _supplierKey;
+  private Input<String> _serviceType;
 
   public DoRegisterProductBox(StoreManager receiver) {
     super(Label.REGISTER_BOX, receiver);

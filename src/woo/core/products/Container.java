@@ -1,12 +1,14 @@
 package woo.core.products;
 
+import woo.core.users.Supplier;
+
 import java.io.Serializable;
 
 public class Container extends Product implements Serializable {
     private ServiceType _serviceType;
     public ServiceLevel _serviceLevel;
-    public Container(int price,int valorCrit,String key, ServiceType serviceType,ServiceLevel serviceLevel){
-        super(price,valorCrit,key);
+    public Container(int price, int valorCrit, String key, ServiceType serviceType, ServiceLevel serviceLevel, Supplier supplier){
+        super(price,valorCrit,key,supplier);
         _serviceType = serviceType;
         _serviceLevel = serviceLevel;
     }
@@ -18,7 +20,7 @@ public class Container extends Product implements Serializable {
     }
 
     public String toString(){
-        return "BOX"+"|"+super.getKey()+"|"+super.getprice()+"|"+super.getValCrit()+"|"+getValExist()+"|"
-                +getServiceType()+"|"+getServiceLevel();
+        return "BOX"+"|"+super.getKey()+"|"+super.getSupplier().getId()+"|"+super.getprice()+"|"+super.getValCrit()+"|"
+                +getValExist()+"|" +getServiceType()+"|"+getServiceLevel();
     }
 }

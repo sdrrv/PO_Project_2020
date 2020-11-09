@@ -74,6 +74,13 @@ public String getSupplier(String id) throws UnknownSupplierIdException{
     }
       return _store.toggleSupplierActivation(id);
   }
+
+  public Supplier getHasSupplier(String id) throws UnknownSupplierIdException{
+    if(!_store.hasSupplier(id)){
+      throw new UnknownSupplierIdException(id);
+    }
+    return _store.getSupplier(id);
+  }
   //---------------------------------------------------------------------------------------------------------------------
   public int showDate(){
     return _store.getDate();
@@ -82,7 +89,10 @@ public String getSupplier(String id) throws UnknownSupplierIdException{
   public void increaseDate(int amount){
     _store.increaseDate(amount);
   }
-//---------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------
+
+
+
 public List<String> getAllProducts(){
   SortedSet<Product> temp = _store.getAllProducts();
   List<String> result = new ArrayList<>();
@@ -91,17 +101,25 @@ public List<String> getAllProducts(){
   }
   return result;
 }
-public void registerBox(int price,int valorCrit,String key, String serviceType) throws WrongServiceTypeException{
+public void registerBox(int price,int valorCrit,String key, String serviceType,String supplierKey) throws WrongServiceTypeException,UnknownSupplierIdException,DuplicateProductIdException{
+    Supplier sup = getHasSupplier(supplierKey);
+    if(_store.hasProduct(supplierKey)){
+      throw new DuplicateProductIdException(supplierKey);
+    }
     try{
       ServiceType serv = ServiceType.valueOf(serviceType);
-      _store.registerBox(_store.createBox(price,valorCrit,key,serv));
+      _store.registerBox(_store.createBox(price,valorCrit,key,serv,sup));
     }
     catch (IllegalArgumentException e){
       throw new WrongServiceTypeException(serviceType);
     }
 }
-public void registerContainer(int price, int valorCrit, String key, String serviceType, String serviceLevel)throws WrongServiceTypeException,WrongServiceLevelException{
+public void registerContainer(int price, int valorCrit, String key, String serviceType, String serviceLevel, String supplierKey)throws WrongServiceTypeException,WrongServiceLevelException,UnknownSupplierIdException,DuplicateProductIdException{
   ServiceType serv;
+  Supplier sup = getHasSupplier(supplierKey);
+  if(_store.hasProduct(supplierKey)){
+    throw new DuplicateProductIdException(supplierKey);
+  }
   try{
      serv = ServiceType.valueOf(serviceType);
   }
@@ -110,14 +128,14 @@ public void registerContainer(int price, int valorCrit, String key, String servi
   }
   try{
     ServiceLevel level = ServiceLevel.valueOf(serviceLevel);
-    _store.registerContainer(_store.createContainer(price,valorCrit,key,serv,level));
+    _store.registerContainer(_store.createContainer(price,valorCrit,key,serv,level,sup));
   }
   catch (IllegalArgumentException i){
     throw new WrongServiceLevelException(serviceLevel);
   }
 }
 
-public void resgisterBook(int price,int valorCrit, String key, String title, String author, String isbn){
+public void resgisterBook(int price,int valorCrit, String key, String title, String author, String isbn, String supplierKey) throws UnknownSupplierIdException{
   //FixMe Do Book
 }
   //---------------------------------------------------------------------------------------------------------------------
@@ -135,7 +153,7 @@ public void resgisterBook(int price,int valorCrit, String key, String title, Str
   }
 
   /**
-   * @param filename
+
    * @throws MissingFileAssociationException
    * @throws IOException
    * @throws FileNotFoundException
@@ -146,7 +164,7 @@ public void resgisterBook(int price,int valorCrit, String key, String title, Str
   }
 
   /**
-   * @param filename
+
    * @throws UnavailableFileException
    */
   public void load(String fileName) throws UnavailableFileException,IOException,ClassNotFoundException {
@@ -165,8 +183,7 @@ public void resgisterBook(int price,int valorCrit, String key, String title, Str
     }
 
   /**
-   * @param textfile
-   * @throws ImportFileException
+
    */
   public void importFile(String textFile) throws ImportFileException {
     try {

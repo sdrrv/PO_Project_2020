@@ -8,9 +8,9 @@ import woo.core.exception.BadEntryException;
 // add here more imports if needed
 
 public class Parser {
-    private Store _store;  // ou outra entidade
+    private Store _store;
 
-    Parser(Store s) {
+    public Parser(Store s) {
         _store = s;
     }
 

@@ -1,5 +1,7 @@
 package woo.core.products;
 
+import woo.core.users.Supplier;
+
 import java.io.Serializable;
 
 public class Book extends Product implements Serializable {
@@ -7,8 +9,8 @@ public class Book extends Product implements Serializable {
     private String _author;
     private String _isbn;
 
-    public Book(int price,int valorCrit, String key, String title, String author, String isbn){
-        super(price,valorCrit,key);
+    public Book(int price, int valorCrit, String key, String title, String author, String isbn, Supplier supplier){
+        super(price,valorCrit,key,supplier);
         _title= title;
         _author = author;
         _isbn = isbn;
@@ -25,7 +27,7 @@ public class Book extends Product implements Serializable {
     }
 
     public String toString(){
-        return "BOOK"+"|"+super.getKey()+"|"+super.getprice()+"|"+super.getValCrit()+"|"+getValExist()+"|"+getTitle()+
-                "|"+getAuthor()+"|"+getIsbn();
+        return "BOOK"+"|"+super.getKey()+"|"+super.getSupplier().getId()+"|"+super.getprice()+"|"+super.getValCrit()+"|"
+                +getValExist()+"|"+getTitle()+ "|"+getAuthor()+"|"+getIsbn();
     }
 }
