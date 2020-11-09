@@ -20,8 +20,14 @@ public class DoShowSuppliers extends Command<StoreManager> {
   @Override
   public void execute() throws DialogException {
     List<String> suppliers = _receiver.getAllSuppliers();
-    for(String sp : suppliers)
-      _display.addLine(sp);
+    List<Boolean> supplierStates= _receiver.getAllSupliersStates();
+    for(int i=0; i<suppliers.size();i++ ){
+        if(supplierStates.get(i))
+          _display.addLine(suppliers.get(i)+Message.yes());
+
+        else
+          _display.addLine(suppliers.get(i)+Message.no());
+    }
 
     _display.display();
   }

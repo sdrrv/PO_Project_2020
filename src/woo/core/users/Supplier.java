@@ -18,8 +18,7 @@ public class Supplier extends User implements Serializable {
         _isActive = !_isActive;
         return _isActive;
     }
-
     public String toString(){
-        return (super.getId()+"|"+super.getName()+"|"+super.getAddress()+"|"+String.valueOf(isActive()));
+        return (super.getId()+"|"+super.getName()+"|"+super.getAddress()+"|");
     }
 }

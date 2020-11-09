@@ -81,6 +81,15 @@ public String getSupplier(String id) throws UnknownSupplierIdException{
     }
     return result;
   }
+  public List<Boolean> getAllSupliersStates(){
+    SortedSet<Supplier> temp = _store.getAllSuppliers();
+    List<Boolean> result = new ArrayList<Boolean>();
+    for(Supplier supplier: temp){
+      result.add(supplier.isActive());
+    }
+    return result;
+  }
+
   public boolean toggleSupplierActivation(String id)throws UnknownSupplierIdException{
     if(!_store.hasSupplier(id)){
       throw new UnknownSupplierIdException(id);
