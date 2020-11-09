@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 
 import woo.core.*;
+import woo.core.exception.BadEntryException;
+import woo.core.exception.ImportFileException;
 
 public class Parser {
     private StoreManager _store;
