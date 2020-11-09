@@ -7,9 +7,7 @@ import java.lang.reflect.Array;
 import java.util.Collection;
 
 import woo.core.exception.*;
-import woo.core.products.Product;
-import woo.core.products.ServiceLevel;
-import woo.core.products.ServiceType;
+import woo.core.products.*;
 import woo.core.users.Client;
 import woo.core.users.Supplier;
 
@@ -105,22 +103,26 @@ public List<String> getAllProducts(){
   }
   return result;
 }
-public void registerBox(int price,int valorCrit,String key, String serviceType,String supplierKey) throws WrongServiceTypeException,UnknownSupplierIdException,DuplicateProductIdException{
+public Box registerBox(int price, int valorCrit, String key, String serviceType, String supplierKey) throws WrongServiceTypeException,UnknownSupplierIdException,DuplicateProductIdException{
     Supplier sup = getHasSupplier(supplierKey);
+    Box box;
     if(_store.hasProduct(key)){
       throw new DuplicateProductIdException(key);
     }
     try{
       ServiceType serv = ServiceType.valueOf(serviceType);
-      _store.registerBox(_store.createBox(price,valorCrit,key,serv,sup));
+      box =_store.createBox(price,valorCrit,key,serv,sup)
+      _store.registerBox(box);
     }
     catch (IllegalArgumentException e){
       throw new WrongServiceTypeException(serviceType);
     }
+    return box;
 }
-public void registerContainer(int price, int valorCrit, String key, String serviceType, String serviceLevel, String supplierKey)throws WrongServiceTypeException,WrongServiceLevelException,UnknownSupplierIdException,DuplicateProductIdException{
+public Container registerContainer(int price, int valorCrit, String key, String serviceType, String serviceLevel, String supplierKey)throws WrongServiceTypeException,WrongServiceLevelException,UnknownSupplierIdException,DuplicateProductIdException{
   ServiceType serv;
   Supplier sup = getHasSupplier(supplierKey);
+  Container container;
   if(_store.hasProduct(key)){
     throw new DuplicateProductIdException(key);
   }
@@ -132,19 +134,22 @@ public void registerContainer(int price, int valorCrit, String key, String servi
   }
   try{
     ServiceLevel level = ServiceLevel.valueOf(serviceLevel);
-    _store.registerContainer(_store.createContainer(price,valorCrit,key,serv,level,sup));
+    container = _store.createContainer(price,valorCrit,key,serv,level,sup);
+    _store.registerContainer(container);
   }
   catch (IllegalArgumentException i){
     throw new WrongServiceLevelException(serviceLevel);
   }
 }
 
-public void registerBook(int price,int valorCrit, String key, String title, String author, String isbn, String supplierKey) throws UnknownSupplierIdException,DuplicateProductIdException{
+public Book registerBook(int price,int valorCrit, String key, String title, String author, String isbn, String supplierKey) throws UnknownSupplierIdException,DuplicateProductIdException{
   if(_store.hasProduct(key)){
     throw new DuplicateProductIdException(key);
   }
   Supplier sup = getHasSupplier(supplierKey);
-  _store.registerBook(_store.createBook(price,valorCrit,key,title,author,isbn,sup));
+  Book book = _store.createBook(price,valorCrit,key,title,author,isbn,sup);
+  _store.registerBook(book);
+  return book;
 }
   //---------------------------------------------------------------------------------------------------------------------
   /**

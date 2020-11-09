@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.util.prefs.BackingStoreException;
 
 import woo.core.exception.*;
+import woo.core.products.*;
 
 public class Parser {
     private StoreManager _store;
@@ -99,7 +100,8 @@ public class Parser {
         int critVal = Integer.parseInt(components[5]);
 
         try{
-          _store.registerBox(price, critVal, id, serviceType, supplierId);
+          Box box=_store.registerBox(price, critVal, id, serviceType, supplierId);
+          box.setValue(Integer.parseInt(components[6]));
         }catch(DuplicateProductIdException e){
           throw new BadEntryException(e.getKey(),e);
         }catch(UnknownSupplierIdException e){
@@ -123,7 +125,8 @@ public class Parser {
         int critVal = Integer.parseInt(components[7]);
 
         try{
-          _store.registerBook(price, critVal, id, title, author, isbn, supplierId);
+          Book book =_store.registerBook(price, critVal, id, title, author, isbn, supplierId);
+          book.setValue(Integer.parseInt(components[8]));
         }catch(DuplicateProductIdException e){
           throw new BadEntryException(e.getKey(),e);
         }catch(UnknownSupplierIdException e){
@@ -144,7 +147,8 @@ public class Parser {
         int critVal = Integer.parseInt(components[6]);
 
         try{
-          _store.registerContainer(price, critVal, id, serviceType, serviceLevel, supplierId);
+          Container container=_store.registerContainer(price, critVal, id, serviceType, serviceLevel, supplierId);
+          container.setValue(Integer.parseInt(components[7]));
         }catch(DuplicateProductIdException e){
           throw new BadEntryException(e.getKey(),e);
         }catch(WrongServiceLevelException e){
