@@ -61,7 +61,8 @@ public class Parser {
         String name = components[2];
         String address = components[3];
 
-        _store.registerSupplier(components[1], components[2], components[3])
+          _store.registerSupplier(components[1], components[2], components[3]);
+
 
     }
 
@@ -90,7 +91,7 @@ public class Parser {
         String critVal = components[5];
         String valExist= components[6];
 
-        _store.registerBox(components[1], components[2], components[3], components[4], components[5], components[6])
+        _store.registerBox(components[1], components[2], components[3], components[4], components[5], components[6]);
 
     }
 
