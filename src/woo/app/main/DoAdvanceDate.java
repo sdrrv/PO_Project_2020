@@ -10,16 +10,15 @@ import woo.core.StoreManager;
  * Advance current date.
  */
 public class DoAdvanceDate extends Command<StoreManager> {
-  
-  //FIXME add input fields
-
+  private Input<Integer> _amount;
   public DoAdvanceDate(StoreManager receiver) {
     super(Label.ADVANCE_DATE, receiver);
-    //FIXME init input fields
+    _amount = _form.addIntegerInput(Message.requestDaysToAdvance());
   }
 
   @Override
   public final void execute() throws DialogException {
-    //FIXME implement command
+    _form.parse();
+    _receiver.increaseDate(_amount.value());
   }
 }

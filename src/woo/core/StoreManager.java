@@ -64,7 +64,6 @@ public String getSupplier(String id) throws UnknownSupplierIdException{
 
   public List<String> getAllProducts(){
     return null;
-
   }
 
   public List<String> getAllSuppliers(){
@@ -75,8 +74,8 @@ public String getSupplier(String id) throws UnknownSupplierIdException{
     return _store.getDate();
   }
 
-  public void increaseDate(){
-    _store.increaseDate(1);
+  public void increaseDate(int amount){
+    _store.increaseDate(amount);
   }
 
   /**

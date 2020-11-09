@@ -10,16 +10,12 @@ import woo.core.StoreManager;
  * Show current date.
  */
 public class DoDisplayDate extends Command<StoreManager> {
-
-  //FIXME add input fields
-
   public DoDisplayDate(StoreManager receiver) {
     super(Label.SHOW_DATE, receiver);
-    //FIXME init input fields
   }
 
   @Override
   public final void execute() throws DialogException {
-    //FIXME implement command
+    _display.popup(Message.currentDate(_receiver.showDate()));
   }
 }
