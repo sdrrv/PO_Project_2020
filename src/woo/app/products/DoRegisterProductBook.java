@@ -38,7 +38,7 @@ public class DoRegisterProductBook extends Command<StoreManager> {
   public final void execute() throws DialogException {
     _form.parse();
     try {
-      _receiver.resgisterBook(_price.value(), _valCrit.value(),_key.value(),_title.value(), _author.value(), _isbn.value(), _supplierKey.value());
+      _receiver.registerBook(_price.value(), _valCrit.value(),_key.value(),_title.value(), _author.value(), _isbn.value(), _supplierKey.value());
     }
     catch (UnknownSupplierIdException e1){
       throw new UnknownSupplierKeyException(e1.getId());

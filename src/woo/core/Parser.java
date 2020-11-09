@@ -3,8 +3,9 @@ package woo.core;
 import java.io.IOException;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.util.prefs.BackingStoreException;
 
-import woo.core.*;
+import woo.core.exception.*;
 
 public class Parser {
     private StoreManager _store;
@@ -64,7 +65,7 @@ public class Parser {
         try{
           _store.registerSupplier(name, address, id);
         }catch(DuplicateSupplierIdException e){
-          throw new DuplicateSupplierIdException(id);
+          throw new BadEntryException(e.getKey(),e);
 
         }
     }
@@ -81,7 +82,7 @@ public class Parser {
           try{
             _store.registerClient(name, address, id);
           }catch(DuplicateClientIdException e){
-            throw new DuplicateClientIdException(id);
+            throw new BadEntryException(e.getKey(),e);
           }
     }
 
@@ -95,13 +96,12 @@ public class Parser {
         String serviceType = components[2];
         String supplierId = components[3];
         int price = Integer.parseInt(components[4]);
-        String critVal = components[5];
-        String valExist= components[6];
+        int critVal = Integer.parseInt(components[5]);
 
         try{
-          _store.registerBox(price, critVal, id, serviceType, supplierId;
+          _store.registerBox(price, critVal, id, serviceType, supplierId);
         }catch(DuplicateProductIdException e){
-          throw new DuplicateProductIdException(id);
+          throw new BadEntryException(e.getKey(),e);
         }
 
 
@@ -118,12 +118,12 @@ public class Parser {
         String isbn = components[4];
         String supplierId = components[5];
         int price = Integer.parseInt(components[6]);
-        String critVal = components[7];
+        int critVal = Integer.parseInt(components[7]);
 
         try{
           _store.registerBook(price, critVal, id, title, author, isbn, supplierId);
         }catch(DuplicateProductIdException e){
-          throw new DuplicateProductIdException(id);
+          throw new BadEntryException(e.getKey(),e);
         }
     }
 
@@ -137,12 +137,12 @@ public class Parser {
         String serviceLevel = components[3];
         String supplierId = components[4];
         int price = Integer.parseInt(components[5]);
-        String critVal = components[6];
+        int critVal = Integer.parseInt(components[6]);
 
         try{
           _store.registerContainer(price, critVal, id, serviceType, serviceLevel, supplierId);
         }catch(DuplicateProductIdException e){
-          throw new DuplicateProductIdException(id);
+          throw new BadEntryException(e.getKey(),e);
         }
     }
 }
