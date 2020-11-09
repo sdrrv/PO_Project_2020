@@ -5,8 +5,6 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 
 import woo.core.*;
-import woo.core.exception.BadEntryException;
-import woo.core.exception.ImportFileException;
 
 public class Parser {
     private StoreManager _store;
@@ -63,9 +61,12 @@ public class Parser {
         String name = components[2];
         String address = components[3];
 
-        _store.registerSupplier(components[2], components[3], components[1]);
+        try{
+          _store.registerSupplier(name, address, id);
+        }catch(DuplicateSupplierIdException e){
+          throw new DuplicateSupplierIdException(id);
 
-
+        }
     }
 
     // Format: CLIENT|id|nome|endereço
@@ -77,7 +78,11 @@ public class Parser {
           String name = components[2];
           String address = components[3];
 
-          _store.registerClient(components[2], components[3], components[1]);
+          try{
+            _store.registerClient(name, address, id);
+          }catch(DuplicateClientIdException e){
+            throw new DuplicateClientIdException(id);
+          }
     }
 
     // Format: BOX|id|tipo-de-serviço|id-fornecedor|preço|valor-crítico|exemplares
@@ -93,7 +98,12 @@ public class Parser {
         String critVal = components[5];
         String valExist= components[6];
 
-        _store.registerBox(components[4], components[5], components[1], components[2], components[3]);
+        try{
+          _store.registerBox(price, critVal, id, serviceType, supplierId;
+        }catch(DuplicateProductIdException e){
+          throw new DuplicateProductIdException(id);
+        }
+
 
     }
 
@@ -109,9 +119,12 @@ public class Parser {
         String supplierId = components[5];
         int price = Integer.parseInt(components[6]);
         String critVal = components[7];
-        String valExist= components[8];
 
-        _store.registerBook(components[6], components[7], components[1], components[2], components[3], components[4], components[5]);
+        try{
+          _store.registerBook(price, critVal, id, title, author, isbn, supplierId);
+        }catch(DuplicateProductIdException e){
+          throw new DuplicateProductIdException(id);
+        }
     }
 
     // Format: CONTAINER|id|tipo-de-serviço|nível-de-serviço|id-fornecedor|preço|valor-crítico|exemplares
@@ -126,6 +139,10 @@ public class Parser {
         int price = Integer.parseInt(components[5]);
         String critVal = components[6];
 
-        _store.registerContainer(components[5], components[6], components[1], components[2], components[3], components[4]);
+        try{
+          _store.registerContainer(price, critVal, id, serviceType, serviceLevel, supplierId);
+        }catch(DuplicateProductIdException e){
+          throw new DuplicateProductIdException(id);
+        }
     }
 }
