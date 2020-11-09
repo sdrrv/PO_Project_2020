@@ -38,6 +38,14 @@ public class StoreManager implements Serializable {
     }
     return _store.getClient(id).toString();
   }
+  public List<String> getAllClients(){
+    SortedSet<Client> temp = _store.getAllClients();
+    List<String> result = new ArrayList<>();
+    for(Client client: temp){
+      result.add(client.toString());
+    }
+    return result;
+  }
 //---------------------------------------------------------------------------------------------------------------------
 public void registerSupplier(String name, String address, String id) throws DuplicateSupplierIdException{
     if(_store.hasSupplier(id)){
@@ -54,26 +62,6 @@ public String getSupplier(String id) throws UnknownSupplierIdException{
     return _store.getSupplier(id).toString();
 }
 
-//---------------------------------------------------------------------------------------------------------------------
-
-  public List<String> getAllClients(){
-    SortedSet<Client> temp = _store.getAllClients();
-    List<String> result = new ArrayList<>();
-    for(Client client: temp){
-      result.add(client.toString());
-    }
-    return result;
-  }
-
-  public List<String> getAllProducts(){
-    SortedSet<Product> temp = _store.getAllProducts();
-    List<String> result = new ArrayList<>();
-    for(Product product: temp){
-      result.add(product.toString());
-    }
-    return result;
-  }
-
   public List<Supplier> getAllSuppliers(){
     return new ArrayList<Supplier>(_store.getAllSuppliers());
   }
@@ -84,7 +72,7 @@ public String getSupplier(String id) throws UnknownSupplierIdException{
     }
       return _store.toggleSupplierActivation(id);
   }
-
+  //---------------------------------------------------------------------------------------------------------------------
   public int showDate(){
     return _store.getDate();
   }
@@ -92,7 +80,16 @@ public String getSupplier(String id) throws UnknownSupplierIdException{
   public void increaseDate(int amount){
     _store.increaseDate(amount);
   }
-
+//---------------------------------------------------------------------------------------------------------------------
+public List<String> getAllProducts(){
+  SortedSet<Product> temp = _store.getAllProducts();
+  List<String> result = new ArrayList<>();
+  for(Product product: temp){
+    result.add(product.toString());
+  }
+  return result;
+}
+  //---------------------------------------------------------------------------------------------------------------------
   /**
    * @throws IOException
    * @throws FileNotFoundException
