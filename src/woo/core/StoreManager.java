@@ -28,6 +28,11 @@ public class StoreManager implements Serializable {
 
   /** The actual store. */
   private Store _store = new Store();
+
+  public StoreManager(){
+    _store.setStoreManager(this);
+  }
+
 //---------------------------------------------------------------------------------------------------------------------
   public void registerClient(String name, String address, String id) throws DuplicateClientIdException {
     if(_store.hasClient(id)){ throw new DuplicateClientIdException(id); }

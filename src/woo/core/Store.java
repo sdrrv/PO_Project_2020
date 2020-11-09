@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import woo.core.exception.BadEntryException;
 
+import woo.core.exception.ImportFileException;
 import woo.core.users.*;
 import woo.core.products.*;
 
@@ -28,7 +29,11 @@ public class Store implements Serializable {
   private int _date;
   private Map<String,Product> _products;
   private Map<String,Supplier> _suppliers;
+  private StoreManager _storeManager;
 
+  public void setStoreManager(StoreManager storeManager){
+    _storeManager = storeManager;
+  }
   public Store(){
     _date=0;
     _clients = new HashMap<String,Client>();
@@ -112,7 +117,8 @@ public class Store implements Serializable {
    * @throws IOException
    * @throws BadEntryException
    */
-  void importFile(String txtfile) throws IOException, BadEntryException /* FIXME maybe other exceptions */ {
-    //FIXME implement metho
+  void importFile(String txtfile) throws IOException, BadEntryException, ImportFileException {
+    Parser parser = new Parser(_storeManager);
+    parser.parseFile(txtfile);
   }
 }
