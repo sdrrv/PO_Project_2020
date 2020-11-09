@@ -20,7 +20,7 @@ public class Container extends Product implements Serializable {
     }
 
     public String toString(){
-        return "BOX"+"|"+super.getKey()+"|"+super.getSupplier().getId()+"|"+super.getprice()+"|"+super.getValCrit()+"|"
+        return "CONTAINER"+"|"+super.getKey()+"|"+super.getSupplier().getId()+"|"+super.getprice()+"|"+super.getValCrit()+"|"
                 +getValExist()+"|" +getServiceType()+"|"+getServiceLevel();
     }
 }
