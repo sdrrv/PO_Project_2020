@@ -2,6 +2,7 @@ package woo.core;
 
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.Collection;
 
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 /**
  * StoreManager: façade for the core classes.
  */
-public class StoreManager {
+public class StoreManager implements Serializable {
 
   /** Current filename. */
   private String _filename = "";
@@ -57,7 +58,7 @@ public String getSupplier(String id) throws UnknownSupplierIdException{
 
   public List<String> getAllClients(){
     SortedSet<Client> temp = _store.getAllClients();
-    List<String> result = new ArrayList<String>();
+    List<String> result = new ArrayList<>();
     for(Client client: temp){
       result.add(client.toString());
     }
@@ -66,28 +67,15 @@ public String getSupplier(String id) throws UnknownSupplierIdException{
 
   public List<String> getAllProducts(){
     SortedSet<Product> temp = _store.getAllProducts();
-    List<String> result = new ArrayList<String>();
+    List<String> result = new ArrayList<>();
     for(Product product: temp){
       result.add(product.toString());
     }
     return result;
   }
 
-  public List<String> getAllSuppliers(){
-    SortedSet<Supplier> temp = _store.getAllSuppliers();
-    List<String> result = new ArrayList<String>();
-    for(Supplier supplier: temp){
-      result.add(supplier.toString());
-    }
-    return result;
-  }
-  public List<Boolean> getAllSupliersStates(){
-    SortedSet<Supplier> temp = _store.getAllSuppliers();
-    List<Boolean> result = new ArrayList<Boolean>();
-    for(Supplier supplier: temp){
-      result.add(supplier.isActive());
-    }
-    return result;
+  public List<Supplier> getAllSuppliers(){
+    return new ArrayList<Supplier>(_store.getAllSuppliers());
   }
 
   public boolean toggleSupplierActivation(String id)throws UnknownSupplierIdException{

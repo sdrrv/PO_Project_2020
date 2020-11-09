@@ -7,7 +7,7 @@ public class Book extends Product implements Serializable {
     private String _author;
     private String _isbn;
 
-    public Book(int price,int valorCrit, int valorExist, int key, String title, String author, String isbn){
+    public Book(int price,int valorCrit, int valorExist, String key, String title, String author, String isbn){
         super(price,valorCrit,valorExist,key);
         _title= title;
         _author = author;
@@ -22,5 +22,10 @@ public class Book extends Product implements Serializable {
     }
     public String getIsbn(){
         return _isbn;
+    }
+
+    public String toString(){
+        return "BOOK"+"|"+super.getKey()+"|"+super.getprice()+"|"+super.getValCrit()+"|"+getValExist()+"|"+getTitle()+
+                "|"+getAuthor()+"|"+getIsbn();
     }
 }

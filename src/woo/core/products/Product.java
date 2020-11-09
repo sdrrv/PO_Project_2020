@@ -6,9 +6,9 @@ public abstract class Product implements Serializable {
     private int _price;
     private int _valCrit;
     private int _valExist;
-    private int _key;
+    private String _key;
 
-    protected Product(int price,int valCrit, int valExist, int key){
+    protected Product(int price,int valCrit, int valExist, String key){
         _price = price;
         _valCrit = valCrit;
         _valExist = valExist;
@@ -24,6 +24,7 @@ public abstract class Product implements Serializable {
     public int getValExist(){
         return _valExist;
     }
+    public String getKey(){return _key;}
 
     public void setprice(int price){
         _price= price;
@@ -36,7 +37,5 @@ public abstract class Product implements Serializable {
         _valExist += value;
     }
 
-    public String toString(){
-        return  null;
-    }
+    public abstract String toString();
 }
