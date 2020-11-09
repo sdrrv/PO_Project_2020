@@ -11,8 +11,6 @@ import woo.core.users.*;
 import woo.core.products.*;
 
 import java.util.Map;
-
-import java.util.SortedSet;
 import java.util.TreeSet;
 
 
