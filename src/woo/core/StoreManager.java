@@ -32,7 +32,6 @@ public class StoreManager implements Serializable {
   public void registerClient(String name, String address, String id) throws DuplicateClientIdException {
     if(_store.hasClient(id)){ throw new DuplicateClientIdException(id); }
     _store.registerClient(_store.createClient(name, address, id));
-    //.
   }
   public String getClient(String id) throws UnknownClientIdException {
     if(!_store.hasClient(id)){
