@@ -14,7 +14,7 @@ public class Parser {
         _store = s;
     }
 
-    void parseFile(String fileName) throws IOException, BadEntryException, ImportFileException {
+    void parseFile(String fileName) throws IOException, BadEntryException{
 
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
@@ -66,7 +66,6 @@ public class Parser {
           _store.registerSupplier(name, address, id);
         }catch(DuplicateSupplierIdException e){
           throw new BadEntryException(e.getKey(),e);
-
         }
     }
 
@@ -102,9 +101,9 @@ public class Parser {
           _store.registerBox(price, critVal, id, serviceType, supplierId);
         }catch(DuplicateProductIdException e){
           throw new BadEntryException(e.getKey(),e);
+        }catch(UnknownSupplierIdException e){
+          throw new WrongServiceLevelExpection(e.getKey(),e);
         }
-
-
     }
 
     // Format: BOOK|id|título|autor|isbn|id-fornecedor|preço|valor-crítico|exemplares
@@ -124,6 +123,8 @@ public class Parser {
           _store.registerBook(price, critVal, id, title, author, isbn, supplierId);
         }catch(DuplicateProductIdException e){
           throw new BadEntryException(e.getKey(),e);
+        }catch(UnknownSupplierIdException e){
+          throw new WrongServiceLevelExpection(e.getKey(),e);
         }
     }
 
@@ -143,6 +144,10 @@ public class Parser {
           _store.registerContainer(price, critVal, id, serviceType, serviceLevel, supplierId);
         }catch(DuplicateProductIdException e){
           throw new BadEntryException(e.getKey(),e);
+        }catch(WrongServiceLevelException e){
+          throw new WrongServiceLevelExpection(e.getKey(),e)
+        }catch(WrongServiceTypeException e){
+          throw new WrongServiceTypeExpection(e.getKey(),e)
         }
     }
 }
