@@ -102,8 +102,8 @@ public List<String> getAllProducts(){
 }
 public void registerBox(int price,int valorCrit,String key, String serviceType,String supplierKey) throws WrongServiceTypeException,UnknownSupplierIdException,DuplicateProductIdException{
     Supplier sup = getHasSupplier(supplierKey);
-    if(_store.hasProduct(supplierKey)){
-      throw new DuplicateProductIdException(supplierKey);
+    if(_store.hasProduct(key)){
+      throw new DuplicateProductIdException(key);
     }
     try{
       ServiceType serv = ServiceType.valueOf(serviceType);
@@ -116,8 +116,8 @@ public void registerBox(int price,int valorCrit,String key, String serviceType,S
 public void registerContainer(int price, int valorCrit, String key, String serviceType, String serviceLevel, String supplierKey)throws WrongServiceTypeException,WrongServiceLevelException,UnknownSupplierIdException,DuplicateProductIdException{
   ServiceType serv;
   Supplier sup = getHasSupplier(supplierKey);
-  if(_store.hasProduct(supplierKey)){
-    throw new DuplicateProductIdException(supplierKey);
+  if(_store.hasProduct(key)){
+    throw new DuplicateProductIdException(key);
   }
   try{
      serv = ServiceType.valueOf(serviceType);
