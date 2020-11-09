@@ -81,6 +81,12 @@ public String getSupplier(String id) throws UnknownSupplierIdException{
     }
     return result;
   }
+  public boolean toggleSupplierActivation(String id)throws UnknownSupplierIdException{
+    if(!_store.hasSupplier(id)){
+      throw new UnknownSupplierIdException(id);
+    }
+      return _store.toggleSupplierActivation(id);
+  }
 
   public int showDate(){
     return _store.getDate();

@@ -79,6 +79,9 @@ public class Store implements Serializable {
   public Supplier getSupplier(String id){
     return _suppliers.get(id);
   }
+  public boolean toggleSupplierActivation(String id){
+    return getSupplier(id).toogleActivation();
+  }
   //-----------------------------------------------------------------------------------
   /**
    * @param txtfile filename to be loaded.
