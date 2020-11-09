@@ -134,8 +134,12 @@ public void registerContainer(int price, int valorCrit, String key, String servi
   }
 }
 
-public void resgisterBook(int price,int valorCrit, String key, String title, String author, String isbn, String supplierKey) throws UnknownSupplierIdException{
-  //FixMe Do Book
+public void resgisterBook(int price,int valorCrit, String key, String title, String author, String isbn, String supplierKey) throws UnknownSupplierIdException,DuplicateProductIdException{
+  if(_store.hasProduct(key)){
+    throw new DuplicateProductIdException(key);
+  }
+  Supplier sup = getHasSupplier(supplierKey);
+  _store.registerBook(_store.createBook(price,valorCrit,key,title,author,isbn,sup));
 }
   //---------------------------------------------------------------------------------------------------------------------
   /**
