@@ -42,6 +42,9 @@ public class Sale extends Transaction{
     }
 
     public Product getProduct(){
-        _productPlus
+       return _productPlus.getProduct();
+    }
+    public int getAmount(){
+        return  _productPlus.getAmount();
     }
 }
