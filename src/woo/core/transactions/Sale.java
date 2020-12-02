@@ -21,6 +21,8 @@ public class Sale extends Transaction{
         _price = price;
         _client = client;
         _productPlus = productPlus;
+
+        _productPlus.getProduct().decreaseValue(_productPlus.getAmount()); // Decrease the amount that the product has
     }
 
     public int getprice() {
