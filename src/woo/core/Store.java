@@ -111,6 +111,10 @@ public class Store implements Serializable {
   public boolean hasProduct(String id){
     return _products.containsKey(id);
   }
+
+  public void setProductPrice(String id, int price){ // sets the price
+    _products.get(id).setprice(price);
+  }
   //-----------------------------------------------------------------------------------
   /**
    * @param txtfile filename to be loaded.

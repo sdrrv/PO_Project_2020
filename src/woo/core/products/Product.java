@@ -40,9 +40,7 @@ public abstract class Product implements Serializable,Comparable {
         return _supplier;
     }
 
-    public void setprice(int price) {
-        _price = price;
-    }
+    public void setprice(int price) { _price = price; } //Set the price to the price given -- Used int the DoChange Price
 
     public void decreaseValue(int value) {
         _valExist -= value;

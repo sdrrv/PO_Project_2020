@@ -10,15 +10,12 @@ public class Notification {
         _desc = desc;
         _deliMethod = deliMethod;
     }
-
     public int getId() {
         return _id;
     }
-
     public Description getDesc() {
         return _desc;
     }
-
     public DeliveryMethod getDeliMethod() {
         return _deliMethod;
     }
