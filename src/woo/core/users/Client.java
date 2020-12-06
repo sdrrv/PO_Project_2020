@@ -1,19 +1,49 @@
 package woo.core.users;
 
+import woo.core.notifications.Notification;
+import woo.core.transactions.Sale;
+
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Client extends User implements Serializable {
+    private int _points;
     private ClientStatus _status;
-    private List<Supplier> _transacoes;
+    private List<Sale> _transactions;
+    private List<Notification> _notifications;
 
     public Client(String name, String address, String id){
         super(name, address, id);
+        _points = 0;
         _status = ClientStatus.NORMAL;
+        _transactions = new LinkedList<>();
+        _notifications = new LinkedList<>();
     }
 
     public ClientStatus getStatus(){
         return _status;
+    }
+
+    public int getPoints(){
+        return _points;
+    }
+
+    private void statusCheck(){
+        if(_points<2000){
+            _status = ClientStatus.NORMAL;
+        }
+        else if (( _points>=2000 ) && ( _points<=25000) ){
+            _status = ClientStatus.SELECTION;
+        }
+        else if (_points > 25000){
+            _status = ClientStatus.ELITE;
+        }
+    }
+
+    public void addPoints(int value){
+        _points += value;
+        statusCheck();
     }
 
     public String toString(){
