@@ -8,6 +8,7 @@ import java.io.IOException;
 import woo.core.exception.BadEntryException;
 
 import woo.core.exception.ImportFileException;
+import woo.core.transactions.Transaction;
 import woo.core.users.*;
 import woo.core.products.*;
 
@@ -30,15 +31,17 @@ public class Store implements Serializable {
   private Map<String,Product> _products;
   private Map<String,Supplier> _suppliers;
   private StoreManager _storeManager;
+  private Map<String,Transaction> _transactions;
 
   public void setStoreManager(StoreManager storeManager){
     _storeManager = storeManager;
   }
   public Store(){
     _date=0;
-    _clients = new HashMap<String,Client>();
-    _suppliers = new HashMap<String,Supplier>();
-    _products = new HashMap<String,Product>();
+    _clients = new HashMap<>();
+    _suppliers = new HashMap<>();
+    _products = new HashMap<>();
+    _transactions = new HashMap<>();
   }
   //-----------------------------------------------------------------------------------
   public int getDate(){
@@ -113,7 +116,7 @@ public class Store implements Serializable {
   }
 
   public void setProductPrice(String id, int price){ // sets the price
-    _products.get(id).setprice(price);
+    _products.get(id).setPrice(price);
   }
   //-----------------------------------------------------------------------------------
   /**

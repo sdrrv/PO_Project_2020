@@ -1,9 +1,9 @@
 package woo.core.transactions;
 
 public abstract class Transaction {
-    private int _key;
+    private final int _key;
     private static int _staticKey;
-    private TransType _type;
+    private final TransType _type;
 
     public Transaction(int key, int staticKey, TransType type){
         _key = key;

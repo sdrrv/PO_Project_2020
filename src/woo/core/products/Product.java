@@ -1,26 +1,30 @@
 package woo.core.products;
 
+import woo.core.users.Client;
 import woo.core.users.Supplier;
 import woo.core.users.User;
 
 import java.io.Serializable;
+import java.util.List;
 
 public abstract class Product implements Serializable,Comparable {
     private int _price;
     private int _valCrit;
     private int _valExist;
-    private String _key;
-    private Supplier _supplier;
+    private final String _key;
+    private final Supplier _supplier;
+    private List<Client> _notificClients;
 
-    protected Product(int price, int valCrit, String key, Supplier supplier) {
+    protected Product(int price, int valCrit, String key, Supplier supplier, List<Client> allClients) {
         _price = price;
         _valCrit = valCrit;
         _valExist = 0;
         _key = key;
         _supplier=supplier;
+        _notificClients = allClients;
     }
 
-    public int getprice() {
+    public int getPrice() {
         return _price;
     }
 
@@ -40,7 +44,7 @@ public abstract class Product implements Serializable,Comparable {
         return _supplier;
     }
 
-    public void setprice(int price) { _price = price; } //Set the price to the price given -- Used int the DoChange Price
+    public void setPrice(int price) { _price = price; } //Set the price to the price given -- Used int the DoChange Price
 
     public void decreaseValue(int value) {
         _valExist -= value;
