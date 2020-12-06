@@ -9,14 +9,14 @@ public class Sale extends Transaction{
     private int _dateLim;
     private boolean _isPaid;
     private int _price;
-    private double _FinalPrice;
+    private double _finalPrice;
 
     private Client _client;
     private ProductPlus _productPlus;
 
 
-    public Sale(int key, int staticKey,int dateLim, int price, Client client, ProductPlus productPlus){
-        super(key, staticKey,TransType.Sale);
+    public Sale(String key, int staticKey,int payDay,int dateLim, int price, Client client, ProductPlus productPlus){
+        super(key, staticKey,payDay,TransType.Sale);
         _dateLim = dateLim;
         _price = price;
         _client = client;
@@ -28,8 +28,8 @@ public class Sale extends Transaction{
     public int getprice() {
         return _price;
     }
-    public double getFinalPrice() {
-        return _FinalPrice;
+    public double getfinalPrice() {
+        return _finalPrice;
     }
     public int getDateLim(){
         return _dateLim;
@@ -49,4 +49,23 @@ public class Sale extends Transaction{
     public int getAmount(){
         return  _productPlus.getAmount();
     }
+
+
+    private String toStringMixer(){
+        return (super.getKey() +"|"+
+                getProduct().getKey()+"|"+
+                _productPlus.getAmount()+"|"+
+                _price+"|"+
+                _finalPrice+"|"+
+                _dateLim+"|");
+    }
+
+
+    public String toString() {
+        if(_isPaid){
+            return toStringMixer() + "|" + super.getPayDay();
+        }
+        return toStringMixer();
+    }
 }
+
