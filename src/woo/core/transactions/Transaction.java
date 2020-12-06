@@ -4,7 +4,7 @@ public abstract class Transaction {
     private final int _key;
     private final TransType _type;
     private int _payDay;
-    private int _price;
+    private final int _price;
 
     public Transaction(int key,int price, TransType type){
         _key = key;

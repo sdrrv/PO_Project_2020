@@ -125,6 +125,8 @@ public class Store implements Serializable {
     _products.get(id).setPrice(price);
   }
   //-----------------------------------------------------------------------------------
+  public Transaction getTransaction(int key){return _transactions.get(key);}
+
   public void createSale(String clientId,int dateLim, String productId,int amount){
     Product product = getProduct(productId);
     Client client= getClient(clientId);
