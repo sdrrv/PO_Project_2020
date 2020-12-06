@@ -1,10 +1,7 @@
 package woo.core.users;
 
-import woo.core.users.ClientStatus;
-
 import java.io.Serializable;
 import java.util.List;
-import java.util.LinkedList;
 
 public class Client extends User implements Serializable {
     private ClientStatus _status;
