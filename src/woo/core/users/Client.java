@@ -36,7 +36,7 @@ public class Client extends User implements Serializable {
         else if (( _points>=2000 ) && ( _points<=25000) ){
             _status = ClientStatus.SELECTION;
         }
-        else if (_points > 25000){
+        else{
             _status = ClientStatus.ELITE;
         }
     }
@@ -44,6 +44,14 @@ public class Client extends User implements Serializable {
     public void addPoints(int value){
         _points += value;
         statusCheck();
+    }
+
+    public List<Notification> getNotifications(){
+        return _notifications;
+    }
+
+    public void clearNotifications(){
+        _notifications.clear();
     }
 
     public String toString(){
