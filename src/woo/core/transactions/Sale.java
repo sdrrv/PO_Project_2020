@@ -8,7 +8,6 @@ import java.security.PublicKey;
 public class Sale extends Transaction{
     private int _dateLim;
     private boolean _isPaid;
-    private int _price;
     private double _finalPrice;
 
     private Client _client;
@@ -16,26 +15,22 @@ public class Sale extends Transaction{
 
 
     public Sale(String key, int staticKey,int payDay,int dateLim, int price, Client client, ProductPlus productPlus){
-        super(key, staticKey,payDay,TransType.Sale);
+        super(key, staticKey,price,payDay,TransType.Sale);
         _dateLim = dateLim;
-        _price = price;
         _client = client;
         _productPlus = productPlus;
 
         _productPlus.getProduct().decreaseValue(_productPlus.getAmount()); // Decrease the amount that the product has
     }
 
-    public int getprice() {
-        return _price;
-    }
-    public double getfinalPrice() {
+    public double getFinalPrice() {
         return _finalPrice;
     }
     public int getDateLim(){
         return _dateLim;
     }
 
-    public void pay(){
+    public void Pay(){
         _isPaid = true;
     }
 
@@ -55,7 +50,7 @@ public class Sale extends Transaction{
         return (super.getKey() +"|"+
                 getProduct().getKey()+"|"+
                 _productPlus.getAmount()+"|"+
-                _price+"|"+
+                super.getPrice()+"|"+
                 _finalPrice+"|"+
                 _dateLim+"|");
     }
