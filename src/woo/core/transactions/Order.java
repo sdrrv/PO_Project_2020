@@ -11,10 +11,11 @@ public class Order extends Transaction{
 
     private List<ProductPlus> _productsPlus;
 
-    public Order(String key, int staticKey, int payDay, Supplier supplier){
-        super(key,staticKey,0,payDay,TransType.Order);
+    public Order(int key, Supplier supplier){
+        super(key,0,TransType.Order);
         _supplier= supplier;
         _productsPlus = new LinkedList<>();
+
     }
 
     public void addProduct(Product product, int amount){
@@ -32,6 +33,5 @@ public class Order extends Transaction{
             result = result + i.getProduct().getKey()+"|"+i.getAmount()+"\n";
         }
         return result;
-
     }
 }

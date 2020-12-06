@@ -8,6 +8,7 @@ import java.io.IOException;
 import woo.core.exception.BadEntryException;
 
 import woo.core.exception.ImportFileException;
+import woo.core.transactions.Sale;
 import woo.core.transactions.Transaction;
 import woo.core.users.*;
 import woo.core.products.*;
@@ -31,12 +32,15 @@ public class Store implements Serializable {
   private Map<String,Product> _products;
   private Map<String,Supplier> _suppliers;
   private StoreManager _storeManager;
-  private Map<String,Transaction> _transactions;
+  private Map<Integer,Transaction> _transactions;
+
+  private int _numberOfTransactions;
 
   public void setStoreManager(StoreManager storeManager){
     _storeManager = storeManager;
   }
   public Store(){
+    _numberOfTransactions = -1;
     _date=0;
     _clients = new HashMap<>();
     _suppliers = new HashMap<>();
@@ -90,6 +94,8 @@ public class Store implements Serializable {
     return getSupplier(id).toogleActivation();
   }
   //-----------------------------------------------------------------------------------
+  public Product getProduct(String id){return _products.get(id);}
+
   public Box createBox(int price,int valorCrit,String key,ServiceType serviceType, Supplier supplier){
     return new Box(price, valorCrit, key, serviceType,supplier);
   }
@@ -118,6 +124,13 @@ public class Store implements Serializable {
   public void setProductPrice(String id, int price){ // sets the price
     _products.get(id).setPrice(price);
   }
+  //-----------------------------------------------------------------------------------
+  public void createSale(String clientId,int dateLim, String productId,int amount){
+    Product product = getProduct(productId);
+    Client client= getClient(clientId);
+    _transactions.put(_numberOfTransactions++,new Sale(_numberOfTransactions,dateLim,product.getPrice(),client,product,amount));
+  }
+
   //-----------------------------------------------------------------------------------
   /**
    * @param txtfile filename to be loaded.

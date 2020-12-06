@@ -14,13 +14,11 @@ public class Sale extends Transaction{
     private ProductPlus _productPlus;
 
 
-    public Sale(String key, int staticKey,int payDay,int dateLim, int price, Client client, ProductPlus productPlus){
-        super(key, staticKey,price,payDay,TransType.Sale);
+    public Sale(int key,int dateLim, int price, Client client, Product product, int amount){
+        super(key,price,TransType.Sale);
         _dateLim = dateLim;
         _client = client;
-        _productPlus = productPlus;
-
-        _productPlus.getProduct().decreaseValue(_productPlus.getAmount()); // Decrease the amount that the product has
+        _productPlus = new ProductPlus(amount,product);
     }
 
     public double getFinalPrice() {
