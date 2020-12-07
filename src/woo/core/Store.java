@@ -1,6 +1,7 @@
 package woo.core;
 
 //FIXME import classes (cannot import from pt.tecnico or woo.app)
+import java.beans.Transient;
 import java.io.Serializable;
 
 import java.io.IOException;
@@ -8,6 +9,8 @@ import java.io.IOException;
 import woo.core.exception.BadEntryException;
 
 import woo.core.exception.ImportFileException;
+import woo.core.transactions.Order;
+import woo.core.transactions.ProductPlus;
 import woo.core.transactions.Sale;
 import woo.core.transactions.Transaction;
 import woo.core.users.*;
@@ -32,7 +35,8 @@ public class Store implements Serializable {
   private Map<String,Product> _products;
   private Map<String,Supplier> _suppliers;
   private StoreManager _storeManager;
-  private Map<Integer,Transaction> _transactions;
+  private Map<Integer,Sale> _sales;
+  private Map<Integer,Order> _orders;
 
   private int _numberOfTransactions;
 
@@ -45,7 +49,9 @@ public class Store implements Serializable {
     _clients = new HashMap<>();
     _suppliers = new HashMap<>();
     _products = new HashMap<>();
-    _transactions = new HashMap<>();
+    _sales= new HashMap<>();
+    _orders = new HashMap<>();
+
   }
   //-----------------------------------------------------------------------------------
   public int getDate(){
@@ -125,13 +131,40 @@ public class Store implements Serializable {
     _products.get(id).setPrice(price);
   }
   //-----------------------------------------------------------------------------------
-  public Transaction getTransaction(int key){return _transactions.get(key);}
+  public boolean hasSale(int key){
+    return _sales.containsKey(key);
+  }
+  public boolean hasOrder(int key){
+    return _orders.containsKey(key);
+  }
+
+  public Transaction getTransaction(int key){
+    if(hasSale(key)){
+      return _sales.get(key);
+    }
+    return _orders.get(key);
+  }
 
   public void createSale(String clientId,int dateLim, String productId,int amount){
     Product product = getProduct(productId);
     Client client= getClient(clientId);
-    _transactions.put(_numberOfTransactions++,new Sale(_numberOfTransactions,dateLim,product.getPrice(),client,product,amount));
-    product.decreaseValue(amount); // decreases the value of the products
+    _sales.put(_numberOfTransactions++,new Sale(_numberOfTransactions,dateLim,product.getPrice(),client,product,amount));
+    product.decreaseValue(amount);
+  }
+
+  public void createOrder(String supplierId, List<ProductPlus> products){
+    Supplier supplier = _suppliers.get(supplierId);
+    Order order = new Order(_numberOfTransactions,supplier);
+    for (ProductPlus i: products){
+      order.addProduct(i);
+      i.getProduct().decreaseValue(i.getAmount());
+    }
+    _orders.put(_numberOfTransactions++,order);
+  }
+
+  public void pay(int key){
+    Sale sale = _sales.get(key);
+    sale.Pay();
   }
 
   //-----------------------------------------------------------------------------------
