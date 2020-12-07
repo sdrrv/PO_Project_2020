@@ -8,6 +8,8 @@ import java.io.IOException;
 import woo.core.exception.BadEntryException;
 
 import woo.core.exception.ImportFileException;
+import woo.core.transactions.Order;
+import woo.core.transactions.ProductPlus;
 import woo.core.transactions.Sale;
 import woo.core.transactions.Transaction;
 import woo.core.users.*;
@@ -131,6 +133,24 @@ public class Store implements Serializable {
     Product product = getProduct(productId);
     Client client= getClient(clientId);
     _transactions.put(_numberOfTransactions++,new Sale(_numberOfTransactions,dateLim,product.getPrice(),client,product,amount));
+    product.decreaseValue(amount);
+  }
+
+  public void createOrder(String supplierId, List<ProductPlus> products){
+    Supplier supplier = _suppliers.get(supplierId);
+    Order order = new Order(_numberOfTransactions,supplier);
+    for (ProductPlus i: products){
+      order.addProduct(i);
+      i.getProduct().decreaseValue(i.getAmount());
+    }
+    _transactions.put(_numberOfTransactions++,order);
+  }
+
+  public void pay(int key){
+    Sale transaction = (Sale)_transactions.get(key);
+    if(transaction.getType().equals("SALE")){
+      //transaction.pay();
+    }
   }
 
   //-----------------------------------------------------------------------------------

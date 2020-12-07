@@ -18,9 +18,12 @@ public class Order extends Transaction{
 
     }
 
-    public void addProduct(Product product, int amount){
+    /*public void addProduct(Product product, int amount){
         product.decreaseValue(amount);
         _productsPlus.add(new ProductPlus(amount,product));
+    }*/
+    public void addProduct(ProductPlus product){
+        _productsPlus.add(product);
     }
 
     public String toString(){
