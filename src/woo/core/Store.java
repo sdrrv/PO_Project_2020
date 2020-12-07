@@ -131,6 +131,7 @@ public class Store implements Serializable {
     Product product = getProduct(productId);
     Client client= getClient(clientId);
     _transactions.put(_numberOfTransactions++,new Sale(_numberOfTransactions,dateLim,product.getPrice(),client,product,amount));
+    product.decreaseValue(amount); // decreases the value of the products
   }
 
   //-----------------------------------------------------------------------------------
