@@ -15,13 +15,13 @@ public abstract class Product implements Serializable,Comparable {
     private final Supplier _supplier;
     private List<Client> _notificClients;
 
-    protected Product(int price, int valCrit, String key, Supplier supplier, List<Client> allClients) {
+    protected Product(int price, int valCrit, String key, Supplier supplier) {
         _price = price;
         _valCrit = valCrit;
         _valExist = 0;
         _key = key;
         _supplier=supplier;
-        _notificClients = allClients;
+        //_notificClients = allClients;
     }
 
     public int getPrice() {

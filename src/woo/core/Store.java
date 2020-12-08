@@ -149,21 +149,21 @@ public class Store implements Serializable {
     return (hasSale(key)&&hasOrder(key));
   }
 
-  public void createSale(String clientId,int dateLim, String productId,int amount){
-    Product product = getProduct(productId);
-    Client client= getClient(clientId);
-    _sales.put(_numberOfTransactions++,new Sale(_numberOfTransactions,dateLim,product.getPrice(),client,product,amount));
+  public Sale createSale(Client client,int dateLim,Product product,int amount){
+    Sale result =new Sale(_numberOfTransactions,dateLim,product.getPrice(),client,product,amount);
+    _sales.put(_numberOfTransactions++,result);
     product.decreaseValue(amount);
+    return result;
   }
 
-  public void createOrder(String supplierId, List<ProductPlus> products){
-    Supplier supplier = _suppliers.get(supplierId);
+  public Order createOrder(Supplier supplier, List<ProductPlus> products){
     Order order = new Order(_numberOfTransactions,supplier);
     for (ProductPlus i: products){
       order.addProduct(i);
       i.getProduct().decreaseValue(i.getAmount());
     }
     _orders.put(_numberOfTransactions++,order);
+    return order;
   }
 
   public void pay(int key){

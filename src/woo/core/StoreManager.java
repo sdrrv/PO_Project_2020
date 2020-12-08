@@ -8,6 +8,7 @@ import java.util.Collection;
 
 import woo.core.exception.*;
 import woo.core.products.*;
+import woo.core.transactions.Sale;
 import woo.core.users.Client;
 import woo.core.users.Supplier;
 
@@ -159,6 +160,19 @@ public Book registerBook(int price,int valorCrit, String key, String title, Stri
     }
     return _store.getTransaction(key).toString();
   }
+
+  public Sale registerSale(String clientId,int dateLim,String productId, int quantity) throws UnknownClientIdException,UnknownProductIdException, NotAvaliableProductException{
+    if(!_store.hasClient(clientId))
+      throw new UnknownClientIdException(clientId);
+    if(!_store.hasProduct(productId))
+      throw new UnknownProductIdException(productId);
+    Product product = _store.getProduct(productId);
+    if((product.getValExist()-quantity < 0)){
+      throw new NotAvaliableProductException(productId,quantity,product.getValExist());
+    }
+    return _store.createSale(_store.getClient(clientId),dateLim,_store.getProduct(productId),quantity);
+  }
+
   //---------------------------------------------------------------------------------------------------------------------
   /**
    * @throws IOException
