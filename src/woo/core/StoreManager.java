@@ -153,6 +153,13 @@ public Book registerBook(int price,int valorCrit, String key, String title, Stri
   return book;
 }
   //---------------------------------------------------------------------------------------------------------------------
+  public String showTransaction(int key) throws UnknownTransactionIdException{
+    if(!_store.hasTransaction(key)){
+      throw new UnknownTransactionIdException(key);
+    }
+    return _store.getTransaction(key).toString();
+  }
+  //---------------------------------------------------------------------------------------------------------------------
   /**
    * @throws IOException
    * @throws FileNotFoundException

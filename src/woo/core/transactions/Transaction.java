@@ -24,4 +24,5 @@ public abstract class Transaction {
     public int getPrice() {
         return _price;
     }
+    public abstract String toString();
 }

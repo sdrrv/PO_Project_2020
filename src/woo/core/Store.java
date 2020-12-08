@@ -145,6 +145,10 @@ public class Store implements Serializable {
     return _orders.get(key);
   }
 
+  public boolean hasTransaction(int key){
+    return (hasSale(key)&&hasOrder(key));
+  }
+
   public void createSale(String clientId,int dateLim, String productId,int amount){
     Product product = getProduct(productId);
     Client client= getClient(clientId);
