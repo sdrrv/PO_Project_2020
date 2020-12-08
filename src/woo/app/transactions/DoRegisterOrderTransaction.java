@@ -11,15 +11,31 @@ import woo.core.StoreManager;
  */
 public class DoRegisterOrderTransaction extends Command<StoreManager> {
 
-  //FIXME add input fields
+  private Input<String> _supplierId,_productId;
+  private Input<Integer> _quantity;
+  private Input<Boolean> _more;
 
   public DoRegisterOrderTransaction(StoreManager receiver) {
     super(Label.REGISTER_ORDER_TRANSACTION, receiver);
-    //FIXME init input fields
+    _supplierId = _form.addStringInput(Message.requestClientKey());
+
+    while(_more.value() == true){ //not correct
+      _productId = _form.addStringInput(Message.requestProductKey());
+      _quantity = _form.addIntegerInput(Message.requestAmount());
+      _more = _form.addBooleanInput(Message.requestMore());
+    }
   }
 
   @Override
   public final void execute() throws DialogException {
-    //FIXME implement command
+    _form.parse();
+    try{
+      _receiver.registerOrder(_supplierId.value(),_productId.value(), _quantity.value());
+    }
+    catch (UnknownSupplierIdException e){
+      throw new UnknownSupplierKeyException(e.getId());
+    }
+
   }
+
 }
