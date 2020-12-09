@@ -155,6 +155,10 @@ public class Store implements Serializable {
     return _orders.get(key);
   }
 
+  public Sale getSale(int key){
+    return _sales.get(key);
+  }
+
   public boolean hasTransaction(int key){
     return (hasSale(key)||hasOrder(key));
   }
@@ -185,8 +189,7 @@ public class Store implements Serializable {
     return order;
   }
 
-  public void pay(int key){
-    Sale sale = _sales.get(key);
+  public void pay(Sale sale){
     sale.Pay();
   }
 

@@ -194,6 +194,10 @@ public Book registerBook(int price,int valorCrit, String key, String title, Stri
     _store.registerOrder(_store.createOrder(supplier,result));
   }
 
+  public void pay(int transactionKey) throws UnknownTransactionIdException{
+    _store.pay(_store.getSale(transactionKey));
+  }
+
   //---------------------------------------------------------------------------------------------------------------------
   /**
    * @throws IOException
