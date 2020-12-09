@@ -3,6 +3,7 @@ package woo.core.users;
 import woo.core.products.Product;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Supplier extends User implements Serializable {
@@ -11,6 +12,7 @@ public class Supplier extends User implements Serializable {
 
     public Supplier(String name, String address, String id){
         super(name, address, id);
+        _products = new HashMap<>();
         _isActive=true;
     }
 

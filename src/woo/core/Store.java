@@ -110,6 +110,7 @@ public class Store implements Serializable {
   }
   public void registerBox(Box box){
     _products.put(box.getKey(),box);
+    box.getSupplier().addToProducts(box);
   }
 
   public Container createContainer(int price,int valorCrit,String key, ServiceType serviceType,ServiceLevel serviceLevel, Supplier supplier){
@@ -117,6 +118,7 @@ public class Store implements Serializable {
   }
   public void registerContainer(Container container){
     _products.put(container.getKey(),container);
+    container.getSupplier().addToProducts(container);
   }
 
   public Book createBook(int price,int valorCrit, String key, String title, String author, String isbn, Supplier supplier){
@@ -124,6 +126,7 @@ public class Store implements Serializable {
   }
   public void registerBook(Book book){
     _products.put(book.getKey(),book);
+    book.getSupplier().addToProducts(book);
   }
 
   public boolean hasProduct(String id){
