@@ -4,7 +4,7 @@ public abstract class Transaction {
     private final int _key;
     private final TransType _type;
     private int _payDay;
-    private final int _price;
+    private int _price;
 
     public Transaction(int key,int price, TransType type){
         _key = key;
@@ -24,5 +24,6 @@ public abstract class Transaction {
     public int getPrice() {
         return _price;
     }
+    public void addToPrice(int amount){_price+=amount;}
     public abstract String toString();
 }

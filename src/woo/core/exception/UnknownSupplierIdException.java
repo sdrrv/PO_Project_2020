@@ -1,6 +1,6 @@
 package woo.core.exception;
 
-public class UnknownSupplierIdException extends Exception{
+public class UnknownSupplierIdException extends UnknownIdException{
 
     private String _id;
 

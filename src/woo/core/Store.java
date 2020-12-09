@@ -30,6 +30,8 @@ public class Store implements Serializable {
   /** Serial number for serialization. */
   private static final long serialVersionUID = 202009192006L;
 
+  private int _balance;
+
   private Map<String,Client> _clients;
   private int _date;
   private Map<String,Product> _products;
@@ -44,6 +46,7 @@ public class Store implements Serializable {
     _storeManager = storeManager;
   }
   public Store(){
+    _balance = 0;
     _numberOfTransactions = -1;
     _date=0;
     _clients = new HashMap<>();
@@ -127,6 +130,10 @@ public class Store implements Serializable {
     return _products.containsKey(id);
   }
 
+  public ProductPlus createProductPlus(Product product, int amount){
+    return new ProductPlus(amount,product);
+  }
+
   public void setProductPrice(String id, int price){ // sets the price
     _products.get(id).setPrice(price);
   }
@@ -149,20 +156,29 @@ public class Store implements Serializable {
     return (hasSale(key)&&hasOrder(key));
   }
 
+
+  public void registerSale(Sale sale){
+    _sales.put(_numberOfTransactions,sale);
+    sale.getClient().addSale(sale); // adds the sale to the list in the respective client
+  }
+
   public Sale createSale(Client client,int dateLim,Product product,int amount){
-    Sale result =new Sale(_numberOfTransactions,dateLim,product.getPrice(),client,product,amount);
-    _sales.put(_numberOfTransactions++,result);
+    Sale result = new Sale(++_numberOfTransactions,dateLim,product.getPrice(),client,product,amount);
     product.decreaseValue(amount);
     return result;
+  }
+
+  public void registerOrder(Order order){
+    _orders.put(_numberOfTransactions++,order);
+    _balance -= order.getPrice();
   }
 
   public Order createOrder(Supplier supplier, List<ProductPlus> products){
     Order order = new Order(_numberOfTransactions,supplier);
     for (ProductPlus i: products){
       order.addProduct(i);
-      i.getProduct().decreaseValue(i.getAmount());
+      i.getProduct().increaseValue(i.getAmount());
     }
-    _orders.put(_numberOfTransactions++,order);
     return order;
   }
 

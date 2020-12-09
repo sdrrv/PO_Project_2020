@@ -50,7 +50,7 @@ public abstract class Product implements Serializable,Comparable {
         _valExist -= value;
     }
 
-    public void addValue(int value) {
+    public void increaseValue(int value) {
         _valExist += value;
     }
 

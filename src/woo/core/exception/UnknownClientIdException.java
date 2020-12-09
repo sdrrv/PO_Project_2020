@@ -2,7 +2,7 @@ package woo.core.exception;
 
 
 
-public class UnknownClientIdException extends Exception{
+public class UnknownClientIdException extends UnknownIdException{
 
   private String _id;
 

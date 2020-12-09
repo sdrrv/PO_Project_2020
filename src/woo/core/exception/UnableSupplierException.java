@@ -1,9 +1,9 @@
 package woo.core.exception;
 
-public class UnknownProductIdException extends UnknownIdException{
+public class UnableSupplierException extends Exception{
     private String _id;
 
-    public UnknownProductIdException(String id) {
+    public UnableSupplierException(String id) {
         _id = id;
     }
 

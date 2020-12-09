@@ -1,6 +1,6 @@
 package woo.core.exception;
 
-public class UnknownTransactionIdException extends Exception{
+public class UnknownTransactionIdException extends UnknownIdException{
     private int _key;
 
     public  UnknownTransactionIdException(int key) {

@@ -6,6 +6,7 @@ import woo.core.transactions.Sale;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class Client extends User implements Serializable {
     private int _points;
@@ -52,6 +53,14 @@ public class Client extends User implements Serializable {
 
     public void clearNotifications(){
         _notifications.clear();
+    }
+
+    public void addSale(Sale sale){
+        _transactions.add(sale);
+    }
+
+    public List<Sale> getSales(){
+        return _transactions;
     }
 
     public String toString(){
