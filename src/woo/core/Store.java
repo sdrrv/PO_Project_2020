@@ -156,7 +156,7 @@ public class Store implements Serializable {
   }
 
   public boolean hasTransaction(int key){
-    return (hasSale(key)&&hasOrder(key));
+    return (hasSale(key)||hasOrder(key));
   }
 
 
@@ -172,12 +172,12 @@ public class Store implements Serializable {
   }
 
   public void registerOrder(Order order){
-    _orders.put(_numberOfTransactions++,order);
+    _orders.put(_numberOfTransactions,order);
     _balance -= order.getPrice();
   }
 
   public Order createOrder(Supplier supplier, List<ProductPlus> products){
-    Order order = new Order(_numberOfTransactions,supplier);
+    Order order = new Order(++_numberOfTransactions,supplier);
     for (ProductPlus i: products){
       order.addProduct(i);
       i.getProduct().increaseValue(i.getAmount());
