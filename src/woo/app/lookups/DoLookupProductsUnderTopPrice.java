@@ -4,22 +4,30 @@ import pt.tecnico.po.ui.Command;
 import pt.tecnico.po.ui.DialogException;
 import pt.tecnico.po.ui.Input;
 import woo.core.StoreManager;
-//FIXME import other classes
+
+import java.util.List;
+import woo.core.products.Product;
 
 /**
  * Lookup products cheaper than a given price.
  */
 public class DoLookupProductsUnderTopPrice extends Command<StoreManager> {
 
-  //FIXME add input fields
+  Input<Integer> _amount;
 
   public DoLookupProductsUnderTopPrice(StoreManager storefront) {
     super(Label.PRODUCTS_UNDER_PRICE, storefront);
-    //FIXME init input fields
+    _amount = _form.addIntegerInput(Message.requestPriceLimit());
   }
 
   @Override
   public void execute() throws DialogException {
-    //FIXME implement command
+    _form.parse();
+
+    List<Product> productsBellowAmount= _receiver.getProductsBellowAmount(_amount.value());
+    for (Product product: productsBellowAmount){
+      _display.addLine(product.toString());
+    }
+    _display.display();
   }
 }

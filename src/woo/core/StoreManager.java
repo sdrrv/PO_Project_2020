@@ -221,6 +221,10 @@ public Book registerBook(int price,int valorCrit, String key, String title, Stri
 
   }
   //---------------------------------------------------------------------------------------------------------------------
+  public List<Product> getProductsBellowAmount(int amount){
+    return _store.getProductsBellowAmount(amount);
+  }
+  //---------------------------------------------------------------------------------------------------------------------
   /**
    * @throws IOException
    * @throws FileNotFoundException

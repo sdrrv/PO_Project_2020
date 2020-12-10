@@ -38,8 +38,8 @@ public class Store implements Serializable {
   private Map<String,Product> _products;
   private Map<String,Supplier> _suppliers;
   private StoreManager _storeManager;
-  private Map<Integer,Sale> _sales;
-  private Map<Integer,Order> _orders;
+  private Map<Integer,Sale> _sales; // Work as one with the _orders
+  private Map<Integer,Order> _orders; // Work as one with the _sales
   private Map<Integer,Notification> _notifications;
   
 
@@ -61,14 +61,14 @@ public class Store implements Serializable {
     _orders = new HashMap<>();
 
   }
-  //-----------------------------------------------------------------------------------
+  //-------------------------------------------BaseCode-------------------------------------
   public int getDate(){
     return _date;
   }
   public void increaseDate(int amount){
     _date += amount;
   }
-  //-----------------------------------------------------------------------------------
+  //------------------------------------Clients---------------------------------------------
   public boolean hasClient(String id){
     return _clients.containsKey(id);
   }
@@ -90,7 +90,7 @@ public class Store implements Serializable {
   public TreeSet<Supplier> getAllSuppliers(){
     return new TreeSet<Supplier>(_suppliers.values());
   }
-  //-----------------------------------------------------------------------------------
+  //--------------------------------------------Suppliers-------------------------------------
   public boolean hasSupplier(String id){
     return _suppliers.containsKey(id);
   }
@@ -106,7 +106,7 @@ public class Store implements Serializable {
   public boolean toggleSupplierActivation(String id){
     return getSupplier(id).toogleActivation();
   }
-  //-----------------------------------------------------------------------------------
+  //-------------------------------------Products--------------------------------------------
   public Product getProduct(String id){return _products.get(id);}
 
   public Box createBox(int price,int valorCrit,String key,ServiceType serviceType, Supplier supplier){
@@ -144,7 +144,7 @@ public class Store implements Serializable {
   public void setProductPrice(String id, int price){ // sets the price
     _products.get(id).setPrice(price);
   }
-  //-----------------------------------------------------------------------------------
+  //-------------------------------------Transactions--------------------------------------------
   public boolean hasSale(int key){
     return _sales.containsKey(key);
   }
@@ -200,7 +200,7 @@ public class Store implements Serializable {
     sale.Pay();
     return 0;
   }
-  //-----------------------------------------------------------------------------------
+  //-------------------------------------Notifications-------------------------------------------
   public void registerNotification(Notification notification){
     _notifications.put(_numberOfNotifications,notification);
     // add notification to client
@@ -212,6 +212,16 @@ public class Store implements Serializable {
     return notification;
   }*/
 
+  //---------------------------------------LookUps------------------------------------------
+  public List<Product> getProductsBellowAmount(int amount){
+    List<Product> _result = new LinkedList<>();
+    for (Product product: _products.values()){
+      if(product.getPrice()<amount){
+        _result.add(product);
+      }
+    }
+    return _result;
+  }
   //-----------------------------------------------------------------------------------
   /**
    * @param txtfile filename to be loaded.
