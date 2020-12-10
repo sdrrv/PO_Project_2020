@@ -8,7 +8,7 @@ public class Box extends Product implements Serializable {
     private final ServiceType _serviceType;
 
     public Box(int price, int valorCrit, String key, ServiceType serviceType, Supplier supplier){
-        super(price,valorCrit,key,supplier);
+        super(price,valorCrit,key,supplier,5);
         _serviceType = serviceType;
     }
     public String getServiceType(){

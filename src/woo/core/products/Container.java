@@ -8,7 +8,7 @@ public class Container extends Product implements Serializable {
     private ServiceType _serviceType;
     public ServiceLevel _serviceLevel;
     public Container(int price, int valorCrit, String key, ServiceType serviceType, ServiceLevel serviceLevel, Supplier supplier){
-        super(price,valorCrit,key,supplier);
+        super(price,valorCrit,key,supplier,8);
         _serviceType = serviceType;
         _serviceLevel = serviceLevel;
     }

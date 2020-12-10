@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public abstract class Product implements Serializable,Comparable {
+    private static int _n;
     private int _price;
     private int _valCrit;
     private int _valExist;
@@ -15,12 +16,13 @@ public abstract class Product implements Serializable,Comparable {
     private final Supplier _supplier;
     private List<Client> _notificClients;
 
-    protected Product(int price, int valCrit, String key, Supplier supplier) {
+    protected Product(int price, int valCrit, String key, Supplier supplier,int n) {
         _price = price;
         _valCrit = valCrit;
         _valExist = 0;
         _key = key;
         _supplier=supplier;
+        _n=n;
         //_notificClients = allClients;
     }
 
@@ -65,5 +67,9 @@ public abstract class Product implements Serializable,Comparable {
         }
         e = (Product) o;
         return _key.compareTo(e.getKey());
+    }
+
+    public int getN(){
+        return _n;
     }
 }
