@@ -52,6 +52,7 @@ public class Store implements Serializable {
   public Store(){
     _balance = 0;
     _numberOfTransactions = -1;
+    _numberOfNotifications = -1;
     _date=0;
     _clients = new HashMap<>();
     _suppliers = new HashMap<>();
@@ -201,26 +202,16 @@ public class Store implements Serializable {
     return 0;
   }
   //-----------------------------------------------------------------------------------
-  public void registerSale(Sale sale){
-    _sales.put(_numberOfTransactions,sale);
-    sale.getClient().addSale(sale); // adds the sale to the list in the respective client
-  }
-
-  public Sale createSale(Client client,int dateLim,Product product,int amount){
-    Sale result = new Sale(++_numberOfTransactions,dateLim,product.getPrice(),client,product,amount);
-    product.decreaseValue(amount);
-    return result;
-  }
-
   public void registerNotification(Notification notification){
     _notifications.put(_numberOfNotifications,notification);
     // add notification to client
   }
-  public Notification createNotification(Client client, Product product){
-    Notification notification = new Notification(++_numberOfNotifications,___,___);
+
+  /*public Notification createNotification(Client client, Product product){
+    Notification notification = new Notification(++_numberOfNotifications,___,0);
     _notifications.put(++_numberOfNotifications,notification);
     return notification;
-  }
+  }*/
 
   //-----------------------------------------------------------------------------------
   /**
