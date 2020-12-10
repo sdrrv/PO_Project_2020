@@ -28,8 +28,9 @@ public class Sale extends Transaction{
         return _dateLim;
     }
 
-    public void Pay(){
+    public double pay(){
         _isPaid = true;
+        return 0;
     }
     public boolean isPaid(){
         return _isPaid;

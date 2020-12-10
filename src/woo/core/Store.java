@@ -31,7 +31,7 @@ public class Store implements Serializable {
   /** Serial number for serialization. */
   private static final long serialVersionUID = 202009192006L;
 
-  private int _balance;
+  private double _balance;
 
   private Map<String,Client> _clients;
   private int _date;
@@ -46,6 +46,7 @@ public class Store implements Serializable {
   private int _numberOfTransactions;
   private int _numberOfNotifications;
 
+
   public void setStoreManager(StoreManager storeManager){
     _storeManager = storeManager;
   }
@@ -53,6 +54,7 @@ public class Store implements Serializable {
     _balance = 0;
     _numberOfTransactions = -1;
     _numberOfNotifications = -1;
+    _balance = 0;
     _date=0;
     _clients = new HashMap<>();
     _suppliers = new HashMap<>();
@@ -197,7 +199,7 @@ public class Store implements Serializable {
     if(sale.isPaid()){
       return 1;
     }
-    sale.Pay();
+    _balance += sale.pay();
     return 0;
   }
   //-------------------------------------Notifications-------------------------------------------
