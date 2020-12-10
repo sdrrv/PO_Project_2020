@@ -31,7 +31,9 @@ public class Sale extends Transaction{
     public void Pay(){
         _isPaid = true;
     }
-
+    public boolean isPaid(){
+        return _isPaid;
+    }
     public Client getClient(){
         return _client;
     }

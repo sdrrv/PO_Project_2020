@@ -189,8 +189,12 @@ public class Store implements Serializable {
     return order;
   }
 
-  public void pay(Sale sale){
+  public int pay(Sale sale){
+    if(sale.isPaid()){
+      return 1;
+    }
     sale.Pay();
+    return 0;
   }
 
   //-----------------------------------------------------------------------------------
