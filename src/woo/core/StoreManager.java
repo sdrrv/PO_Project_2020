@@ -165,6 +165,12 @@ public Book registerBook(int price,int valorCrit, String key, String title, Stri
   _store.registerBook(book);
   return book;
 }
+
+public void changeProductPrice(String productId,int newPrice) throws UnknownProductIdException{
+  if(!_store.hasProduct(productId))
+    throw new UnknownProductIdException(productId);
+  _store.getProduct(productId).setPrice(newPrice);
+}
   //---------------------------------------------------------------------------------------------------------------------
   public String showTransaction(int key) throws UnknownTransactionIdException{
     if(!_store.hasTransaction(key)){
