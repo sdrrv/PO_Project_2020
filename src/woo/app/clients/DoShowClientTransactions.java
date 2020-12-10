@@ -3,7 +3,13 @@ package woo.app.clients;
 import pt.tecnico.po.ui.Command;
 import pt.tecnico.po.ui.DialogException;
 import pt.tecnico.po.ui.Input;
+import woo.app.exception.UnknownClientKeyException;
+import woo.app.lookups.Message;
 import woo.core.StoreManager;
+import woo.core.exception.UnknownClientIdException;
+import woo.core.transactions.Sale;
+
+import java.util.List;
 //FIXME import other classes
 
 /**
@@ -11,16 +17,26 @@ import woo.core.StoreManager;
  */
 public class DoShowClientTransactions extends Command<StoreManager> {
 
-  //FIXME add input fields
+  Input<String> _clientId;
 
   public DoShowClientTransactions(StoreManager storefront) {
     super(Label.SHOW_CLIENT_TRANSACTIONS, storefront);
-    //FIXME init input fields
+    _clientId = _form.addStringInput(Message.requestClientKey());
   }
 
   @Override
   public void execute() throws DialogException {
-    //FIXME implement command
+    _form.parse();
+    try {
+      List<Sale> clientSales = _receiver.getClientSales(_clientId.value());
+
+      for (Sale sale : clientSales) {
+        _display.addLine(sale.toString());s
+      }
+      _display.display();
+    } catch (UnknownClientIdException e) {
+        throw new UnknownClientKeyException(_clientId.value());
+    }
   }
 
 }

@@ -24,6 +24,7 @@ public class DoLookupPaymentsByClient extends Command<StoreManager> {
 
   @Override
   public void execute() throws DialogException {
+    _form.parse();
     try {
       List<Sale> paidSales = _receiver.showPaiedSales(_clientId.value());
       for (Sale sale : paidSales) {
@@ -31,7 +32,7 @@ public class DoLookupPaymentsByClient extends Command<StoreManager> {
       }
       _display.display();
     } catch (UnknownClientIdException e) {
-      throw new UnknownClientKeyException(_clientId.value());
+        throw new UnknownClientKeyException(_clientId.value());
     }
 
   }
