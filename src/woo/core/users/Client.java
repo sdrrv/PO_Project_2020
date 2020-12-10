@@ -63,7 +63,7 @@ public class Client extends User implements Serializable {
         return _transactions;
     }
 
-    public List<Sale> getPayedSales(){
+    public List<Sale> getPaiedSales(){
         List<Sale> result = new LinkedList<>();
         for(Sale sale : _transactions){
             if(sale.isPaid()){

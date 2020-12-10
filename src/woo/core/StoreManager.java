@@ -49,6 +49,13 @@ public class StoreManager implements Serializable {
     }
     return result;
   }
+
+  public List<Sale> showPaiedSales(String clientId) throws UnknownClientIdException{
+    if(!_store.hasClient(clientId)){
+      throw new UnknownClientIdException(clientId);
+    }
+    return _store.showSalesPaid(clientId);
+  }
 //---------------------------------------------------------------------------------------------------------------------
 public void registerSupplier(String name, String address, String id) throws DuplicateSupplierIdException{
     if(_store.hasSupplier(id)){
@@ -203,7 +210,7 @@ public Book registerBook(int price,int valorCrit, String key, String title, Stri
       throw new UnknownClientIdException(clientId);
     if(!_store.hasProduct(productId))
       throw new UnknownProductIdException(productId);
-    _store.createNotification(_store.getClient(clientId),_store.getProduct(productId));
+    // _store.createNotification(_store.getClient(clientId),_store.getProduct(productId));
 
   }
   //---------------------------------------------------------------------------------------------------------------------

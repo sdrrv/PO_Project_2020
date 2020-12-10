@@ -81,7 +81,9 @@ public class Store implements Serializable {
   public Client getClient(String id){
     return _clients.get(id);
   }
-
+  public List<Sale> showSalesPaid(String clientId){
+    return getClient(clientId).getPaiedSales();
+  }
   public TreeSet<Client> getAllClients(){
     return new TreeSet<Client>(_clients.values());
   }
