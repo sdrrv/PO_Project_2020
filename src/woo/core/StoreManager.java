@@ -197,7 +197,15 @@ public Book registerBook(int price,int valorCrit, String key, String title, Stri
   public void pay(int transactionKey) throws UnknownTransactionIdException{
     _store.pay(_store.getSale(transactionKey));
   }
+  //---------------------------------------------------------------------------------------------------------------------
+  public void activateNotification(String clientId,String productId) throws UnknownClientIdException, UnknownProductIdException{
+    if(!_store.hasClient(clientId))
+      throw new UnknownClientIdException(clientId);
+    if(!_store.hasProduct(productId))
+      throw new UnknownProductIdException(productId);
+    _store.createNotification(_store.getClient(clientId),_store.getProduct(productId));
 
+  }
   //---------------------------------------------------------------------------------------------------------------------
   /**
    * @throws IOException
