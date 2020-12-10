@@ -108,6 +108,7 @@ public class Store implements Serializable {
   public boolean toggleSupplierActivation(String id){
     return getSupplier(id).toogleActivation();
   }
+  public Collection<Order> getSupplierOrders(String id){return getSupplier(id).getOrders();}
   //-------------------------------------Products--------------------------------------------
   public Product getProduct(String id){return _products.get(id);}
 

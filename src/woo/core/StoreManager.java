@@ -8,6 +8,7 @@ import java.util.*;
 
 import woo.core.exception.*;
 import woo.core.products.*;
+import woo.core.transactions.Order;
 import woo.core.transactions.ProductPlus;
 import woo.core.transactions.Sale;
 import woo.core.users.Client;
@@ -96,6 +97,14 @@ public String getSupplier(String id) throws UnknownSupplierIdException{
     }
     return _store.getSupplier(id);
   }
+
+  public Collection<Order> getSupplierOrders(String supplierId) throws UnknownSupplierIdException{
+    if(!_store.hasSupplier(supplierId)){
+      throw new UnknownSupplierIdException(supplierId);
+    }
+    return _store.getSupplierOrders(supplierId);
+  }
+
   //---------------------------------------------------------------------------------------------------------------------
   public int showDate(){
     return _store.getDate();
