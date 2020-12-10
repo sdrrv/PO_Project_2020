@@ -13,6 +13,7 @@ import woo.core.transactions.Order;
 import woo.core.transactions.ProductPlus;
 import woo.core.transactions.Sale;
 import woo.core.transactions.Transaction;
+import woo.core.notifications.Notification;
 import woo.core.users.*;
 import woo.core.products.*;
 
@@ -39,8 +40,11 @@ public class Store implements Serializable {
   private StoreManager _storeManager;
   private Map<Integer,Sale> _sales;
   private Map<Integer,Order> _orders;
+  private Map<Integer,Notification> _notifications;
+  
 
   private int _numberOfTransactions;
+  private int _numberOfNotifications;
 
   public void setStoreManager(StoreManager storeManager){
     _storeManager = storeManager;
@@ -195,6 +199,27 @@ public class Store implements Serializable {
     }
     sale.Pay();
     return 0;
+  }
+  //-----------------------------------------------------------------------------------
+  public void registerSale(Sale sale){
+    _sales.put(_numberOfTransactions,sale);
+    sale.getClient().addSale(sale); // adds the sale to the list in the respective client
+  }
+
+  public Sale createSale(Client client,int dateLim,Product product,int amount){
+    Sale result = new Sale(++_numberOfTransactions,dateLim,product.getPrice(),client,product,amount);
+    product.decreaseValue(amount);
+    return result;
+  }
+
+  public void registerNotification(Notification notification){
+    _notifications.put(_numberOfNotifications,notification);
+    // add notification to client
+  }
+  public Notification createNotification(Client client, Product product){
+    Notification notification = new Notification(++_numberOfNotifications,___,___);
+    _notifications.put(++_numberOfNotifications,notification);
+    return notification;
   }
 
   //-----------------------------------------------------------------------------------

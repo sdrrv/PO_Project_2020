@@ -22,7 +22,7 @@ public class DoRegisterClient extends Command<StoreManager> {
     _name = _form.addStringInput(Message.requestClientName());
     _address = _form.addStringInput(Message.requestClientAddress());
   }
-
+  
   @Override
   public void execute() throws DialogException { //
     _form.parse();
