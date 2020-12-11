@@ -1,6 +1,8 @@
 package woo.core.users.status;
 
 import woo.core.transactions.Sale;
+import woo.core.transactions.Transaction;
+import woo.core.users.Client;
 
 public abstract class Status {
 
@@ -30,5 +32,6 @@ public abstract class Status {
     public abstract double p3(int price,int daysAfterDeadLine);
     public abstract double p4(int price,int daysAfterDeadLine);
 
+    public abstract void demotion(Client client, int date, Sale sale);
     public abstract String toString();
 }

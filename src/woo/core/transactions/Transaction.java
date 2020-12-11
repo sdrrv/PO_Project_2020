@@ -25,5 +25,5 @@ public abstract class Transaction {
         return _price;
     }
     public void addToPrice(int amount){_price+=amount;}
-    public abstract String toString();
+    public abstract String toString(int date);
 }

@@ -13,8 +13,7 @@ import woo.core.users.status.*;
 import javax.swing.plaf.nimbus.State;
 
 public class Client extends User implements Serializable {
-    private int _points;
-    //private ClientStatus _status;
+    private double _points;
     private Status _state;
     private List<Sale> _transactions;
     private List<Notification> _notifications;
@@ -28,7 +27,7 @@ public class Client extends User implements Serializable {
     }
 
 
-    public int getPoints(){
+    public double getPoints(){
         return _points;
     }
 
@@ -49,7 +48,7 @@ public class Client extends User implements Serializable {
         statusCheck();
     }
 
-    public void removePoints(int value){
+    public void removePoints(double value){
         _points -= value;
     }
 
@@ -81,6 +80,21 @@ public class Client extends User implements Serializable {
 
     public Status getState(){
         return _state;
+    }
+
+    public void setStateNormal(){
+        _state = Normal.getInstance();
+    }
+
+    public void setStateSelection(){
+        _state = Selection.getInstance();
+    }
+    public void setStateElite(){
+        _state = Elite.getInstance();
+    }
+
+    public void demotion(int date,Sale sale){
+        _state.demotion(this,date,sale);
     }
 
     public String toString(){

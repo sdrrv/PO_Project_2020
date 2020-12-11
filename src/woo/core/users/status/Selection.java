@@ -1,6 +1,7 @@
 package woo.core.users.status;
 
 import woo.core.transactions.Sale;
+import woo.core.users.Client;
 
 public class Selection extends Status {
     private static Selection _selection;
@@ -29,6 +30,14 @@ public class Selection extends Status {
 
     public double p4(int price, int daysAfterDeadLine) {
         return (price * (1 + 0.05 * daysAfterDeadLine));
+    }
+
+    public void demotion(Client client, int date, Sale sale) {
+        if(date-sale.getDateLim()>2){
+            client.setStateNormal();
+            client.removePoints( client.getPoints()*0.90 );
+        }
+
     }
 
     public String toString(){

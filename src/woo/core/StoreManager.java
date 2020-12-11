@@ -185,7 +185,7 @@ public void changeProductPrice(String productId,int newPrice) throws UnknownProd
     if(!_store.hasTransaction(key)){
       throw new UnknownTransactionIdException(key);
     }
-    return _store.getTransaction(key).toString();
+    return _store.getTransaction(key).toString(_store.getDate());
   }
 
   public void registerSale(String clientId,int dateLim,String productId, int quantity) throws UnknownClientIdException,UnknownProductIdException, NotAvaliableProductException{

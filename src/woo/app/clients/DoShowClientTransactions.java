@@ -31,7 +31,7 @@ public class DoShowClientTransactions extends Command<StoreManager> {
       List<Sale> clientSales = _receiver.getClientSales(_clientId.value());
 
       for (Sale sale : clientSales) {
-        _display.addLine(sale.toString());
+        _display.addLine(sale.toString(_receiver.showDate()));
       }
       _display.display();
     } catch (UnknownClientIdException e) {

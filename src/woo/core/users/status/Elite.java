@@ -1,6 +1,8 @@
 package woo.core.users.status;
 
 import woo.core.transactions.Sale;
+import woo.core.transactions.Transaction;
+import woo.core.users.Client;
 
 public class Elite extends Status{
     private static Elite _elite;
@@ -22,6 +24,14 @@ public class Elite extends Status{
 
     public double p4(int price,int daysAfterDeadLine){
         return price;
+    }
+
+    public void demotion(Client client, int date, Sale sale) {
+        if(date-sale.getDateLim()>15){
+            client.setStateSelection();
+            client.removePoints( client.getPoints()*0.75 );
+        }
+
     }
 
     public String toString(){

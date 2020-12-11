@@ -5,10 +5,9 @@ import woo.core.users.Client;
 
 import java.security.PublicKey;
 
-public class Sale extends Transaction{
+ public class Sale extends Transaction{
     private int _dateLim;
     private boolean _isPaid;
-    private double _finalPrice;
 
     private Client _client;
     private ProductPlus _productPlus;
@@ -29,8 +28,10 @@ public class Sale extends Transaction{
     }
 
 
-    public void pay(){
+    public void pay(int date){
         _isPaid = true;
+        if( date> _dateLim)
+            _client.demotion(date,this);
     }
 
 
@@ -49,21 +50,21 @@ public class Sale extends Transaction{
     }
 
 
-    private String toStringMixer(){
+    private String toStringMixer(int date){
         return (super.getKey() +"|"+
                 getProduct().getKey()+"|"+
                 _productPlus.getAmount()+"|"+
                 super.getPrice()+"|"+
-                _finalPrice+"|"+
+                getFinalPrice(date)+"|"+
                 _dateLim+"|");
     }
 
 
-    public String toString() {
+    public String toString(int date) {
         if(_isPaid){
-            return toStringMixer() + "|" + super.getPayDay();
+            return toStringMixer(date) + "|" + super.getPayDay();
         }
-        return toStringMixer();
+        return toStringMixer(date);
     }
 }
 

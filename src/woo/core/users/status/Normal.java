@@ -1,6 +1,7 @@
 package woo.core.users.status;
 
 import woo.core.transactions.Sale;
+import woo.core.users.Client;
 
 public class Normal extends Status{
     private static Normal _normal;
@@ -24,8 +25,12 @@ public class Normal extends Status{
         return ( price * (1+0.10*daysAfterDeadLine) ) ;
     }
 
+    public void demotion(Client client, int date, Sale sale) {}
+
     public String toString(){
         return "NORMAL";
     }
+
+
 
 }

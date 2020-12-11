@@ -25,7 +25,7 @@ public class DoShowSupplierTransactions extends Command<StoreManager> {
     _form.parse();
     try {
       for(Order order : _receiver.getSupplierOrders(_supplierId.value())){
-        _display.addLine(order.toString());
+        _display.addLine(order.toString(_receiver.showDate()));
       }
     }
     catch (UnknownSupplierIdException e){
