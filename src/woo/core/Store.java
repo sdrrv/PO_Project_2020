@@ -204,6 +204,22 @@ public class Store implements Serializable {
     sale.pay(_date);
     return 0;
   }
+
+  public double getBalance(){
+    return _balance;
+  }
+
+  public double getAccontingBalance(){
+    double ordersTotalPrice=0;
+    double salesTotalRevenue=0;
+    for(Sale sale : _sales.values()){
+      salesTotalRevenue += sale.getFinalPrice(_date);
+    }
+    for (Order order : _orders.values()){
+      ordersTotalPrice += order.getPrice();
+    }
+    return salesTotalRevenue - ordersTotalPrice;
+  }
   //-------------------------------------Notifications-------------------------------------------
   public void registerNotification(Notification notification){
     _notifications.put(_numberOfNotifications,notification);

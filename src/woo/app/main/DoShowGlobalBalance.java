@@ -11,15 +11,14 @@ import woo.core.StoreManager;
  */
 public class DoShowGlobalBalance extends Command<StoreManager> {
 
-  //FIXME add input fields
 
   public DoShowGlobalBalance(StoreManager receiver) {
     super(Label.SHOW_BALANCE, receiver);
-    //FIXME init input fields
   }
 
   @Override
   public final void execute() {
-    //FIXME implement command
+    _display.addLine(Message.currentBalance((int) Math.round(_receiver.getBalance()),(int) Math.round(_receiver.getAccontingBalance())));
+    _display.display();
   }
 }

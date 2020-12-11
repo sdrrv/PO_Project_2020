@@ -226,6 +226,13 @@ public void changeProductPrice(String productId,int newPrice) throws UnknownProd
   public void pay(int transactionKey) throws UnknownTransactionIdException{
     _store.pay(_store.getSale(transactionKey));
   }
+
+  public double getBalance(){
+    return _store.getBalance();
+  }
+  public double getAccontingBalance(){
+    return _store.getAccontingBalance();
+  }
   //---------------------------------------------------------------------------------------------------------------------
   public void activateNotification(String clientId,String productId) throws UnknownClientIdException, UnknownProductIdException{
     if(!_store.hasClient(clientId))

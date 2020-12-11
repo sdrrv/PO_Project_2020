@@ -30,6 +30,7 @@ import java.security.PublicKey;
 
     public void pay(int date){
         _isPaid = true;
+        super.setPayDay(date);
         if( date> _dateLim)
             _client.demotion(date,this);
     }
