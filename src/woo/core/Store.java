@@ -70,6 +70,10 @@ public class Store implements Serializable {
   }
   public void registerClient(Client client){
     _clients.put(client.getId(),client);
+    NotificationHandler.getInstance().addObserver(client);
+  }
+  public void disableNotificationsFromProduct(Client client, Product product){
+    NotificationHandler.getInstance().addProductToTheRemovedList(client,product.getKey());
   }
   public Client getClient(String id){
     return _clients.get(id);
@@ -212,18 +216,7 @@ public class Store implements Serializable {
     }
     return salesTotalRevenue - ordersTotalPrice;
   }
-  //-------------------------------------Notifications-------------------------------------------
-  public void registerNotification(Notification notification){
-    _notifications.put(_numberOfNotifications,notification);
-    // add notification to client
-  }
-
-  /*public Notification createNotification(Client client, Product product){
-    Notification notification = new Notification(++_numberOfNotifications,___,0);
-    _notifications.put(++_numberOfNotifications,notification);
-    return notification;
-  }*/
-
+  //-------------------------------------Notifications--------------------------------------
   //---------------------------------------LookUps------------------------------------------
   public List<Product> getProductsBellowAmount(int amount){
     List<Product> _result = new LinkedList<>();

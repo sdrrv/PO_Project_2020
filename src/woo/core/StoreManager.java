@@ -7,6 +7,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 import woo.core.exception.*;
+import woo.core.notifications.Notification;
 import woo.core.products.*;
 import woo.core.transactions.Order;
 import woo.core.transactions.ProductPlus;
@@ -47,6 +48,19 @@ public class StoreManager implements Serializable {
     List<String> result = new ArrayList<>();
     for(Client client: temp){
       result.add(client.toString());
+    }
+    return result;
+  }
+
+  public List<String> getClientNotifications(String clientId) throws UnknownClientIdException{
+    if(!_store.hasClient(clientId)){
+      throw new UnknownClientIdException(clientId);
+    }
+    List<String> result = new LinkedList<>();
+    for (Notification notification : _store.getClient(clientId).getNotifications()){
+      if(notification.getDeliMethod().equals("")){
+        result.add(notification.toString());
+      }
     }
     return result;
   }

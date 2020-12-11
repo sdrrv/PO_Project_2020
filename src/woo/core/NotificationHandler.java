@@ -3,6 +3,7 @@ package woo.core;
 import woo.core.notifications.Description;
 import woo.core.notifications.Notification;
 import woo.core.notifications.NotificationsObserver;
+import woo.core.products.Product;
 import woo.core.users.Client;
 import woo.core.users.User;
 
@@ -12,14 +13,14 @@ import java.util.List;
 import java.util.Map;
 
 public class NotificationHandler {
-    private NotificationHandler _notificationHandler;
+    private static NotificationHandler _notificationHandler;
 
     private Map<NotificationsObserver, List<String>> _observers;   // Clients keys ---- String of Products keys not to be used
     private NotificationHandler(){
         _observers = new HashMap<>();
     }
 
-    public NotificationHandler getInstance(){
+    public static NotificationHandler getInstance(){
         if(_notificationHandler== null)
             _notificationHandler = new NotificationHandler();
 
@@ -36,10 +37,10 @@ public class NotificationHandler {
         _observers.get(observer).add(productKey);
     }
 
-    public void addNotification(String productId,String description, String deliveryMethod){
-        Notification notification = new Notification(productId, Description.valueOf(description),deliveryMethod);
+    public void addNotification(Product product, String description, String deliveryMethod){
+        Notification notification = new Notification(product, Description.valueOf(description),deliveryMethod);
         for(NotificationsObserver observer: _observers.keySet()){
-            if (!_observers.get(observer).contains(productId)){
+            if (!_observers.get(observer).contains(product.getKey())){
                 observer.receiveNotification(notification);
             }
         }
