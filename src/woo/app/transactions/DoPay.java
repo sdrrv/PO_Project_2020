@@ -14,6 +14,7 @@ import woo.core.exception.UnknownTransactionIdException;
 public class DoPay extends Command<StoreManager> {
 
   private Input<Integer> _transactionId;
+
   public DoPay(StoreManager storefront) {
     super(Label.PAY, storefront);
     _transactionId = _form.addIntegerInput(Message.requestTransactionKey());

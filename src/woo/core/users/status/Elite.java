@@ -23,4 +23,8 @@ public class Elite extends Status{
     public double p4(int price,int daysAfterDeadLine){
         return price;
     }
+
+    public String toString(){
+        return "ELITE";
+    }
 }

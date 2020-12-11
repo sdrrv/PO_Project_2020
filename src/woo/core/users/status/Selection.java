@@ -30,4 +30,8 @@ public class Selection extends Status {
     public double p4(int price, int daysAfterDeadLine) {
         return (price * (1 + 0.05 * daysAfterDeadLine));
     }
+
+    public String toString(){
+        return "SELECTION";
+    }
 }

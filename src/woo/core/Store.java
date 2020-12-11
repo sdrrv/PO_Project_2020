@@ -200,7 +200,8 @@ public class Store implements Serializable {
     if(sale.isPaid()){
       return 1;
     }
-    _balance += sale.pay();
+    _balance += sale.getFinalPrice(_date);
+    sale.pay();
     return 0;
   }
   //-------------------------------------Notifications-------------------------------------------

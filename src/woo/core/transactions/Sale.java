@@ -21,18 +21,16 @@ public class Sale extends Transaction{
         _productPlus = new ProductPlus(amount,product);
     }
 
-    public double getFinalPrice() {
-        //return getClient().getState().getToPay();
-        return 0;
+    public double getFinalPrice(int date) {
+        return getClient().getState().getToPay(this,date);
     }
     public int getDateLim(){
         return _dateLim;
     }
 
 
-    public double pay(){
+    public void pay(){
         _isPaid = true;
-        return getFinalPrice();
     }
 
 

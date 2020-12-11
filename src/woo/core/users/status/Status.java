@@ -29,4 +29,6 @@ public abstract class Status {
     public abstract double p2(int price,int daysAfterDeadLine);
     public abstract double p3(int price,int daysAfterDeadLine);
     public abstract double p4(int price,int daysAfterDeadLine);
+
+    public abstract String toString();
 }

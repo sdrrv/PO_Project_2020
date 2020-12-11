@@ -24,4 +24,8 @@ public class Normal extends Status{
         return ( price * (1+0.10*daysAfterDeadLine) ) ;
     }
 
+    public String toString(){
+        return "NORMAL";
+    }
+
 }

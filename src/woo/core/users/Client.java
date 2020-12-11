@@ -14,7 +14,7 @@ import javax.swing.plaf.nimbus.State;
 
 public class Client extends User implements Serializable {
     private int _points;
-    private ClientStatus _status;
+    //private ClientStatus _status;
     private Status _state;
     private List<Sale> _transactions;
     private List<Notification> _notifications;
@@ -22,15 +22,11 @@ public class Client extends User implements Serializable {
     public Client(String name, String address, String id){
         super(name, address, id);
         _points = 0;
-        _status = ClientStatus.NORMAL;
         _state = Normal.getInstance();
         _transactions = new LinkedList<>();
         _notifications = new LinkedList<>();
     }
 
-    public ClientStatus getStatus(){
-        return _status;
-    }
 
     public int getPoints(){
         return _points;
@@ -38,15 +34,12 @@ public class Client extends User implements Serializable {
 
     private void statusCheck(){
         if(_points<2000){
-            _status = ClientStatus.NORMAL;
             _state = Normal.getInstance();
         }
         else if (( _points>=2000 ) && ( _points<=25000) ){
-            _status = ClientStatus.SELECTION;
             _state = Selection.getInstance();
         }
         else{
-            _status = ClientStatus.ELITE;
             _state = Elite.getInstance();
         }
     }
@@ -54,6 +47,10 @@ public class Client extends User implements Serializable {
     public void addPoints(int value){
         _points += value;
         statusCheck();
+    }
+
+    public void removePoints(int value){
+        _points -= value;
     }
 
     public List<Notification> getNotifications(){
@@ -87,7 +84,7 @@ public class Client extends User implements Serializable {
     }
 
     public String toString(){
-        return (super.getId()+"|"+super.getName()+"|"+super.getAddress()+"|"+_status.toString()+"|"+"0"+"|"+"0");
+        return (super.getId()+"|"+super.getName()+"|"+super.getAddress()+"|"+_state.toString()+"|"+"0"+"|"+"0");
     }
 
     
