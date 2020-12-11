@@ -31,7 +31,7 @@ public class Supplier extends User implements Serializable {
     }
 
     public void addToProducts(Product product){
-        _products.put(product.getKey(),product);
+        _products.put(product.getKey().toUpperCase(),product);
     }
 
     public boolean hasProduct(String id){
