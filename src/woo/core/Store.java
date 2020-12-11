@@ -189,7 +189,7 @@ public class Store implements Serializable {
   }
 
   public Order createOrder(Supplier supplier, List<ProductPlus> products){
-    Order order = new Order(++_numberOfTransactions,supplier);
+    Order order = new Order(++_numberOfTransactions,supplier,_date);
     for (ProductPlus i: products){
       order.addProduct(i);
       i.getProduct().increaseValue(i.getAmount());

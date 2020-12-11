@@ -11,10 +11,11 @@ public class Order extends Transaction{
 
     private List<ProductPlus> _productsPlus;
 
-    public Order(int key, Supplier supplier){
+    public Order(int key, Supplier supplier,int day){
         super(key,0,TransType.Order);
         _supplier= supplier;
         _productsPlus = new LinkedList<>();
+        super.setPayDay(day);
 
     }
 
