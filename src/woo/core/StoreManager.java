@@ -278,17 +278,11 @@ public void changeProductPrice(String productId,int newPrice) throws UnknownProd
    * @throws UnavailableFileException
    */
   public void load(String fileName) throws UnavailableFileException,IOException,ClassNotFoundException {
-      ObjectInputStream objIn= null;
-      try {
-        objIn= new ObjectInputStream(new FileInputStream(fileName));
+      try (ObjectInputStream objIn = new ObjectInputStream(new FileInputStream(fileName))){
         _store= (Store) objIn.readObject();
       }
       catch (IOException|ClassNotFoundException e){
         throw new UnavailableFileException(fileName);
-      }
-      finally {
-        if (objIn!= null)
-          objIn.close();
       }
     }
 

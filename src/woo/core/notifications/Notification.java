@@ -1,22 +1,28 @@
 package woo.core.notifications;
 
 public class Notification {
-    private int _id;
+    private String _productId;
     private Description _desc;
-    private DeliveryMethod _deliMethod;
+    private String _deliMethod;
 
-    public Notification(int id, Description desc, DeliveryMethod deliMethod){
-        _id=id;
+    public Notification(String productId, Description desc, String deliMethod){
+        _productId=productId;
         _desc = desc;
         _deliMethod = deliMethod;
     }
-    public int getId() {
-        return _id;
+
+    public Notification(String productId, Description desc){
+        _productId=productId;
+        _desc = desc;
+    }
+
+    public String getProductid() {
+        return _productId;
     }
     public Description getDesc() {
         return _desc;
     }
-    public DeliveryMethod getDeliMethod() {
+    public String getDeliMethod() {
         return _deliMethod;
     }
 }

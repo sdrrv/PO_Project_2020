@@ -1,14 +1,9 @@
 package woo.core;
 
 //FIXME import classes (cannot import from pt.tecnico or woo.app)
-import java.beans.Transient;
 import java.io.Serializable;
-
 import java.io.IOException;
-
 import woo.core.exception.BadEntryException;
-
-import woo.core.exception.ImportFileException;
 import woo.core.transactions.Order;
 import woo.core.transactions.ProductPlus;
 import woo.core.transactions.Sale;
@@ -16,11 +11,8 @@ import woo.core.transactions.Transaction;
 import woo.core.notifications.Notification;
 import woo.core.users.*;
 import woo.core.products.*;
-
 import java.util.Map;
 import java.util.TreeSet;
-
-
 import java.util.*;
 
 /**
@@ -54,7 +46,6 @@ public class Store implements Serializable {
     _balance = 0;
     _numberOfTransactions = -1;
     _numberOfNotifications = -1;
-    _balance = 0;
     _date=0;
     _clients = new HashMap<>();
     _suppliers = new HashMap<>();

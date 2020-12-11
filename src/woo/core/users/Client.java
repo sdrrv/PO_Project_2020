@@ -1,6 +1,7 @@
 package woo.core.users;
 
 import woo.core.notifications.Notification;
+import woo.core.notifications.NotificationsObserver;
 import woo.core.transactions.Sale;
 
 import java.io.Serializable;
@@ -12,7 +13,7 @@ import woo.core.users.status.*;
 
 import javax.swing.plaf.nimbus.State;
 
-public class Client extends User implements Serializable {
+public class Client extends User implements Serializable, NotificationsObserver {
     private double _points;
     private Status _state;
     private List<Sale> _transactions;
@@ -95,6 +96,10 @@ public class Client extends User implements Serializable {
 
     public void demotion(int date,Sale sale){
         _state.demotion(this,date,sale);
+    }
+
+    public void receiveNotification(Notification notification){
+        _notifications.add(notification);
     }
 
     public String toString(){
