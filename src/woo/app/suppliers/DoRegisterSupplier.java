@@ -4,6 +4,7 @@ import pt.tecnico.po.ui.Command;
 import pt.tecnico.po.ui.DialogException;
 import pt.tecnico.po.ui.Input;
 import woo.app.exception.DuplicateProductKeyException;
+import woo.app.exception.DuplicateSupplierKeyException;
 import woo.core.StoreManager;
 import woo.core.exception.DuplicateSupplierIdException;
 
@@ -30,7 +31,7 @@ public class DoRegisterSupplier extends Command<StoreManager> {
       _receiver.registerSupplier(_name.value(),_address.value(),_suppplierKey.value());
     }
     catch (DuplicateSupplierIdException e){
-      throw new DuplicateProductKeyException(e.getKey());
+      throw new DuplicateSupplierKeyException(e.getKey());
     }
   }
 }
