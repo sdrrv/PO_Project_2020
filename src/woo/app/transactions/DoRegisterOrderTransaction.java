@@ -30,12 +30,12 @@ public class DoRegisterOrderTransaction extends Command<StoreManager> {
 
   public DoRegisterOrderTransaction(StoreManager receiver) {
     super(Label.REGISTER_ORDER_TRANSACTION, receiver);
-    _products = new LinkedList<>();
-    _amounts = new LinkedList<>();
     }
 
   @Override
   public final void execute() throws DialogException {
+    _products = new LinkedList<>();
+    _amounts = new LinkedList<>();
     _form.clear();
     _supplierId = _form.addStringInput(Message.requestSupplierKey());
     _form.parse();
