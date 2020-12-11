@@ -7,6 +7,11 @@ public class Notification {
     private Description _desc;
     private String _deliMethod;
 
+    public Notification(Product product, Description desc){
+        _product=product;
+        _desc = desc;
+        _deliMethod = "";
+    }
     public Notification(Product product, Description desc, String deliMethod){
         _product=product;
         _desc = desc;

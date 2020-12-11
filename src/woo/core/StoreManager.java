@@ -56,12 +56,14 @@ public class StoreManager implements Serializable {
     if(!_store.hasClient(clientId)){
       throw new UnknownClientIdException(clientId);
     }
+    Client client = _store.getClient(clientId);
     List<String> result = new LinkedList<>();
-    for (Notification notification : _store.getClient(clientId).getNotifications()){
+    for (Notification notification : client.getNotifications()){
       if(notification.getDeliMethod().equals("")){
         result.add(notification.toString());
       }
     }
+    client.clearNotifications();
     return result;
   }
 
@@ -192,7 +194,11 @@ public Book registerBook(int price,int valorCrit, String key, String title, Stri
 public void changeProductPrice(String productId,int newPrice) throws UnknownProductIdException{
   if(!_store.hasProduct(productId))
     throw new UnknownProductIdException(productId);
-  _store.getProduct(productId).setPrice(newPrice);
+  Product product = _store.getProduct(productId);
+  if(product.getPrice()>newPrice){
+    NotificationHandler.getInstance().addNotification(product,"BARGAIN","");
+  }
+  product.setPrice(newPrice);
 }
   //---------------------------------------------------------------------------------------------------------------------
   public String showTransaction(int key) throws UnknownTransactionIdException{
