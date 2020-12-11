@@ -10,6 +10,8 @@ import java.util.Map;
 
 import woo.core.users.status.*;
 
+import javax.swing.plaf.nimbus.State;
+
 public class Client extends User implements Serializable {
     private int _points;
     private ClientStatus _status;
@@ -78,6 +80,10 @@ public class Client extends User implements Serializable {
             }
         }
         return result;
+    }
+
+    public Status getState(){
+        return _state;
     }
 
     public String toString(){

@@ -22,16 +22,20 @@ public class Sale extends Transaction{
     }
 
     public double getFinalPrice() {
-        return _finalPrice;
+        //return getClient().getState().getToPay();
+        return 0;
     }
     public int getDateLim(){
         return _dateLim;
     }
 
+
     public double pay(){
         _isPaid = true;
-        return 0;
+        return getFinalPrice();
     }
+
+
     public boolean isPaid(){
         return _isPaid;
     }

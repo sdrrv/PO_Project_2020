@@ -1,6 +1,8 @@
 package woo.core.users.status;
 
-public class Normal implements Status{
+import woo.core.transactions.Sale;
+
+public class Normal extends Status{
     private static Normal _normal;
     private Normal(){}
 
@@ -10,9 +12,16 @@ public class Normal implements Status{
         }
         return _normal;
     }
-
-    @Override
-    public double getToPay(){
-        return 0;
+    public double p2(int price,int daysAfterDeadLine){
+        return price;
     }
+
+    public double p3(int price,int daysAfterDeadLine){
+        return ( price * (1+0.05*daysAfterDeadLine) ) ;
+    }
+
+    public double p4(int price,int daysAfterDeadLine){
+        return ( price * (1+0.10*daysAfterDeadLine) ) ;
+    }
+
 }
