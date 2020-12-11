@@ -7,6 +7,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 import woo.core.exception.*;
+import woo.core.notifications.Notification;
 import woo.core.products.*;
 import woo.core.transactions.Order;
 import woo.core.transactions.ProductPlus;
@@ -48,6 +49,21 @@ public class StoreManager implements Serializable {
     for(Client client: temp){
       result.add(client.toString());
     }
+    return result;
+  }
+
+  public List<String> getClientNotifications(String clientId) throws UnknownClientIdException{
+    if(!_store.hasClient(clientId)){
+      throw new UnknownClientIdException(clientId);
+    }
+    Client client = _store.getClient(clientId);
+    List<String> result = new LinkedList<>();
+    for (Notification notification : client.getNotifications()){
+      if(notification.getDeliMethod().equals("")){
+        result.add(notification.toString());
+      }
+    }
+    client.clearNotifications();
     return result;
   }
 
@@ -178,7 +194,11 @@ public Book registerBook(int price,int valorCrit, String key, String title, Stri
 public void changeProductPrice(String productId,int newPrice) throws UnknownProductIdException{
   if(!_store.hasProduct(productId))
     throw new UnknownProductIdException(productId);
-  _store.getProduct(productId).setPrice(newPrice);
+  Product product = _store.getProduct(productId);
+  if(product.getPrice()>newPrice){
+    NotificationHandler.getInstance().addNotification(product,"BARGAIN","");
+  }
+  product.setPrice(newPrice);
 }
   //---------------------------------------------------------------------------------------------------------------------
   public String showTransaction(int key) throws UnknownTransactionIdException{
@@ -278,17 +298,11 @@ public void changeProductPrice(String productId,int newPrice) throws UnknownProd
    * @throws UnavailableFileException
    */
   public void load(String fileName) throws UnavailableFileException,IOException,ClassNotFoundException {
-      ObjectInputStream objIn= null;
-      try {
-        objIn= new ObjectInputStream(new FileInputStream(fileName));
+      try (ObjectInputStream objIn = new ObjectInputStream(new FileInputStream(fileName))){
         _store= (Store) objIn.readObject();
       }
       catch (IOException|ClassNotFoundException e){
         throw new UnavailableFileException(fileName);
-      }
-      finally {
-        if (objIn!= null)
-          objIn.close();
       }
     }
 

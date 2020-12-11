@@ -24,7 +24,12 @@ public class DoShowClient extends Command<StoreManager> {
 
     try {
       String cl = _receiver.getClient(_clientKey.value());
-      _display.popup(cl);
+      _display.addLine(cl);
+      for(String notification: _receiver.getClientNotifications(_clientKey.value())){
+        _display.addLine(notification);
+      }
+      _display.display();
+
     } catch(UnknownClientIdException e){
         throw new UnknownClientKeyException(_clientKey.value());
     }
