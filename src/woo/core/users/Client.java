@@ -102,8 +102,26 @@ public class Client extends User implements Serializable, NotificationsObserver 
         _notifications.add(notification);
     }
 
+    public double getSalesValue(){
+        double result =0;
+        for (Sale sale: _transactions){
+            result += sale.getPrice();
+        }
+        return result;
+    }
+
+    public double getPaidSalesValue(){
+        double result = 0;
+        for (Sale sale : _transactions){
+            if(sale.isPaid()){
+                result += sale.getValuePaid();
+            }
+        }
+        return result;
+    }
+
     public String toString(){
-        return (super.getId()+"|"+super.getName()+"|"+super.getAddress()+"|"+_state.toString()+"|"+"0"+"|"+"0");
+        return (super.getId()+"|"+super.getName()+"|"+super.getAddress()+"|"+_state.toString()+"|"+getSalesValue()+"|"+getPaidSalesValue());
     }
 
     
