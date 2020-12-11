@@ -3,7 +3,9 @@ package woo.core.users.status;
 import woo.core.transactions.Sale;
 import woo.core.users.Client;
 
-public class Normal extends Status{
+import java.io.Serializable;
+
+public class Normal extends Status implements Serializable {
     private static Normal _normal;
     private Normal(){}
 

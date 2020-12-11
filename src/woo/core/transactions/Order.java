@@ -3,10 +3,11 @@ package woo.core.transactions;
 import woo.core.products.Product;
 import woo.core.users.Supplier;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Order extends Transaction{
+public class Order extends Transaction implements Serializable {
     private final Supplier _supplier;
 
     private List<ProductPlus> _productsPlus;

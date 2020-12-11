@@ -3,7 +3,9 @@ package woo.core.users.status;
 import woo.core.transactions.Sale;
 import woo.core.users.Client;
 
-public class Selection extends Status {
+import java.io.Serializable;
+
+public class Selection extends Status implements Serializable {
     private static Selection _selection;
 
     private Selection() {

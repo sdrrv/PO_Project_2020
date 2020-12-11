@@ -27,6 +27,7 @@ public class DoShowSupplierTransactions extends Command<StoreManager> {
       for(Order order : _receiver.getSupplierOrders(_supplierId.value())){
         _display.addLine(order.toString(_receiver.showDate()));
       }
+      _display.display();
     }
     catch (UnknownSupplierIdException e){
       throw new UnknownSupplierKeyException(e.getId());

@@ -1,6 +1,8 @@
 package woo.core.transactions;
 
-public enum TransType {
+import java.io.Serializable;
+
+public enum TransType implements Serializable {
     Order,
     Sale
 }

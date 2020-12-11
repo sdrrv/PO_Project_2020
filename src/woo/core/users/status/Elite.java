@@ -4,7 +4,9 @@ import woo.core.transactions.Sale;
 import woo.core.transactions.Transaction;
 import woo.core.users.Client;
 
-public class Elite extends Status{
+import java.io.Serializable;
+
+public class Elite extends Status implements Serializable {
     private static Elite _elite;
     private Elite(){}
 

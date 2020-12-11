@@ -1,6 +1,10 @@
 package woo.core.transactions;
 
-public abstract class Transaction {
+import woo.core.users.User;
+
+import java.io.Serializable;
+
+public abstract class Transaction implements Serializable,Comparable {
     private final int _key;
     private final TransType _type;
     private int _payDay;
@@ -26,6 +30,16 @@ public abstract class Transaction {
     }
     public void addToPrice(int amount){_price+=amount;}
     public abstract String toString(int date);
+
+    public int compareTo(Object o) {
+        Transaction e;
+        if (!(o instanceof Transaction)) {
+            return 0;
+        }
+        e = (Transaction) o;
+        return _key-e.getKey();
+
+    }
 
 
 

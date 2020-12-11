@@ -3,7 +3,9 @@ package woo.core.users.status;
 import woo.core.transactions.Sale;
 import woo.core.users.Client;
 
-public abstract class Status {
+import java.io.Serializable;
+
+public abstract class Status implements Serializable {
 
     public double getToPay(Sale sale, int date){
         int daysAfterDeadLine = date-sale.getDateLim();

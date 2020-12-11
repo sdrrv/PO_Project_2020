@@ -1,6 +1,8 @@
 package woo.core.products;
 
-public enum ServiceLevel {
+import java.io.Serializable;
+
+public enum ServiceLevel implements Serializable {
     B4,
     C4,
     C5,

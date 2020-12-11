@@ -3,9 +3,10 @@ package woo.core.transactions;
 import woo.core.products.Product;
 import woo.core.users.Client;
 
+import java.io.Serializable;
 import java.security.PublicKey;
 
- public class Sale extends Transaction{
+ public class Sale extends Transaction implements Serializable {
     private int _dateLim;
     private boolean _isPaid;
 

@@ -1,6 +1,8 @@
 package woo.core.products;
 
-public enum ServiceType {
+import java.io.Serializable;
+
+public enum ServiceType implements Serializable {
     NORMAL,
     AIR,
     EXPRESS,

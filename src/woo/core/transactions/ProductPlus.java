@@ -2,7 +2,9 @@ package woo.core.transactions;
 
 import woo.core.products.Product;
 
-public class ProductPlus {
+import java.io.Serializable;
+
+public class ProductPlus implements Serializable {
     private int _amount;
     private Product _product;
 

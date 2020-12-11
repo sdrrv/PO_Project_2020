@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.*;
 
+import com.sun.jdi.connect.spi.TransportService;
 import woo.core.exception.*;
 import woo.core.notifications.Notification;
 import woo.core.products.*;
@@ -82,6 +83,7 @@ public class StoreManager implements Serializable {
     List<Sale> result = new ArrayList<>(temp);
     return result;
   }
+
 //---------------------------------------------------------------------------------------------------------------------
 public void registerSupplier(String name, String address, String id) throws DuplicateSupplierIdException{
     if(_store.hasSupplier(id)){
@@ -120,7 +122,9 @@ public String getSupplier(String id) throws UnknownSupplierIdException{
     if(!_store.hasSupplier(supplierId)){
       throw new UnknownSupplierIdException(supplierId);
     }
-    return _store.getSupplierOrders(supplierId);
+    SortedSet<Order> temp = _store.getSupplierOrders(_store.getSupplier(supplierId));
+    List<Order> result = new LinkedList<>(temp);
+    return result;
   }
 
   //---------------------------------------------------------------------------------------------------------------------

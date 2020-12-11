@@ -7,12 +7,13 @@ import woo.core.products.Product;
 import woo.core.users.Client;
 import woo.core.users.User;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class NotificationHandler {
+public class NotificationHandler implements Serializable {
     private static NotificationHandler _notificationHandler;
 
     private Map<NotificationsObserver, List<String>> _observers;   // Clients keys ---- String of Products keys not to be used

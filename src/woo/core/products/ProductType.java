@@ -1,6 +1,8 @@
 package woo.core.products;
 
-public enum ProductType {
+import java.io.Serializable;
+
+public enum ProductType implements Serializable {
     BOX,
     CONTAINER,
     BOOK

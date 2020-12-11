@@ -1,6 +1,8 @@
 package woo.core.notifications;
 
-public enum Description {
+import java.io.Serializable;
+
+public enum Description implements Serializable {
     NEW,
     BARGAIN
 }

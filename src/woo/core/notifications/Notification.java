@@ -2,7 +2,9 @@ package woo.core.notifications;
 
 import woo.core.products.Product;
 
-public class Notification {
+import java.io.Serializable;
+
+public class Notification implements Serializable {
     private Product _product;
     private Description _desc;
     private String _deliMethod;

@@ -1,5 +1,7 @@
 package woo.core.notifications;
 
-public interface NotificationsObserver {
+import java.io.Serializable;
+
+public interface NotificationsObserver{
     void receiveNotification(Notification notification);
 }
