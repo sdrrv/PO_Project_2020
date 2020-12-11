@@ -1,7 +1,6 @@
 package woo.core.users.status;
 
 import woo.core.transactions.Sale;
-import woo.core.transactions.Transaction;
 import woo.core.users.Client;
 
 public abstract class Status {

@@ -36,6 +36,7 @@ public class DoRegisterOrderTransaction extends Command<StoreManager> {
 
   @Override
   public final void execute() throws DialogException {
+    _form.clear();
     _supplierId = _form.addStringInput(Message.requestSupplierKey());
     _form.parse();
     _form.clear();

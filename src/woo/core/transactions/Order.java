@@ -22,6 +22,9 @@ public class Order extends Transaction{
         _productsPlus.add(product);
         super.addToPrice(product.getAmount()*product.getProduct().getPrice());
     }
+    public Supplier getSupplier(){
+        return _supplier;
+    }
 
     public String toString(int date){
         String result = super.getKey()+"|"+

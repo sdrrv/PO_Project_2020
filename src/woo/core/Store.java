@@ -184,6 +184,7 @@ public class Store implements Serializable {
 
   public void registerOrder(Order order){
     _orders.put(_numberOfTransactions,order);
+    order.getSupplier().addToOrders(order);
     _balance -= order.getPrice();
   }
 

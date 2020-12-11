@@ -224,6 +224,8 @@ public void changeProductPrice(String productId,int newPrice) throws UnknownProd
   }
 
   public void pay(int transactionKey) throws UnknownTransactionIdException{
+    if(!_store.hasTransaction(transactionKey))
+      throw new UnknownTransactionIdException(transactionKey);
     _store.pay(_store.getSale(transactionKey));
   }
 
