@@ -33,6 +33,9 @@ import java.security.PublicKey;
         super.setPayDay(date);
         if( date> _dateLim)
             _client.demotion(date,this);
+        else{
+            _client.addPoints(super.getPrice()*10);
+        }
     }
 
 
