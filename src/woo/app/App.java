@@ -13,13 +13,15 @@ public class App {
   public static void main(String[] args) {
     StoreManager storefront = new StoreManager();
 
+    String datafile = System.getProperty("import");
+    if (datafile != null) {
       try {
-        storefront.importFile("C:\\Users\\duart\\Desktop\\Main\\Tecas\\PO\\PO_Project_2020\\src\\tests\\A-17-04-M-ok.import");
+        storefront.importFile(datafile);
       } catch (ImportFileException e) {
         // no behavior described: just present the problem
         e.printStackTrace();
       }
-
+    }
 
     Menu menu = new woo.app.main.Menu(storefront);
     menu.open();
