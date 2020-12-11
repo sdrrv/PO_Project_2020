@@ -102,22 +102,22 @@ public class Client extends User implements Serializable, NotificationsObserver 
         _notifications.add(notification);
     }
 
-    public double getSalesValue(){
+    public int getSalesValue(){
         double result =0;
         for (Sale sale: _transactions){
             result += sale.getPrice();
         }
-        return result;
+        return (int) result;
     }
 
-    public double getPaidSalesValue(){
+    public int getPaidSalesValue(){
         double result = 0;
         for (Sale sale : _transactions){
             if(sale.isPaid()){
                 result += sale.getValuePaid();
             }
         }
-        return result;
+        return (int)result;
     }
 
     public String toString(){
