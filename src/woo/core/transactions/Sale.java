@@ -11,6 +11,7 @@ import java.security.PublicKey;
 
     private Client _client;
     private ProductPlus _productPlus;
+    private double _valuePaid;
 
 
     public Sale(int key,int dateLim, int price, Client client, Product product, int amount){
@@ -23,6 +24,7 @@ import java.security.PublicKey;
     public double getFinalPrice(int date) {
         return getClient().getState().getToPay(this,date);
     }
+
     public int getDateLim(){
         return _dateLim;
     }
@@ -63,6 +65,13 @@ import java.security.PublicKey;
                 _dateLim+"|");
     }
 
+     public double getValuePaid(){
+         return _valuePaid;
+     }
+
+     public void setValuePaid(double valuePaid){
+         _valuePaid = valuePaid;
+     }
 
     public String toString(int date) {
         if(_isPaid){
@@ -70,5 +79,6 @@ import java.security.PublicKey;
         }
         return toStringMixer(date);
     }
+
 }
 
