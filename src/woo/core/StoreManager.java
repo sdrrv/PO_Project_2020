@@ -193,14 +193,18 @@ public Book registerBook(int price,int valorCrit, String key, String title, Stri
   return book;
 }
 
-public void changeProductPrice(String productId,int newPrice) throws UnknownProductIdException{
+public int changeProductPrice(String productId,int newPrice) throws UnknownProductIdException{
   if(!_store.hasProduct(productId))
     throw new UnknownProductIdException(productId);
+  if(newPrice<0){
+    return 1;
+  }
   Product product = _store.getProduct(productId);
   if(product.getPrice()>newPrice){
     NotificationHandler.getInstance().addNotification(product,"BARGAIN","");
   }
   product.setPrice(newPrice);
+  return 0;
 }
   //---------------------------------------------------------------------------------------------------------------------
   public String showTransaction(int key) throws UnknownTransactionIdException{
