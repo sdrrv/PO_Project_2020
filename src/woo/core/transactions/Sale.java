@@ -63,7 +63,7 @@ import java.security.PublicKey;
                 _productPlus.getAmount()+"|"+
                 super.getPrice()+"|"+
                 (int)getFinalPrice(date)+"|"+
-                _dateLim+"|");
+                _dateLim);
     }
 
      public double getValuePaid(){
