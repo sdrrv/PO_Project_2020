@@ -22,6 +22,7 @@ public class DoPay extends Command<StoreManager> {
 
   @Override
   public final void execute() throws DialogException {
+    _form.parse();
     try {
       _receiver.pay(_transactionId.value());
     }
