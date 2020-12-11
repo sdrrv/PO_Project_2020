@@ -177,7 +177,7 @@ public class Store implements Serializable {
   }
 
   public Sale createSale(Client client,int dateLim,Product product,int amount){
-    Sale result = new Sale(++_numberOfTransactions,dateLim,product.getPrice(),client,product,amount);
+    Sale result = new Sale(++_numberOfTransactions,dateLim,product.getPrice()*amount,client,product,amount);
     product.decreaseValue(amount);
     return result;
   }
