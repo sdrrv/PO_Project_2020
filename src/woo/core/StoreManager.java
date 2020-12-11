@@ -257,10 +257,14 @@ public int changeProductPrice(String productId,int newPrice) throws UnknownProdu
     _store.registerOrder(_store.createOrder(supplier,result));
   }
 
-  public void pay(int saleKey) throws UnknownTransactionIdException{
-    if(!_store.hasSale(saleKey))
+  public int pay(int saleKey) throws UnknownTransactionIdException{
+    if(!_store.hasTransaction(saleKey))
       throw new UnknownTransactionIdException(saleKey);
+    if(_store.getTransaction(saleKey).getType().equals("Order")){
+      return 1;
+    }
     _store.pay(_store.getSale(saleKey));
+    return 0;
   }
 
   public double getBalance(){
