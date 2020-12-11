@@ -26,4 +26,7 @@ public abstract class Transaction {
     }
     public void addToPrice(int amount){_price+=amount;}
     public abstract String toString(int date);
+
+
+
 }

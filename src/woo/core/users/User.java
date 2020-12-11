@@ -30,7 +30,7 @@ public abstract class User implements Serializable,Comparable {
             return 0;
         }
         e = (User) o;
-        return _id.compareTo(e.getId());
+        return _id.compareTo(e.getId().toUpperCase());
 
     }
 }

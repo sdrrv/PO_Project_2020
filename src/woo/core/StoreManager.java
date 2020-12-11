@@ -78,7 +78,9 @@ public class StoreManager implements Serializable {
     if(!_store.hasClient(clientId)){
       throw new UnknownClientIdException(clientId);
     }
-    return _store.getClient(clientId).getSales();
+    SortedSet<Sale> temp = _store.getClientSales(_store.getClient(clientId));
+    List<Sale> result = new ArrayList<>(temp);
+    return result;
   }
 //---------------------------------------------------------------------------------------------------------------------
 public void registerSupplier(String name, String address, String id) throws DuplicateSupplierIdException{

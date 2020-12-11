@@ -63,20 +63,20 @@ public class Store implements Serializable {
   }
   //------------------------------------Clients---------------------------------------------
   public boolean hasClient(String id){
-    return _clients.containsKey(id);
+    return _clients.containsKey(id.toUpperCase());
   }
   public Client createClient(String name, String address, String id){
     return new Client(name,address,id);
   }
   public void registerClient(Client client){
-    _clients.put(client.getId(),client);
+    _clients.put(client.getId().toUpperCase(),client);
     NotificationHandler.getInstance().addObserver(client);
   }
   public void disableNotificationsFromProduct(Client client, Product product){
     NotificationHandler.getInstance().addProductToTheRemovedList(client,product.getKey());
   }
   public Client getClient(String id){
-    return _clients.get(id);
+    return _clients.get(id.toUpperCase());
   }
   public TreeSet<Client> getAllClients(){
     return new TreeSet<Client>(_clients.values());
@@ -87,31 +87,36 @@ public class Store implements Serializable {
   public TreeSet<Supplier> getAllSuppliers(){
     return new TreeSet<Supplier>(_suppliers.values());
   }
+
+  public TreeSet<Sale>getClientSales(Client client){
+    return new TreeSet<>(client.getSales());
+  }
+
   //--------------------------------------------Suppliers-------------------------------------
   public boolean hasSupplier(String id){
-    return _suppliers.containsKey(id);
+    return _suppliers.containsKey(id.toUpperCase());
   }
   public Supplier createSupplier(String name, String address, String id){
     return new Supplier(name,address,id);
   }
   public void registerSupplier(Supplier supplier){
-    _suppliers.put(supplier.getId(),supplier);
+    _suppliers.put(supplier.getId().toUpperCase(),supplier);
   }
   public Supplier getSupplier(String id){
-    return _suppliers.get(id);
+    return _suppliers.get(id.toUpperCase());
   }
   public boolean toggleSupplierActivation(String id){
     return getSupplier(id).toogleActivation();
   }
   public Collection<Order> getSupplierOrders(String id){return getSupplier(id).getOrders();}
   //-------------------------------------Products--------------------------------------------
-  public Product getProduct(String id){return _products.get(id);}
+  public Product getProduct(String id){return _products.get(id.toUpperCase());}
 
   public Box createBox(int price,int valorCrit,String key,ServiceType serviceType, Supplier supplier){
     return new Box(price, valorCrit, key, serviceType,supplier);
   }
   public void registerBox(Box box){
-    _products.put(box.getKey(),box);
+    _products.put(box.getKey().toUpperCase(),box);
     box.getSupplier().addToProducts(box);
   }
 
@@ -119,7 +124,7 @@ public class Store implements Serializable {
     return new Container(price, valorCrit, key, serviceType, serviceLevel,supplier);
   }
   public void registerContainer(Container container){
-    _products.put(container.getKey(),container);
+    _products.put(container.getKey().toUpperCase(),container);
     container.getSupplier().addToProducts(container);
   }
 
@@ -127,12 +132,12 @@ public class Store implements Serializable {
     return new Book(price, valorCrit, key, title, author, isbn, supplier);
   }
   public void registerBook(Book book){
-    _products.put(book.getKey(),book);
+    _products.put(book.getKey().toUpperCase(),book);
     book.getSupplier().addToProducts(book);
   }
 
   public boolean hasProduct(String id){
-    return _products.containsKey(id);
+    return _products.containsKey(id.toUpperCase());
   }
 
   public ProductPlus createProductPlus(Product product, int amount){
@@ -140,7 +145,7 @@ public class Store implements Serializable {
   }
 
   public void setProductPrice(String id, int price){ // sets the price
-    _products.get(id).setPrice(price);
+    getProduct(id).setPrice(price);
   }
   //-------------------------------------Transactions--------------------------------------------
   public boolean hasSale(int key){

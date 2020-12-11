@@ -66,7 +66,7 @@ public abstract class Product implements Serializable,Comparable {
             return 0;
         }
         e = (Product) o;
-        return _key.compareTo(e.getKey());
+        return _key.compareTo(e.getKey().toUpperCase());
     }
 
     public int getN(){
