@@ -13,14 +13,14 @@ public class Elite extends Status{
         return _elite;
     }
     public double p2(int price,int daysAfterDeadLine){
-        return price;
+        return price*0.90;
     }
 
     public double p3(int price,int daysAfterDeadLine){
-        return ( price * (1+0.05*daysAfterDeadLine) ) ;
+        return price*0.95;
     }
 
     public double p4(int price,int daysAfterDeadLine){
-        return ( price * (1+0.10*daysAfterDeadLine) ) ;
+        return price;
     }
 }
