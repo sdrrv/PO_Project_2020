@@ -58,10 +58,11 @@ import java.security.PublicKey;
 
     private String toStringMixer(int date){
         return (super.getKey() +"|"+
+                getClient().getId()+"|"+
                 getProduct().getKey()+"|"+
                 _productPlus.getAmount()+"|"+
                 super.getPrice()+"|"+
-                getFinalPrice(date)+"|"+
+                (int)getFinalPrice(date)+"|"+
                 _dateLim+"|");
     }
 
