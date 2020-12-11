@@ -35,7 +35,7 @@ public class Supplier extends User implements Serializable {
     }
 
     public boolean hasProduct(String id){
-        return _products.containsKey(id);
+        return _products.containsKey(id.toUpperCase());
     }
 
     public void addToOrders(Order order){
