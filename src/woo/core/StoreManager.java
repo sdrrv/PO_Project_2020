@@ -223,10 +223,10 @@ public void changeProductPrice(String productId,int newPrice) throws UnknownProd
     _store.registerOrder(_store.createOrder(supplier,result));
   }
 
-  public void pay(int transactionKey) throws UnknownTransactionIdException{
-    if(!_store.hasTransaction(transactionKey))
-      throw new UnknownTransactionIdException(transactionKey);
-    _store.pay(_store.getSale(transactionKey));
+  public void pay(int saleKey) throws UnknownTransactionIdException{
+    if(!_store.hasSale(saleKey))
+      throw new UnknownTransactionIdException(saleKey);
+    _store.pay(_store.getSale(saleKey));
   }
 
   public double getBalance(){
