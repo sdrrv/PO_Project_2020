@@ -231,13 +231,17 @@ public void changeProductPrice(String productId,int newPrice) throws UnknownProd
     for(int i=0; i<products.size();i++){
       String productId = products.get(i);
       int amount = amounts.get(i);
-
       if(!_store.hasProduct(productId))
         throw new UnknownProductIdException(productId);
       if(!supplier.hasProduct(productId))
         throw new NotSoldBySupplierException(supplierId,productId);
+      Product product = _store.getProduct(productId);
 
-      result.add(_store.createProductPlus(_store.getProduct(productId),amount));
+      if(product.getValExist()==0 && amount!=0){
+        NotificationHandler.getInstance().addNotification(product,"NEW","");
+      }
+
+      result.add(_store.createProductPlus(product,amount));
     }
 
     _store.registerOrder(_store.createOrder(supplier,result));
