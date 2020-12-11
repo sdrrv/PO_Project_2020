@@ -8,9 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import woo.core.users.status.*;
+
 public class Client extends User implements Serializable {
     private int _points;
     private ClientStatus _status;
+    private Status _state;
     private List<Sale> _transactions;
     private List<Notification> _notifications;
 
@@ -18,6 +21,7 @@ public class Client extends User implements Serializable {
         super(name, address, id);
         _points = 0;
         _status = ClientStatus.NORMAL;
+        _state = Normal.getInstance();
         _transactions = new LinkedList<>();
         _notifications = new LinkedList<>();
     }
@@ -33,12 +37,15 @@ public class Client extends User implements Serializable {
     private void statusCheck(){
         if(_points<2000){
             _status = ClientStatus.NORMAL;
+            _state = Normal.getInstance();
         }
         else if (( _points>=2000 ) && ( _points<=25000) ){
             _status = ClientStatus.SELECTION;
+            _state = Selection.getInstance();
         }
         else{
             _status = ClientStatus.ELITE;
+            _state = Elite.getInstance();
         }
     }
 

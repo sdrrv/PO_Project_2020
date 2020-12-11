@@ -11,6 +11,7 @@ public class Normal implements Status{
         return _normal;
     }
 
+    @Override
     public double getToPay(){
         return 0;
     }
