@@ -19,7 +19,8 @@ public class Selection extends Status implements Serializable {
     }
 
     public double p2(int price, int daysAfterDeadLine) {
-        if (-daysAfterDeadLine>=2)
+
+        if (-daysAfterDeadLine<=2)
             return price*0.95;
         return price;
     }
