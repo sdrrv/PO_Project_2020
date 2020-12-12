@@ -31,13 +31,13 @@ import java.security.PublicKey;
     }
 
 
-    public void pay(int date){
+    public void pay(int date, double pay){
         _isPaid = true;
         super.setPayDay(date);
         if( date> _dateLim)
             _client.demotion(date,this);
         else{
-            _client.addPoints(super.getPrice()*10);
+            _client.addPoints((int) pay*10);
         }
     }
 

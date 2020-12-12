@@ -203,7 +203,7 @@ public class Store implements Serializable {
     }
     double paid = sale.getFinalPrice(_date);
     _balance += paid;
-    sale.pay(_date);
+    sale.pay(_date,paid);
     sale.setValuePaid(paid);
     return 0;
   }
