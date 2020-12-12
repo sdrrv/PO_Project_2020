@@ -23,6 +23,9 @@ import java.security.PublicKey;
     }
 
     public double getFinalPrice(int date) {
+        if(_isPaid){
+            return _valuePaid;
+        }
         return getClient().getState().getToPay(this,date);
     }
 
