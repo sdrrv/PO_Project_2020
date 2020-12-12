@@ -21,12 +21,20 @@ public class DoSave extends Command<StoreManager> {
   /** @see pt.tecnico.po.ui.Command#execute() */
   @Override
   public final void execute() {
-    _form.parse();
-    try{
-      _receiver.saveAs(_fileName.value());
+    if(!_receiver.hasFileName()) {
+      _form.parse();
+      try {
+        _receiver.saveAs(_fileName.value());
+      } catch (Exception e) {
+        System.out.println("Save Error");
+      }
     }
-    catch (Exception e){
-      System.out.println("Save Error");
+    else{
+      try {
+        _receiver.saveAs(_receiver.getFileName());
+      } catch (Exception e) {
+        System.out.println("Save Error");
+      }
     }
   }
 }

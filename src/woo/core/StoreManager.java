@@ -26,6 +26,13 @@ public class StoreManager implements Serializable {
   /** Current filename. */
   private String _filename = "";
 
+  public boolean hasFileName(){
+    return (!_filename.equals(""));
+  }
+  public String getFileName(){
+    return _filename;
+  }
+  
   /** The actual store. */
   private Store _store = new Store();
 
